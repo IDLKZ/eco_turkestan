@@ -81,13 +81,13 @@
                             }
                         }).addTo(map)
                     })
-
+                    var dataPolygons = []
                     //OnCreated
                     map.on('pm:create', ({ shape,layer }) => {
-                        let dense = $("#dense").val();
                         if(shape == "Rectangle" || shape == "Polygon"){
                             const polygon = layer.toGeoJSON();
-                            $("#geo").attr("value",JSON.stringify(polygon));
+                            dataPolygons.push(polygon)
+                            $("#geo").attr("value",JSON.stringify(dataPolygons));
                         }
                     });
 
