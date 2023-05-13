@@ -17,10 +17,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('image_url')->nullable();
-            $table->unsignedBigInteger('role_id')->default(3);
+            $table->unsignedBigInteger('role_id')->default(2);
             $table->foreign('role_id')->references('id')->on('roles');
-            $table->unsignedBigInteger('place_id')->nullable();
-            $table->foreign('place_id')->references('id')->on('places');
             $table->timestamps();
         });
     }

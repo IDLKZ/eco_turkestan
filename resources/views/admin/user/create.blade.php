@@ -11,14 +11,6 @@
                 </select>
             </div>
 
-            <div class="relative mb-4" data-te-input-wrapper-init>
-                <select name="place_id" class="w-full" data-te-select-init>
-                    @foreach($places as $place)
-                        <option value="{{$place->id}}">{{$place->title_ru}}</option>
-                    @endforeach
-                </select>
-            </div>
-
             <div class="relative mb-4">
                 <input
                     type="text"
