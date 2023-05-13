@@ -35,7 +35,14 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
+        $this->validate($request, [
+           'name' => 'required',
+           'email' => 'required|email',
+           'password' => 'required',
+           'role_id' => 'required'
+        ]);
+        User::add($request->all());
+        return redirect(route('user.index'));
     }
 
     /**
@@ -67,6 +74,8 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->back();
     }
 }

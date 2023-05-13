@@ -12,7 +12,7 @@
             </div>
 
             <div class="relative mb-4" data-te-input-wrapper-init>
-                <select name="role_id" class="w-full" data-te-select-init>
+                <select name="place_id" class="w-full" data-te-select-init>
                     @foreach($places as $place)
                         <option value="{{$place->id}}">{{$place->title_ru}}</option>
                     @endforeach
@@ -22,25 +22,36 @@
             <div class="relative mb-4">
                 <input
                     type="text"
-                    class="peer block min-h-[auto] w-full rounded border-1"
+                    class="@error('name') border-red-600 @enderror peer block min-h-[auto] w-full rounded border-1"
                     name="name"
+                    value="{{old('name')}}"
                     placeholder="Имя" />
+                @error('name')
+                    <div class="text-red-600">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="relative mb-4">
                 <input
                     type="email"
-                    class="peer block min-h-[auto] w-full rounded border-1"
+                    class="@error('email') border-red-600 @enderror peer block min-h-[auto] w-full rounded border-1"
                     name="email"
+                    value="{{old('email')}}"
                     placeholder="Email" />
+                @error('email')
+                    <div class="text-red-600">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="relative mb-4">
                 <input
                     type="password"
-                    class="peer block min-h-[auto] w-full rounded border-1"
+                    class="@error('password') border-red-600 @enderror peer block min-h-[auto] w-full rounded border-1"
                     name="password"
                     placeholder="Введите пароль" />
+                @error('password')
+                    <div class="text-red-600">{{ $message }}</div>
+                @enderror
             </div>
 
             <button
