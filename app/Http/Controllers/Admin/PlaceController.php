@@ -36,7 +36,8 @@ class PlaceController extends Controller
         $this->validate($request, [
             'title_ru' => 'required',
             'bg_color' => 'required',
-            'geocode' => 'required'
+            'geocode' => 'required',
+            'area_id'=>'required'
         ]);
         Place::add($request->all());
         return redirect(route('place.index'));
