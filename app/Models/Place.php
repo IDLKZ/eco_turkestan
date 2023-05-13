@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\Upload;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Place extends Model
 {
@@ -12,6 +13,8 @@ class Place extends Model
     use Upload;
 
     protected $fillable = [
+        'area_id',
+        'bg_color',
         'title_ru',
         'title_kz',
         'description_ru',
@@ -19,4 +22,9 @@ class Place extends Model
         'image_url',
         'geocode'
     ];
+
+
+    public function area():BelongsTo{
+        return $this->belongsTo(Area::class);
+    }
 }

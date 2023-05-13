@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
 use App\Models\Place;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,7 @@ class PlaceController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -58,8 +59,8 @@ class PlaceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Place $place)
+    public function destroy(int $id)
     {
-        //
+
     }
 }

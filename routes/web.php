@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Admin\AreaController as AdminAreaController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
-use App\Http\Controllers\PlaceController as AdminPlaceController;
+use App\Http\Controllers\Admin\PlaceController as AdminPlaceController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 

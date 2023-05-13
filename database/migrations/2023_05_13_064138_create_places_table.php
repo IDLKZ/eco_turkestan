@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('places', function (Blueprint $table) {
             $table->id();
+            $table->foreignId("area_id")->nullable()->references("id")->on("areas")->onDelete("set null");
             $table->string('title_ru');
             $table->string('title_kz')->nullable();
             $table->text('description_ru')->nullable();
             $table->text('description_kz')->nullable();
             $table->string('image_url')->nullable();
             $table->text('geocode');
+            $table->string('bg_color')->nullable();
             $table->timestamps();
         });
     }
