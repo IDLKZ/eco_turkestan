@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AreaController as AdminAreaController;
+use App\Http\Controllers\Admin\BreedController as AdminBreedController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\PlaceController as AdminPlaceController;
 use App\Http\Controllers\ProfileController;
@@ -32,6 +33,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('area', AdminAreaController::class);
         Route::resource('user', AdminUserController::class);
         Route::resource('place', AdminPlaceController::class);
+        Route::resource('breed', AdminBreedController::class);
     });
 
     Route::middleware('ModerMiddleware')->group(function () {
