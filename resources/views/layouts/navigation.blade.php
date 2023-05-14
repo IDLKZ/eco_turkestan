@@ -25,6 +25,39 @@
                         <x-nav-link :href="route('place.index')" :active="request()->routeIs('place.index')">
                             Места
                         </x-nav-link>
+                        <div class="flex items-center">
+                            <x-dropdown align="right" width="48">
+                                <x-slot name="trigger">
+                                    <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                                        <div>Системные данные</div>
+                                    </button>
+                                </x-slot>
+
+                                <x-slot name="content">
+                                    <x-dropdown-link :href="route('breed.index')">
+                                        {{ __('Породы') }}
+                                    </x-dropdown-link>
+                                    <x-dropdown-link :href="route('category.index')">
+                                        {{ __('Категория насаждений') }}
+                                    </x-dropdown-link>
+                                    <x-dropdown-link :href="route('sanitary.index')">
+                                        {{ __('Состояния') }}
+                                    </x-dropdown-link>
+                                    <x-dropdown-link :href="route('status.index')">
+                                        {{ __('Статусы') }}
+                                    </x-dropdown-link>
+                                    <x-dropdown-link :href="route('event.index')">
+                                        {{ __('Хозяйственные мероприятия') }}
+                                    </x-dropdown-link>
+                                    <x-dropdown-link :href="route('type.index')">
+                                        {{ __('Виды насаждений') }}
+                                    </x-dropdown-link>
+                                </x-slot>
+                            </x-dropdown>
+                        </div>
+
+
+
                     @endadmin
 
                     @moder

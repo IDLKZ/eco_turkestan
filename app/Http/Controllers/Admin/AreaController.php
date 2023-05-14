@@ -54,7 +54,8 @@ class AreaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $area = Area::findOrFail($id);
+        return view('admin.area.edit', compact('area'));
     }
 
     /**
@@ -62,7 +63,14 @@ class AreaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $this->validate($request, [
+            'title_ru' => 'required',
+            'bg_color' => 'required',
+            'geocode' => 'required'
+        ]);
+        $area = Area::findOrFail($id);
+        $area->edit($request->all());
+        return redirect(route('area.index'));
     }
 
     /**

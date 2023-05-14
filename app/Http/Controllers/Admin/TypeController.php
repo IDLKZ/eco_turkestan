@@ -4,18 +4,18 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MainRequest;
-use App\Models\Breed;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
-class BreedController extends Controller
+class TypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $breeds = Breed::paginate(15);
-        return view('admin.breed.index', compact('breeds'));
+        $types = Type::all();
+        return view('admin.type.index', compact('types'));
     }
 
     /**
@@ -23,7 +23,7 @@ class BreedController extends Controller
      */
     public function create()
     {
-        return view('admin.breed.create');
+        return view('admin.type.create');
     }
 
     /**
@@ -31,8 +31,8 @@ class BreedController extends Controller
      */
     public function store(MainRequest $request)
     {
-        Breed::add($request->all());
-        return redirect(route('breed.index'));
+        Type::add($request->all());
+        return redirect(route('type.index'));
     }
 
     /**
@@ -48,8 +48,8 @@ class BreedController extends Controller
      */
     public function edit(string $id)
     {
-        $breed = Breed::findOrFail($id);
-        return view('admin.breed.edit', compact('breed'));
+        $item = Type::findOrFail($id);
+        return view('admin.type.edit', compact('item'));
     }
 
     /**
@@ -57,9 +57,9 @@ class BreedController extends Controller
      */
     public function update(MainRequest $request, string $id)
     {
-        $breed = Breed::findOrFail($id);
-        $breed->edit($request->all());
-        return redirect(route('breed.index'));
+        $type = Type::findOrFail($id);
+        $type->edit($request->all());
+        return redirect(route('type.index'));
     }
 
     /**
@@ -67,7 +67,7 @@ class BreedController extends Controller
      */
     public function destroy(string $id)
     {
-        Breed::findOrFail($id)->delete();
+        Type::findOrFail($id)->delete();
         return redirect()->back();
     }
 }

@@ -4,18 +4,18 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MainRequest;
-use App\Models\Breed;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
-class BreedController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $breeds = Breed::paginate(15);
-        return view('admin.breed.index', compact('breeds'));
+        $categories = Category::all();
+        return view('admin.category.index', compact('categories'));
     }
 
     /**
@@ -23,7 +23,7 @@ class BreedController extends Controller
      */
     public function create()
     {
-        return view('admin.breed.create');
+        return view('admin.category.create');
     }
 
     /**
@@ -31,8 +31,8 @@ class BreedController extends Controller
      */
     public function store(MainRequest $request)
     {
-        Breed::add($request->all());
-        return redirect(route('breed.index'));
+        Category::add($request->all());
+        return redirect(route('category.index'));
     }
 
     /**
@@ -48,8 +48,8 @@ class BreedController extends Controller
      */
     public function edit(string $id)
     {
-        $breed = Breed::findOrFail($id);
-        return view('admin.breed.edit', compact('breed'));
+        $category = Category::findOrFail($id);
+        return view('admin.category.edit', compact('category'));
     }
 
     /**
@@ -57,9 +57,9 @@ class BreedController extends Controller
      */
     public function update(MainRequest $request, string $id)
     {
-        $breed = Breed::findOrFail($id);
-        $breed->edit($request->all());
-        return redirect(route('breed.index'));
+        $category = Category::findOrFail($id);
+        $category->edit($request->all());
+        return redirect(route('category.index'));
     }
 
     /**
@@ -67,7 +67,7 @@ class BreedController extends Controller
      */
     public function destroy(string $id)
     {
-        Breed::findOrFail($id)->delete();
+        Category::findOrFail($id)->delete();
         return redirect()->back();
     }
 }

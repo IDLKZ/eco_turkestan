@@ -2,6 +2,11 @@
 
 use App\Http\Controllers\Admin\AreaController as AdminAreaController;
 use App\Http\Controllers\Admin\BreedController as AdminBreedController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\EventController as AdminEventController;
+use App\Http\Controllers\Admin\SanitaryController as AdminSanitaryController;
+use App\Http\Controllers\Admin\StatusController as AdminStatusController;
+use App\Http\Controllers\Admin\TypeController as AdminTypeController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\PlaceController as AdminPlaceController;
 use App\Http\Controllers\ProfileController;
@@ -34,6 +39,11 @@ Route::middleware('auth')->group(function () {
         Route::resource('user', AdminUserController::class);
         Route::resource('place', AdminPlaceController::class);
         Route::resource('breed', AdminBreedController::class);
+        Route::resource('category', AdminCategoryController::class);
+        Route::resource('sanitary', AdminSanitaryController::class);
+        Route::resource('status', AdminStatusController::class);
+        Route::resource('event', AdminEventController::class);
+        Route::resource('type', AdminTypeController::class);
     });
 
     Route::middleware('ModerMiddleware')->group(function () {

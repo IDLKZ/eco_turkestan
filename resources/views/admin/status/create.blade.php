@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="container mx-auto py-5">
-        <h1 class="mb-4 rounded-lg bg-secondary-100 px-6 py-5 text-base text-secondary-800">Создать новую породу</h1>
-        <form action="{{route('breed.store')}}" method="post">
+        <h1 class="mb-4 rounded-lg bg-secondary-100 px-6 py-5 text-base text-secondary-800">Создать новый статус</h1>
+        <form action="{{route('status.store')}}" method="post">
             @csrf
 
             <div class="relative mb-4">
