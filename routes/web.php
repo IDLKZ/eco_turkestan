@@ -10,6 +10,9 @@ use App\Http\Controllers\Admin\StatusController as AdminStatusController;
 use App\Http\Controllers\Admin\TypeController as AdminTypeController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\PlaceController as AdminPlaceController;
+
+
+use App\Http\Controllers\Moder\DashboardController as ModerDashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,7 +28,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(\route('login'));
+//    return view('welcome');
 });
 
 Route::get('/dashboard', function () {
@@ -49,8 +53,9 @@ Route::middleware('auth')->group(function () {
         Route::get('add-place/{id}', [AdminPlaceController::class, 'addPlace'])->name('admin.add-place');
     });
 
-    Route::middleware('ModerMiddleware')->group(function () {
-
+    Route::middleware('ModerMiddleware')->prefix('moder')->group(function () {
+        Route::get('/', [ModerDashboardController::class, 'index'])->name('moder-dashboard');
+        Route::get('/maps', [ModerDashboardController::class, 'maps'])->name('moder-maps');
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

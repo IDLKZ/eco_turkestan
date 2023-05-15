@@ -13,7 +13,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     @admin
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        <x-nav-link :href="route('admin-dashboard')" :active="request()->routeIs('admin-dashboard')">
                             {{ __('Dashboard') }}
                         </x-nav-link>
                         <x-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
@@ -56,12 +56,15 @@
                             </x-dropdown>
                         </div>
 
-
-
                     @endadmin
 
                     @moder
-
+                        <x-nav-link :href="route('moder-dashboard')" :active="request()->routeIs('moder-dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('moder-maps')" :active="request()->routeIs('moder-maps')">
+                            Карта
+                        </x-nav-link>
                     @endmoder
                 </div>
             </div>
