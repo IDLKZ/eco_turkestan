@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AreaController as AdminAreaController;
 use App\Http\Controllers\Admin\BreedController as AdminBreedController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\SanitaryController as AdminSanitaryController;
 use App\Http\Controllers\Admin\StatusController as AdminStatusController;
@@ -34,7 +35,7 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
 
     Route::middleware('AdminMiddleware')->prefix('admin')->group(function () {
-        Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin-dashboard');
+        Route::get('/', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
         Route::resource('area', AdminAreaController::class);
         Route::resource('user', AdminUserController::class);
         Route::resource('place', AdminPlaceController::class);
@@ -44,6 +45,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('status', AdminStatusController::class);
         Route::resource('event', AdminEventController::class);
         Route::resource('type', AdminTypeController::class);
+
+        Route::get('add-place/{id}', [AdminPlaceController::class, 'addPlace'])->name('admin.add-place');
     });
 
     Route::middleware('ModerMiddleware')->group(function () {

@@ -14,15 +14,7 @@
         <form action="{{route('place.store')}}" method="post">
             @csrf
             <div class="relative mb-4">
-                <select name="area_id" class="form-select w-full" aria-label="Район">
-                    @foreach($areas as $area)
-
-                        <option value="{{$area->id}}">
-                            {{$area->title_ru}}
-                        </option>
-
-                    @endforeach
-                </select>
+                <input type="hidden" name="area_id" value="{{$area->id}}">
             </div>
             <div class="relative mb-4">
                 <input
@@ -83,9 +75,15 @@
                     });
                     map.pm.setLang('ru');
 
-                    var places = {{Js::from($places)}}
+                    var places = {{Js::from($places)}},
+                        area = {{Js::from($area)}}
+
+                    L.geoJSON(JSON.parse(area.geocode), {
+                        style: {
+                            color: area.bg_color
+                        }
+                    }).addTo(map)
                     places.forEach(function (area){
-                        console.log(area.bg_color);
                         L.geoJSON(JSON.parse(area.geocode), {
                             style: {
                                 color: area.bg_color

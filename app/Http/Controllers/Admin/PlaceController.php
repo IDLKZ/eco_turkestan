@@ -14,10 +14,16 @@ class PlaceController extends Controller
      */
     public function index()
     {
-        $places = Place::with("area")->get();
+        $places = Place::with("area")->paginate(20);
         return view("admin.place.index",compact("places"));
     }
 
+    public function addPlace($id)
+    {
+        $area = Area::findOrFail($id);
+        $places = Place::where('area_id', $id)->get();
+        return view('admin.place.create', compact('area', 'places'));
+    }
     /**
      * Show the form for creating a new resource.
      */
