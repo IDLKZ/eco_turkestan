@@ -11,7 +11,7 @@
     @endpush
     <div class="container mx-auto py-5">
         <h1 class="mb-4 rounded-lg bg-secondary-100 px-6 py-5 text-base text-secondary-800">Редактировать район</h1>
-        <form action="{{route('area.update', $area->id)}}" method="post">
+        <form id="area-form" action="{{route('area.update', $area->id)}}" method="post">
             @csrf
             @method('PUT')
             <div class="relative mb-4">
@@ -46,6 +46,7 @@
             </div>
 
             <button
+                id="submit-map"
                 type="submit"
                 class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
                 Обновить
@@ -76,22 +77,76 @@
             });
             map.pm.setLang('ru');
 
-            let area = {{Js::from($area)}}
+            let area = {{Js::from($area)}};
+            let areas = {{Js::from($areas)}};
+            areas.forEach(function (area){
+                L.geoJSON(JSON.parse(area.geocode), {
+                    style: {
+                        color: area.bg_color
+                    },
+                    onEachFeature: function (feature, layer) {
 
+                        layer.pm.disable();
+                        layer.bindTooltip(area.title_ru, { permanent: true, offset: [0, 12] });
+                        layer.pm.setOptions({
+                            allowEditing:false,
+                            allowRemoval:false,
+                            allowCutting:false,
+                            allowRotation:false,
+                            isBase: true,
+                        });
+                    },
+
+                }).addTo(map)
+            })
+            let dataPolygons = []
             let editItem = L.geoJSON(JSON.parse(area.geocode), {
                 style: {
                     color: area.bg_color
                 }
             }).addTo(map)
-            let dataPolygons = []
             //OnCreated
-
+            map.on('pm:create', ({ shape,layer }) => {
+                if(shape == "Polygon"){
+                    layer.pm.setOptions({
+                        allowSelfIntersection:false,
+                    });
+                    layer.setStyle({color:`${$("#bg_color").val()}`})
+                }
+            });
+            //OnChange
             editItem.on('pm:edit', ({shape, layer}) => {
                 if (shape == "Rectangle" || shape == "Polygon") {
-                    const polygon = layer.toGeoJSON();
-                    dataPolygons.push(polygon)
-                    $("#geo").attr("value", JSON.stringify(dataPolygons));
+                    layer.pm.setOptions({
+                        allowSelfIntersection:false,
+                    });
+                    layer.setStyle({color:`${$("#bg_color").val()}`})
                 }
+            })
+
+            $("#bg_color").on("change",function (e){
+                map.eachLayer(function(itemLayer){
+                    if(itemLayer instanceof L.Polygon ){
+                        if(!itemLayer.pm.getOptions().isBase){
+                           itemLayer.setStyle({color :`${e.target.value}`})
+                        }
+                    }
+                });
+            });
+
+
+            $("#submit-map").on("click",function (e) {
+                e.preventDefault();
+                map.eachLayer(function(itemLayer){
+                    if(itemLayer instanceof L.Polygon ){
+                        if(!itemLayer.pm.getOptions().isBase){
+                            const polygon = itemLayer.toGeoJSON();
+                            dataPolygons.push(polygon)
+                            $("#geo").attr("value",JSON.stringify(dataPolygons));
+                        }
+                    }
+                });
+                $("#area-form").submit();
             })
 
             // L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoid2VwbGF5a3oyMDIwIiwiYSI6ImNrcTRxd3I3czB2eHgydm8wOHR2NW40OTEifQ.a08RNc7xB3Tm1pGai2NNCQ', {subdomains:['mt0','mt1','mt2','mt3'], maxZoom:25}).addTo(map);

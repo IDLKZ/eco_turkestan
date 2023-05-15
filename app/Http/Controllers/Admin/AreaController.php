@@ -54,8 +54,9 @@ class AreaController extends Controller
      */
     public function edit(string $id)
     {
+        $areas = Area::where("id","!=",$id)->get();
         $area = Area::findOrFail($id);
-        return view('admin.area.edit', compact('area'));
+        return view('admin.area.edit', compact('area',"areas"));
     }
 
     /**
