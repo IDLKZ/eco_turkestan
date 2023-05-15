@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('user_places');
         Schema::create('user_places', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users');
-            $table->foreignId('place_id')->references('id')->on('places');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('place_id');
+            $table->foreign('place_id')->references('id')->on('places')->onDelete('cascade');
             $table->timestamps();
         });
     }
