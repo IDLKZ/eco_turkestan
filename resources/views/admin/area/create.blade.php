@@ -1,13 +1,6 @@
 <x-app-layout>
     @push('css')
-        <link rel='stylesheet' href='https://unpkg.com/leaflet@1.8.0/dist/leaflet.css' crossorigin='' />
-        <link rel="stylesheet" href="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.css" />
-        <style>
-            #map {
-                width: 100%;
-                height: 700px;
-            }
-        </style>
+    <x-leaflet-styles/>
     @endpush
     <div class="container mx-auto py-5">
         <h1 class="mb-4 rounded-lg bg-secondary-100 px-6 py-5 text-base text-secondary-800">Создать новый район</h1>
@@ -52,10 +45,7 @@
     </div>
 
     @push('js')
-            <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-            <script src='https://unpkg.com/leaflet@1.8.0/dist/leaflet.js' crossorigin=''></script>
-            <script src="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.min.js"></script>
-            <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
+            <x-leaflet-scripts/>
 
             <script>
                     //    Initialize Map
@@ -109,6 +99,7 @@
                                     allowCutting:false,
                                     allowRotation:false,
                                     isBase: true,
+                                    id:Date.now()
                                 });
                             },
 
@@ -119,8 +110,18 @@
                         if(shape == "Polygon"){
                             layer.pm.setOptions({
                                 allowSelfIntersection:false,
+                                id:Date.now()
                             });
                             layer.setStyle({color:`${$("#bg_color").val()}`})
+                            if(checkIntersection(layer)){
+                                layer.remove();
+                            }
+                            layer.on('pm:change', ({layer, latlngs, shape}) => {
+                                if(checkIntersection(layer)){
+                                    layer.remove();
+                                }
+                            })
+
                         }
                     });
                     //Event when color changes
@@ -133,6 +134,23 @@
                             }
                         });
                     });
+                    //Check intersection
+                    function checkIntersection(layer){
+                        let findIntersection = false;
+                        map.eachLayer(function(itemLayer){
+                            if(itemLayer instanceof L.Polygon ){
+                                if(itemLayer.pm.getOptions().id != layer.pm.getOptions().id){
+                                    if(turf.intersect(itemLayer.toGeoJSON(),layer.toGeoJSON()) instanceof Object){
+                                        findIntersection = true;
+                                    }
+                                }
+
+                            }
+                        });
+                        return findIntersection;
+                    }
+
+
                     //Action when save it
                     $("#submit-map").on("click",function (e) {
                         e.preventDefault();

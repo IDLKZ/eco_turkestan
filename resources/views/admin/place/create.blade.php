@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.css" />
         <style>
             #map {
-                width: '100%';
+                width: 100%;
                 height: 700px;
             }
         </style>
@@ -66,6 +66,7 @@
                         drawCircleMarker:false,
                         tooltips:true,
                         drawPolyline:false,
+                        drawRectangle: false,
                         dragMode:false,
                         cutPolygon:false,
                         drawPolygon:true,
