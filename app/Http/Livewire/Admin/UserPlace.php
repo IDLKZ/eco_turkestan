@@ -54,6 +54,7 @@ class UserPlace extends Component
     public function submit()
     {
         $validatedData = $this->validate();
+        $validatedData['password'] = bcrypt($validatedData['password']);
         if (!empty($this->checkedPlaces)) {
             $user = User::add($validatedData);
             foreach ($this->checkedPlaces as $checkedPlace) {

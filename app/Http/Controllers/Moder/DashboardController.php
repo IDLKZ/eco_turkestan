@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Moder;
 
 use App\Http\Controllers\Controller;
-use App\Models\Place;
+use App\Models\UserPlace;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -15,7 +15,12 @@ class DashboardController extends Controller
 
     public function maps()
     {
-        $geocodes = Place::with('area')->where('user_id', auth()->id())->get();
-        dd($geocodes);
+
     }
+    public function places()
+    {
+        $places = UserPlace::with('place.area')->where('user_id', auth()->id())->paginate(10);
+        return view('moder.place', compact('places'));
+    }
+
 }
