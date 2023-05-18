@@ -1,21 +1,23 @@
 <x-app-layout>
     @push('css')
-        <link rel='stylesheet' href='https://unpkg.com/leaflet@1.8.0/dist/leaflet.css' crossorigin='' />
-        <link rel="stylesheet" href="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.css" />
-        <style>
-            #map {
-                width: 100%;
-                height: 700px;
-            }
-        </style>
+        <x-leaflet-styles></x-leaflet-styles>
     @endpush
     <div class="container mx-auto py-5">
         <h1 class="mb-4 rounded-lg bg-secondary-100 px-6 py-5 text-base text-secondary-800">Создать новое место</h1>
         <form action="{{route('place.store')}}" method="post">
             @csrf
-            <div class="relative mb-4">
+            @if($area)
                 <input type="hidden" name="area_id" value="{{$area->id}}">
-            </div>
+            @elseif(count($areas))
+                <select id="area_id_change" class="form-select w-full mb-4" name="area_id">
+                    <option value="">Не выбрано</option>
+                    @foreach($areas as $areaItem)
+                        <option data-area="{{$areaItem}}" value="{{$areaItem->id}}">
+                            {{$areaItem->title_ru}}
+                        </option>
+                    @endforeach
+                </select>
+            @endif
             <div class="relative mb-4">
                 <input
                     type="text"
@@ -54,9 +56,7 @@
     </div>
 
     @push('js')
-            <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-            <script src='https://unpkg.com/leaflet@1.8.0/dist/leaflet.js' crossorigin=''></script>
-            <script src="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.min.js"></script>
+            <x-leaflet-scripts></x-leaflet-scripts>
             <script>
                     //    Initialize Map
                     var map = L.map('map',{preferCanvas:true}).setView([42.315524, 69.586943], 12);
@@ -77,29 +77,58 @@
                     map.pm.setLang('ru');
 
                     var places = {{Js::from($places)}},
-                        area = {{Js::from($area)}}
+                        area = {{Js::from($area)}};
 
-                    L.geoJSON(JSON.parse(area.geocode), {
-                        style: {
-                            color: area.bg_color
-                        }
-                    }).addTo(map)
-                    places.forEach(function (area){
-                        L.geoJSON(JSON.parse(area.geocode), {
-                            style: {
-                                color: area.bg_color
+                    $("#area_id_change").on("change",function (e) {
+                        clearMap();
+                        var areaOption = $(this).find('option:selected');
+                        var activeArea = areaOption.attr("data-area");
+                        if(activeArea != null){
+                            activeArea = JSON.parse(activeArea);
+                            changeActiveArea(activeArea,true)
+                            if(activeArea.places != null && activeArea.places.length > 0){
+                                activeArea.places.forEach(
+                                    placeItem => changeActiveArea(JSON.parse(placeItem))
+                                );
                             }
-                        }).addTo(map)
+                        }
                     })
 
-                    //OnCreated
-                    map.on('pm:create', ({ shape,layer }) => {
-                        let dense = $("#dense").val();
-                        if(shape == "Rectangle" || shape == "Polygon"){
-                            const polygon = layer.toGeoJSON();
-                            $("#geo").attr("value",JSON.stringify(polygon));
+
+                    function changeActiveArea(area,isArea = false){
+                        if(area != null){
+                            L.geoJSON(JSON.parse(area.geocode), {
+                                style: {
+                                    color: area.bg_color
+                                },
+                                onEachFeature: function (feature, layer) {
+                                    layer.pm.disable();
+                                    layer.bindTooltip(area.title_ru, { permanent: true, offset: [0, 12] });
+                                    layer.pm.setOptions({
+                                        allowEditing:false,
+                                        allowRemoval:false,
+                                        allowCutting:false,
+                                        allowRotation:false,
+                                        isBase: true,
+                                        isArea:isArea,
+                                        id:Date.now()
+                                    });
+                                },
+
+                            }).addTo(map)
                         }
-                    });
+                    }
+
+                    function clearMap(){
+                        map.eachLayer(function (layer) {
+                            if(layer instanceof L.Polygon){
+                                map.removeLayer(layer);
+                            }
+                        });
+                    }
+
+
+
 
                     // L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoid2VwbGF5a3oyMDIwIiwiYSI6ImNrcTRxd3I3czB2eHgydm8wOHR2NW40OTEifQ.a08RNc7xB3Tm1pGai2NNCQ', {subdomains:['mt0','mt1','mt2','mt3'], maxZoom:25}).addTo(map);
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);

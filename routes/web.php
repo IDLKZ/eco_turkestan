@@ -51,7 +51,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('event', AdminEventController::class);
         Route::resource('type', AdminTypeController::class);
 
-        Route::get('add-place/{id}', [AdminPlaceController::class, 'addPlace'])->name('admin.add-place');
+        Route::get('add-place/{id?}', [AdminPlaceController::class, 'addPlace'])->name('admin.add-place');
     });
 
     Route::middleware('ModerMiddleware')->prefix('moder')->group(function () {
