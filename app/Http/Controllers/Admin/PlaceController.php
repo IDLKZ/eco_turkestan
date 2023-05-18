@@ -22,12 +22,8 @@ class PlaceController extends Controller
     {
 
         $area = Area::find($id);
-        $areas = [];
-        if(!$area){
-            $areas = Area::with("places")->get();
-        }
-        $places = Place::where('area_id', $id)->get();
-        return view('admin.place.create', compact('area', 'places',"areas"));
+        $areas = Area::with("places")->get();
+        return view('admin.place.create', compact('area',"areas"));
     }
     /**
      * Show the form for creating a new resource.
