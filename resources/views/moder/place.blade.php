@@ -41,7 +41,7 @@
                                     </td>
                                     <td class="whitespace-nowrap px-6 py-4">{{$item->place->title_ru}}</td>
                                     <td class="flex justify-center py-4">
-                                        <a href="{{route('moder-markers', $item->id)}}" class="mr-3">
+                                        <a href="{{route('moder-markers', $item->place->id)}}" class="mr-3">
                                             <img src="{{asset('images/tree.svg')}}" width="30">
                                         </a>
 

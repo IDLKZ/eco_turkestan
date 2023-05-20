@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Moder;
 
 use App\Http\Controllers\Controller;
+use App\Models\Place;
 use Illuminate\Http\Request;
 
 class MarkerController extends Controller
@@ -12,7 +13,8 @@ class MarkerController extends Controller
      */
     public function index($id)
     {
-
+        $place = Place::findOrFail($id);
+        return view('moder.marker', compact('place'));
     }
 
     /**
