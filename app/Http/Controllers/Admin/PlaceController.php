@@ -55,7 +55,7 @@ class PlaceController extends Controller
      */
     public function show(string $id)
     {
-        //
+        dd("i am show");
     }
 
     /**
@@ -63,7 +63,13 @@ class PlaceController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $place = Place::findOrFail($id);
+        $area = Area::where(["id"=>$place->area_id])->first();
+        $places = Place::where(["area_id"=>$area->id])->whereNot("id",$place->id)->get();
+        return view("admin.place.edit",compact("area","place","places"));
+
+
+
     }
 
     /**
@@ -71,7 +77,16 @@ class PlaceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $this->validate($request, [
+            'title_ru' => 'required',
+            'bg_color' => 'required',
+            'bg_color' => 'required',
+            'geocode' => 'required'
+        ]);
+        $place = Place::findOrFail($id);
+        $place->edit($request->except(["area_id"]));
+        return redirect(route('place.index'));
     }
 
     /**

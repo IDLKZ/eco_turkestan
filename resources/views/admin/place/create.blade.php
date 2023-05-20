@@ -126,7 +126,6 @@
                                     if(isArea){
                                         activeAreaGeo = layer;
                                     }
-                                    layer.pm.disable();
                                     layer.bindTooltip(area.title_ru, { permanent: true, offset: [0, 12] });
                                     layer.pm.setOptions({
                                         allowEditing:false,
@@ -137,6 +136,7 @@
                                         isArea:isArea,
                                         id:Date.now()
                                     });
+
                                 },
 
                             }).addTo(map)
@@ -165,6 +165,7 @@
                             })
                         }
                     });
+
 
                     //Check if in selectedArea
                     function checkInBounds(layer){
