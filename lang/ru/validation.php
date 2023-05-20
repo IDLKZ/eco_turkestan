@@ -386,7 +386,9 @@ return [
         "craftman"=>"Ремесленники",
         "active"=>"Активные",
         "non_active"=>"Не активные",
-        "on_moderation"=>"На модерации"
+        "on_moderation"=>"На модерации",
+        "geocode"=>"Карта",
+        "area_id"=>"Район"
 
 
 

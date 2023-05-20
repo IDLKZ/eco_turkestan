@@ -179,6 +179,9 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        "geocode"=>"Map",
+        "area_id"=>"District"
+    ],
 
 ];

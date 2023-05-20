@@ -9,16 +9,22 @@
             <div class="relative mb-4">
                 <input
                     type="text"
-                    class="peer block min-h-[auto] w-full rounded border-1"
+                    class="peer block min-h-[auto] w-full rounded border-1 @error('title_kz') border-red-600 @enderror"
                     name="title_kz"
                     placeholder="Наименование на каз" />
+                @error('title_kz')
+                <div class="text-red-600">{{ $message }}</div>
+                @enderror
             </div>
             <div class="relative mb-4">
                 <input
                     type="text"
-                    class="peer block min-h-[auto] w-full rounded border-1"
+                    class="peer block min-h-[auto] w-full rounded border-1 @error('title_ru') border-red-600 @enderror"
                     name="title_ru"
                     placeholder="Наименование на рус" />
+                @error('title_ru')
+                <div class="text-red-600">{{ $message }}</div>
+                @enderror
             </div>
             <input type="hidden" name="geocode" id="geo" value="{{old('geocode')}}">
 
@@ -26,10 +32,16 @@
                 <label for="bg_color">Выберите цвет</label>
                 <input type="color"
                        id="bg_color"
-                       class="peer block min-h-[auto] w-full rounded border-1"
+                       class="peer block min-h-[auto] w-full rounded border-1 @error('bg_color') border-red-600 @enderror"
                        name="bg_color">
+                @error('bg_color')
+                <div class="text-red-600">{{ $message }}</div>
+                @enderror
             </div>
 
+            @error('geocode')
+            <div class="text-red-600">{{ $message }}</div>
+            @enderror
             <div class="relative mb-4">
                 <div id='map'></div>
             </div>

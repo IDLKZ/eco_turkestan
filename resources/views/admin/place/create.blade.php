@@ -7,7 +7,10 @@
         <form id="area-form" action="{{route('place.store')}}" method="post">
             @csrf
             @if(count($areas))
-                <select id="area_id_change" class="form-select w-full mb-4" name="area_id">
+                <select
+                    id="area_id_change"
+                    class="form-select w-full mb-4 @error('area_id') border-red-600 @enderror"
+                    name="area_id">
                     <option value="">Не выбрано</option>
                     @foreach($areas as $areaItem)
                         <option {{($area != null ? ($area->id == $areaItem->id ? "selected" : "") : "")}} data-area="{{$areaItem}}" value="{{$areaItem->id}}">
@@ -15,20 +18,29 @@
                         </option>
                     @endforeach
                 </select>
+                @error('area_id')
+                <div class="text-red-600 mb-2">{{ $message }}</div>
+                @enderror
             @endif
             <div class="relative mb-4">
                 <input
                     type="text"
-                    class="peer block min-h-[auto] w-full rounded border-1"
+                    class="peer block min-h-[auto] w-full rounded border-1 @error('title_kz') border-red-600 @enderror"
                     name="title_kz"
                     placeholder="Наименование на каз" />
+                @error('title_kz')
+                <div class="text-red-600">{{ $message }}</div>
+                @enderror
             </div>
             <div class="relative mb-4">
                 <input
                     type="text"
-                    class="peer block min-h-[auto] w-full rounded border-1"
+                    class="peer block min-h-[auto] w-full rounded border-1 @error('title_ru') border-red-600 @enderror"
                     name="title_ru"
                     placeholder="Наименование на рус" />
+                @error('title_ru')
+                <div class="text-red-600">{{ $message }}</div>
+                @enderror
             </div>
             <input type="hidden" name="geocode" id="geo">
 
@@ -36,10 +48,15 @@
                 <label for="bg_color">Выберите цвет</label>
                 <input type="color"
                        id="bg_color"
-                       class="peer block min-h-[auto] w-full rounded border-1"
+                       class="peer block min-h-[auto] w-full rounded border-1 @error('bg_color') border-red-600 @enderror"
                        name="bg_color">
+                @error('bg_color')
+                <div class="text-red-600">{{ $message }}</div>
+                @enderror
             </div>
-
+            @error('geocode')
+            <div class="text-red-600">{{ $message }}</div>
+            @enderror
             <div class="relative mb-4">
                 <div id='map'></div>
             </div>
