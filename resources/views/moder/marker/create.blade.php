@@ -39,6 +39,8 @@
         <x-leaflet-scripts/>
 
         <script>
+
+
             //    Initialize Map
             var activeGeoPlace;
             const dataPolygons = [],
@@ -68,6 +70,16 @@
 
                 map.fitBounds(cable.getBounds())
 
+            window.onload = function() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(setPosition);
+                } else {
+                    console.log("Geolocation not supported by browser.");
+                }
+
+            }
+
+
             // a layer group, used here like a container for markers
             var markersGroup = L.layerGroup();
             map.addLayer(markersGroup);
@@ -75,7 +87,12 @@
             markers.forEach(function (marker) {
                 L.marker(JSON.parse(marker.geocode), {icon: greenIcon}).addTo(map)
             })
-
+            function setPosition(position) {
+                console.log(position);
+                var latitude = position.coords.latitude;
+                var longitude = position.coords.longitude;
+                L.marker([latitude, longitude]).addTo(map)
+            }
             map.on('click', function(e) {
                 // get the count of currently displayed markers
                 const markersCount = markersGroup.getLayers().length;
