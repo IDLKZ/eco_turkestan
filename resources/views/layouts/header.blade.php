@@ -22,7 +22,12 @@
                 </figure>
                 <div class="profile-info" data-lock-name="{{\Illuminate\Support\Facades\Auth::user()->name}}" data-lock-email="{{\Illuminate\Support\Facades\Auth::user()->email}}">
                     <span class="name">{{\Illuminate\Support\Facades\Auth::user()->name}}</span>
+                    @admin
                     <span class="role">Administrator</span>
+                    @endadmin
+                    @moder
+                    <span class="role">Moderator</span>
+                    @endmoder
                 </div>
 
                 <i class="fa custom-caret"></i>

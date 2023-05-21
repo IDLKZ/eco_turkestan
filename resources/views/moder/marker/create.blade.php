@@ -40,6 +40,7 @@
 
         <script>
             //    Initialize Map
+            var activeGeoPlace;
             const dataPolygons = [],
                 place = {{Js::from($place)}},
                 markers = {{Js::from($place->markers)}},
@@ -47,7 +48,11 @@
                 cable = L.geoJSON(JSON.parse(place.geocode), {
                     style: {
                         color: place.bg_color
-                    }
+                    },
+                    onEachFeature: function (feature, layer) {
+                        activeGeoPlace = layer;
+
+                    },
                 }).addTo(map),
                 greenIcon = L.icon({
                     iconUrl: '/images/leaf-green.png',
@@ -77,6 +82,7 @@
 
                 if (markersCount < MARKERS_MAX) {
                     var marker = L.marker(e.latlng, {icon: greenIcon}).addTo(markersGroup);
+                    checkInBounds(marker);
                     markersGroup.getLayers().forEach(function (e){
                         if (!MARKERS_DATA.includes(e.getLatLng())) {
                             MARKERS_DATA.push(e.getLatLng())
@@ -89,6 +95,18 @@
                 // remove the markers when MARKERS_MAX is reached
                 markersGroup.clearLayers();
             });
+
+            //Check if in selectedArea
+            function checkInBounds(layer){
+                if(activeGeoPlace){
+                    if(turf.booleanContains(activeGeoPlace.toGeoJSON(),layer.toGeoJSON())){
+                        return true;
+                    }
+                }
+                layer.remove();
+            }
+
+
             // L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoid2VwbGF5a3oyMDIwIiwiYSI6ImNrcTRxd3I3czB2eHgydm8wOHR2NW40OTEifQ.a08RNc7xB3Tm1pGai2NNCQ', {subdomains:['mt0','mt1','mt2','mt3'], maxZoom:25}).addTo(map);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 25}).addTo(map);
 
