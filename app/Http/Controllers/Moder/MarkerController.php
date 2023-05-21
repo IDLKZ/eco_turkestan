@@ -27,22 +27,9 @@ class MarkerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(MarkerRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->all();
-        if ($request['landing_date']) {
-            $years = explode('-', $data['landing_date']);
-            $year = $years[0];
-            $data['age'] = Carbon::now()->format('Y') - $year;
-        } else {
-            unset($data['landing_date']);
-        }
-        $data['user_id'] = auth()->id();
-        foreach (json_decode($request['geocode'][0]) as $datum) {
-            $data['geocode'] = json_encode($datum);
-            Marker::add($data);
-        }
-        return redirect(route('trees.index'));
+        //
     }
 
     /**

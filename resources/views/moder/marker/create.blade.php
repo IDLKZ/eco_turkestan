@@ -4,11 +4,12 @@
         <style>
             #map {height: 300px}
             select {width: 100%}
+            #geo_denied {display: none}
         </style>
     @endpush
     <div class="container mx-auto py-5">
         <h1 class="mb-4 rounded-lg bg-secondary-100 px-6 py-5 text-base text-secondary-800">Посадить дерево</h1>
-        <div class="mb-4">
+        <div class="mb-4" id="geo_permission">
             <div class="mb-2">
                 @error('geocode')
                     <div class="text-red-600">{{ $message }}</div>
@@ -17,11 +18,13 @@
             </div>
 
             <div class="modal-block">
-                <form action="{{route('store-marker')}}" method="post">
+                <form action="{{route('trees.store')}}" method="post">
                     @csrf
                     <livewire:moder.modal-marker />
                     <input type="hidden" id="geo" name="geocode[]">
                     <input type="hidden" name="place_id" value="{{$place->id}}">
+                    <input type="hidden" id="lat" name="lat">
+                    <input type="hidden" id="lng" name="lng">
                     <div class="mb-2">
                         <button
                             class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
@@ -32,18 +35,18 @@
 
             </div>
         </div>
-
+        <div id="geo_denied" class="mb-4 rounded-lg bg-danger-100 px-6 py-5 text-base text-danger-700">
+            Разрешите доступ к вашему местоположению! (Обновите страницу)
+        </div>
     </div>
 
     @push('js')
         <x-leaflet-scripts/>
 
         <script>
-
-
             //    Initialize Map
             var activeGeoPlace;
-            const dataPolygons = [],
+            const currentPosition = [],
                 place = {{Js::from($place)}},
                 markers = {{Js::from($place->markers)}},
                 map = L.map('map', {preferCanvas: true}).setView([42.315524, 69.586943], 14),
@@ -53,7 +56,6 @@
                     },
                     onEachFeature: function (feature, layer) {
                         activeGeoPlace = layer;
-
                     },
                 }).addTo(map),
                 greenIcon = L.icon({
@@ -70,6 +72,15 @@
 
                 map.fitBounds(cable.getBounds())
 
+            window.onload = function() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(setPosition, errorCallBack);
+                } else {
+                    alert("Geolocation not supported by browser.");
+                }
+
+            }
+
             // a layer group, used here like a container for markers
             var markersGroup = L.layerGroup();
             map.addLayer(markersGroup);
@@ -78,6 +89,19 @@
                 L.marker(JSON.parse(marker.geocode), {icon: greenIcon}).addTo(map)
             })
 
+            function errorCallBack() {
+                $('#geo_permission').css('display', 'none');
+                $('#geo_denied').css('display', 'block');
+            }
+
+            function setPosition(position) {
+                var latitude = position.coords.latitude;
+                var longitude = position.coords.longitude;
+                currentPosition['lat'] = latitude;
+                currentPosition['lng'] = longitude;
+                $('#lat').attr('value', JSON.stringify(latitude))
+                $('#lng').attr('value', JSON.stringify(longitude))
+            }
             map.on('click', function(e) {
                 // get the count of currently displayed markers
                 const markersCount = markersGroup.getLayers().length;

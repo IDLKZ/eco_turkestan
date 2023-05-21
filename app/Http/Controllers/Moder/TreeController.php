@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Moder;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MarkerRequest;
+use App\Models\GeoPosition;
 use App\Models\Marker;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class TreeController extends Controller
 {
@@ -28,9 +32,37 @@ class TreeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(MarkerRequest $request)
     {
-        //
+        $data = $request->all();
+        $latLng['lat'] = $request['lat'];
+        $latLng['lng'] = $request['lng'];
+        if ($request['landing_date']) {
+            $years = explode('-', $data['landing_date']);
+            $year = $years[0];
+            $data['age'] = Carbon::now()->format('Y') - $year;
+        } else {
+            unset($data['landing_date']);
+        }
+        $data['user_id'] = auth()->id();
+        $geoPosition = GeoPosition::where('user_id', auth()->id())->latest()->first();
+
+        if ($geoPosition != null) {
+            GeoPosition::where('user_id', auth()->id())->update([
+                'geocode' => json_encode($latLng)
+            ]);
+        } else {
+            GeoPosition::create([
+                'user_id' => auth()->id(),
+                'geocode' => json_encode($latLng)
+            ]);
+        }
+
+        foreach (json_decode($request['geocode'][0]) as $datum) {
+            $data['geocode'] = json_encode($datum);
+            Marker::add($data);
+        }
+        return redirect(route('trees.index'));
     }
 
     /**
@@ -39,7 +71,6 @@ class TreeController extends Controller
     public function show(string $id)
     {
         $tree = Marker::with('place', 'type', 'event', 'breed', 'category', 'sanitary', 'status')->findOrFail($id);
-
         return view('moder.marker.show', compact('tree'));
     }
 

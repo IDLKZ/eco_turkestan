@@ -35,7 +35,11 @@
                         :route-name="'Места'"
                         :icon="'bx bx-map-pin'"
                     />
-
+                    <x-sidebar-navlink
+                        :route="'admin-check-users'"
+                        :route-name="'Геопозиция кураторов'"
+                        :icon="'bx bx-current-location'"
+                    />
                     <li class="nav-parent">
                         <a class="nav-link" href="#">
                             <i class="bx bx-file" aria-hidden="true"></i>

@@ -17,7 +17,7 @@
 
                             <div class="widget-profile-info">
                                 <div class="profile-picture w-100">
-                                    <img src="https://i.imgur.com/rNn9mHP.gif">
+                                    <img src="https://cdn.pixabay.com/animation/2022/12/01/17/03/17-03-11-60_512.gif">
                                 </div>
                                 <div class="profile-info">
                                     <h4 class="name font-weight-semibold">{{\Illuminate\Support\Facades\Auth::user()->name}}</h4>

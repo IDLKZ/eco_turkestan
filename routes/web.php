@@ -53,6 +53,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('type', AdminTypeController::class);
 
         Route::get('add-place/{id?}', [AdminPlaceController::class, 'addPlace'])->name('admin.add-place');
+
+        Route::get('users-check', [AdminDashboardController::class, 'geo_positions'])->name('admin-check-users');
+        Route::get('user-by-geo/{id}', [AdminDashboardController::class, 'getByGeo'])->name('admin-user-by-geo');
     });
 
     Route::middleware('ModerMiddleware')->prefix('moder')->group(function () {

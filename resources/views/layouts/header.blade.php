@@ -18,7 +18,7 @@
         <div id="userbox" class="userbox">
             <a href="#" data-bs-toggle="dropdown">
                 <figure class="profile-picture">
-                    <img src="https://i.imgur.com/rNn9mHP.gif" alt="{{\Illuminate\Support\Facades\Auth::user()->name}}" class="rounded-circle" data-lock-picture="" />
+                    <img src="https://cdn.pixabay.com/animation/2022/12/01/17/03/17-03-11-60_512.gif" alt="{{\Illuminate\Support\Facades\Auth::user()->name}}" class="rounded-circle" data-lock-picture="" />
                 </figure>
                 <div class="profile-info" data-lock-name="{{\Illuminate\Support\Facades\Auth::user()->name}}" data-lock-email="{{\Illuminate\Support\Facades\Auth::user()->email}}">
                     <span class="name">{{\Illuminate\Support\Facades\Auth::user()->name}}</span>

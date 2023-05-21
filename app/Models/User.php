@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function geo()
+    {
+        return $this->belongsTo(GeoPosition::class, 'id', 'user_id');
+    }
 }
