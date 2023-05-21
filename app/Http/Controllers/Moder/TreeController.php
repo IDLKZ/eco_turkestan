@@ -38,7 +38,9 @@ class TreeController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $tree = Marker::with('place', 'type', 'event', 'breed', 'category', 'sanitary', 'status')->findOrFail($id);
+
+        return view('moder.marker.show', compact('tree'));
     }
 
     /**

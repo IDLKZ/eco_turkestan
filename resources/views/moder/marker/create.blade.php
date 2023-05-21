@@ -20,7 +20,7 @@
                 <form action="{{route('store-marker')}}" method="post">
                     @csrf
                     <livewire:moder.modal-marker />
-                    <input type="hidden" id="geo" name="geocode">
+                    <input type="hidden" id="geo" name="geocode[]">
                     <input type="hidden" name="place_id" value="{{$place->id}}">
                     <div class="mb-2">
                         <button
@@ -42,13 +42,24 @@
             //    Initialize Map
             const dataPolygons = [],
                 place = {{Js::from($place)}},
+                markers = {{Js::from($place->markers)}},
                 map = L.map('map', {preferCanvas: true}).setView([42.315524, 69.586943], 14),
                 cable = L.geoJSON(JSON.parse(place.geocode), {
                     style: {
                         color: place.bg_color
                     }
                 }).addTo(map),
-                MARKERS_MAX = 1;
+                greenIcon = L.icon({
+                    iconUrl: '/images/leaf-green.png',
+                    shadowUrl: '/images/leaf-shadow.png',
+                    iconSize:     [38, 95], // size of the icon
+                    shadowSize:   [50, 64], // size of the shadow
+                    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+                    shadowAnchor: [4, 62],  // the same for the shadow
+                    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                }),
+                MARKERS_MAX = 20,
+                MARKERS_DATA = [];
 
                 map.fitBounds(cable.getBounds())
 
@@ -56,16 +67,9 @@
             var markersGroup = L.layerGroup();
             map.addLayer(markersGroup);
 
-            var greenIcon = L.icon({
-                iconUrl: '/images/leaf-green.png',
-                shadowUrl: '/images/leaf-shadow.png',
-
-                iconSize:     [38, 95], // size of the icon
-                shadowSize:   [50, 64], // size of the shadow
-                iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-                shadowAnchor: [4, 62],  // the same for the shadow
-                popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-            });
+            markers.forEach(function (marker) {
+                L.marker(JSON.parse(marker.geocode), {icon: greenIcon}).addTo(map)
+            })
 
             map.on('click', function(e) {
                 // get the count of currently displayed markers
@@ -73,11 +77,13 @@
 
                 if (markersCount < MARKERS_MAX) {
                     var marker = L.marker(e.latlng, {icon: greenIcon}).addTo(markersGroup);
-
-                    $('#geo').attr('value', JSON.stringify(marker.toGeoJSON()))
+                    markersGroup.getLayers().forEach(function (e){
+                        if (!MARKERS_DATA.includes(e.getLatLng())) {
+                            MARKERS_DATA.push(e.getLatLng())
+                        }
+                    });
+                    $('#geo').attr('value', JSON.stringify(MARKERS_DATA))
                     return;
-                } else {
-
                 }
 
                 // remove the markers when MARKERS_MAX is reached
