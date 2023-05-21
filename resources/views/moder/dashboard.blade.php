@@ -1,17 +1,93 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
+    <div class="row pt-4 mt-2">
+        <div class="col-lg-6 col-xl-6">
+            <section class="card card-transparent">
+                <header class="card-header">
+                    <div class="card-actions">
+                        <a href="#" class="card-action card-action-toggle" data-card-toggle=""></a>
+                        <a href="#" class="card-action card-action-dismiss" data-card-dismiss=""></a>
+                    </div>
+
+                    <h2 class="card-title">Мой профиль</h2>
+                </header>
+                <div class="card-body">
+                    <section class="card card-group">
+                        <header class="card-header bg-primary w-100">
+
+                            <div class="widget-profile-info">
+                                <div class="profile-picture w-100">
+                                    <img src="https://i.imgur.com/rNn9mHP.gif">
+                                </div>
+                                <div class="profile-info">
+                                    <h4 class="name font-weight-semibold">{{\Illuminate\Support\Facades\Auth::user()->name}}</h4>
+                                    <h5 class="role">{{\Illuminate\Support\Facades\Auth::user()->email}}</h5>
+                                </div>
+                            </div>
+
+                        </header>
+
+                    </section>
+
                 </div>
-            </div>
+            </section>
         </div>
+        <div class="col-lg-6 col-xl-6">
+            <section class="card card-transparent">
+                <header class="card-header">
+                    <div class="card-actions">
+                        <a href="#" class="card-action card-action-toggle" data-card-toggle=""></a>
+                        <a href="#" class="card-action card-action-dismiss" data-card-dismiss=""></a>
+                    </div>
+                    <h2 class="card-title">Статистика</h2>
+                </header>
+                <div class="card-body">
+                    <section class="card card-featured-left card-featured-primary mb-3">
+                        <div class="card-body">
+                            <div class="widget-summary">
+                                <div class="widget-summary-col widget-summary-col-icon">
+                                    <div class="summary-icon bg-primary">
+                                        <i class="fa-solid fa-globe"></i>
+                                    </div>
+                                </div>
+                                <div class="widget-summary-col">
+                                    <div class="summary">
+                                        <h4 class="title">Кол-во мест</h4>
+                                        <div class="info">
+                                            <strong class="amount">{{\App\Models\UserPlace::where("user_id",\Illuminate\Support\Facades\Auth::user()->id)->count()}}</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="card card-featured-left card-featured-tertiary mb-3">
+                        <div class="card-body">
+                            <div class="widget-summary">
+                                <div class="widget-summary-col widget-summary-col-icon">
+                                    <div class="summary-icon bg-tertiary">
+                                        <i class="fa-solid fa-tree"></i>
+                                    </div>
+                                </div>
+                                <div class="widget-summary-col">
+                                    <div class="summary">
+                                        <h4 class="title">Кол-во посадок</h4>
+                                        <div class="info">
+                                            <strong class="amount">{{\App\Models\Marker::where("user_id",\Illuminate\Support\Facades\Auth::user()->id)->count()}}</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+
+        </div>
+
     </div>
+
+
+
+
 </x-app-layout>

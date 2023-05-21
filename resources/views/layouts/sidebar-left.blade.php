@@ -101,6 +101,17 @@
 
                 </ul>
                 @endmoder
+
+                <li>
+                    <form action="{{route("logout")}}" method="post">
+                        @csrf
+                        <button style="padding: 12px 25px; color: white" type="submit" class="nav-link">
+                            <i class="fas fa-power-off" aria-hidden="true"></i>
+                            <span>Выход</span>
+                        </button>
+                    </form>
+
+                </li>
             </nav>
         </div>
 
