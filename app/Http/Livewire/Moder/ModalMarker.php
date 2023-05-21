@@ -19,6 +19,7 @@ class ModalMarker extends Component
     public $types;
     public $breeds;
     public $statuses;
+    public $geocode;
     public $category_id;
     public $type_id;
     public $breed_id;
@@ -45,12 +46,25 @@ class ModalMarker extends Component
         'type_id' => 'required',
         'category_id' => 'required',
         'height' => 'required',
-        'diameter' => 'required'
+        'diameter' => 'required',
+        'breed_id' => 'required',
+        'landing_date' => 'nullable',
+        'status_id' => 'nullable',
+        'geocode' => 'required'
     ];
-//    public function updated($propertyName)
-//    {
-//        $this->validateOnly($propertyName);
-//    }
+    protected $validationAttributes = [
+        'event_id' => 'хозяйственное мероприятие',
+        'sanitary_id' => 'состояние',
+        'type_id' => 'вид насаждения',
+        'height' => 'высота',
+        'diameter' => 'диаметр',
+        'breed_id' => 'порода',
+        'geocode' => 'маркер'
+    ];
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
     public function mount()
     {
         $this->events = Event::all();
@@ -62,7 +76,8 @@ class ModalMarker extends Component
 
     public function submit()
     {
-
+        $validatedData = $this->validate();
+        dd($validatedData);
     }
     public function render()
     {

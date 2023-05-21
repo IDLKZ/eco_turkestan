@@ -68,6 +68,9 @@
                         <x-nav-link :href="route('moder-places')" :active="request()->routeIs('moder-places')">
                             Мои места
                         </x-nav-link>
+                        <x-nav-link :href="route('trees.index')" :active="request()->routeIs('trees.index')">
+                            Точки
+                        </x-nav-link>
                     @endmoder
                 </div>
             </div>

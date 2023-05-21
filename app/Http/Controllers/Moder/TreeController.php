@@ -3,39 +3,34 @@
 namespace App\Http\Controllers\Moder;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MarkerRequest;
 use App\Models\Marker;
-use App\Models\Place;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class MarkerController extends Controller
+class TreeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index($id)
+    public function index()
     {
-        $place = Place::findOrFail($id);
-        return view('moder.marker.create', compact('place'));
+        $trees = Marker::with('place', 'type')->where('user_id', auth()->id())->paginate(20);
+        return view('moder.marker.index', compact('trees'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
+    public function create()
+    {
+        //
+    }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(MarkerRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->all();
-        $years = explode('-', $data['landing_date']);
-        $year = $years[0];
-        $data['age'] = Carbon::now()->format('Y') - $year;
-        $data['user_id'] = auth()->id();
-        Marker::add($data);
-        return redirect(route('trees.index'));
+        //
     }
 
     /**
@@ -67,6 +62,7 @@ class MarkerController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Marker::findOrFail($id)->delete();
+        return redirect()->back();
     }
 }

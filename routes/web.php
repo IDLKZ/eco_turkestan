@@ -13,7 +13,8 @@ use App\Http\Controllers\Admin\PlaceController as AdminPlaceController;
 
 
 use App\Http\Controllers\Moder\DashboardController as ModerDashboardController;
-use App\Http\Controllers\Moder\MarkerController as AdminMarkerController;
+use App\Http\Controllers\Moder\MarkerController as ModerMarkerController;
+use App\Http\Controllers\Moder\TreeController as ModerTreeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -58,7 +59,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [ModerDashboardController::class, 'index'])->name('moder-dashboard');
         Route::get('/maps', [ModerDashboardController::class, 'maps'])->name('moder-maps');
         Route::get('/places', [ModerDashboardController::class, 'places'])->name('moder-places');
-        Route::get('/markers/by-area/{area_id}', [AdminMarkerController::class, 'index'])->name('moder-markers');
+        Route::get('/markers/by-area/{area_id}', [ModerMarkerController::class, 'index'])->name('moder-markers');
+        Route::post('store-marker', [ModerMarkerController::class, 'store'])->name('store-marker');
+        Route::resource('trees', ModerTreeController::class);
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
