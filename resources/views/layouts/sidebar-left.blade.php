@@ -83,11 +83,11 @@
                         :route-name="'Главная'"
                         :icon="'bx bx-home-alt'"
                     />
-                    <x-sidebar-navlink
-                        :route="'moder-maps'"
-                        :route-name="'Карта'"
-                        :icon="'bx bxs-map-alt'"
-                    />
+{{--                    <x-sidebar-navlink--}}
+{{--                        :route="'moder-maps'"--}}
+{{--                        :route-name="'Карта'"--}}
+{{--                        :icon="'bx bxs-map-alt'"--}}
+{{--                    />--}}
                     <x-sidebar-navlink
                         :route="'moder-places'"
                         :route-name="'Мои места'"
