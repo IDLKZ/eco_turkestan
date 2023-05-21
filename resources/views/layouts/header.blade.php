@@ -37,7 +37,12 @@
                 <ul class="list-unstyled mb-2">
                     <li class="divider"></li>
                     <li>
-                        <a role="menuitem" tabindex="-1" href="{{route('admin-dashboard')}}"><i class="bx bx-user-circle"></i> Главная страница</a>
+                        @admin
+                            <a role="menuitem" tabindex="-1" href="{{route('admin-dashboard')}}"><i class="bx bx-user-circle"></i> Главная страница</a>
+                        @endadmin
+                        @moder
+                            <a role="menuitem" tabindex="-1" href="{{route('moder-dashboard')}}"><i class="bx bx-user-circle"></i> Главная страница</a>
+                        @endmoder
                     </li>
                     <li>
                         <form method="POST" action="{{ route('logout') }}">

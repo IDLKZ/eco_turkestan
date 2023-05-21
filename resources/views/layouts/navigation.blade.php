@@ -62,9 +62,9 @@
                         <x-nav-link :href="route('moder-dashboard')" :active="request()->routeIs('moder-dashboard')">
                             {{ __('Dashboard') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('moder-maps')" :active="request()->routeIs('moder-maps')">
-                            Карта
-                        </x-nav-link>
+{{--                        <x-nav-link :href="route('moder-maps')" :active="request()->routeIs('moder-maps')">--}}
+{{--                            Карта--}}
+{{--                        </x-nav-link>--}}
                         <x-nav-link :href="route('moder-places')" :active="request()->routeIs('moder-places')">
                             Мои места
                         </x-nav-link>
