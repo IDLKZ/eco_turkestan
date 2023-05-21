@@ -10,31 +10,35 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
+        <x-app-layout-styles></x-app-layout-styles>
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
         @stack('css')
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen">
-            @include('layouts.navigation')
+    <section class="body">
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
+        <!-- start: header -->
+        @include("layouts.header")
+        <!-- end: header -->
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+        <div class="inner-wrapper">
+            <!-- start: sidebar -->
+            @include("layouts.sidebar-left")
+            <!-- end: sidebar -->
+            <section role="main" class="content-body">
+                @include("layouts.page-header")
+
+                <!-- start: page -->
+                {{$slot}}
+                <!-- end: page -->
+            </section>
         </div>
 
+
+    </section>
+        <x-app-layout-scripts></x-app-layout-scripts>
     @livewireScripts
     @stack('js')
 
