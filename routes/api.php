@@ -23,7 +23,13 @@ Route::group([],function (){
         return "It works!";
     });
    Route::get("areas-all",[AreaController::class,"getAllArea"]);
+
    Route::get("places-all",[PlaceController::class,"getAllPlace"]);
+   Route::get("places-by-area",[PlaceController::class,"getAreasPlace"]);
+
    Route::get("markers-all",[MarkerController::class,"getAllMarker"]);
+   Route::get("markers-all-place",[MarkerController::class,"getPlacesMarker"]);
+
    Route::get("get-system-all",[SystemController::class,"getAllSystemData"]);
+
 });
