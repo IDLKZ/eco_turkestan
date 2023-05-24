@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Place;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\UserPlace;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -50,7 +51,8 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = User::with('user_places.place')->findOrFail($id);
+        return view('admin.user.show', compact('user'));
     }
 
     /**
@@ -58,7 +60,8 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('admin.user.edit', compact('user'));
     }
 
     /**

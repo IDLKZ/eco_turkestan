@@ -54,4 +54,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo(GeoPosition::class, 'id', 'user_id');
     }
+    public function user_places()
+    {
+        return $this->hasMany(UserPlace::class, 'user_id', 'id');
+    }
 }

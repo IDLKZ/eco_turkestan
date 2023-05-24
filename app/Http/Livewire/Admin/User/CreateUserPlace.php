@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Http\Livewire\Admin\User;
 
 use App\Models\Place;
 use App\Models\Role;
 use App\Models\User;
-use Livewire\Component;
 use App\Models\UserPlace as AdminUserPlace;
+use Livewire\Component;
 
-class UserPlace extends Component
+class CreateUserPlace extends Component
 {
     public $search;
     public $places;
@@ -22,7 +22,7 @@ class UserPlace extends Component
 
     protected $rules = [
         'name' => 'required',
-        'email' => 'required|email',
+        'email' => 'required|email|unique:users,email',
         'password' => 'required',
         'role_id' => 'required'
     ];
@@ -70,6 +70,6 @@ class UserPlace extends Component
     }
     public function render()
     {
-        return view('livewire.admin.user-place');
+        return view('livewire.admin.user.create-user-place');
     }
 }
