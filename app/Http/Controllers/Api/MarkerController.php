@@ -31,7 +31,7 @@ class MarkerController extends Controller
              if($request->get("breed")){
                  $query = $query->whereIn("breed_id",explode(",", $request->get("breed")));
              }
-            return $query->whereIn("place_id",explode(",", $request->get("ids")))->get();
+            return $query->whereIn("place_id",explode(",", $request->get("ids")))->with(["event","type","breed","sanitary","status","category","place"])->get();
         }
         return [];
 
