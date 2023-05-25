@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreignId('status_id')->nullable()->references('id')->on('statuses');
             $table->foreignId('place_id')->references('id')->on('places');
             $table->text('geocode');
+            $table->point("point")->nullable();
             $table->string('image_url')->nullable();
             $table->string('age')->nullable();
             $table->string('height');

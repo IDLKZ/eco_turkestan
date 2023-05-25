@@ -9,6 +9,7 @@ use App\Models\Marker;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use MatanYadaev\EloquentSpatial\Objects\Point;
 
 class TreeController extends Controller
 {
@@ -60,6 +61,8 @@ class TreeController extends Controller
 
         foreach (json_decode($request['geocode'][0]) as $datum) {
             $data['geocode'] = json_encode($datum);
+
+            $data['point'] = new Point($datum->lat, $datum->lng);
             Marker::add($data);
         }
         return redirect(route('trees.index'));
