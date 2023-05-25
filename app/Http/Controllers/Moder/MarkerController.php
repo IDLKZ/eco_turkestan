@@ -17,6 +17,7 @@ class MarkerController extends Controller
     public function index($id)
     {
         $place = Place::findOrFail($id);
+        dd(123);
         return view('moder.marker.create', compact('place'));
     }
 
