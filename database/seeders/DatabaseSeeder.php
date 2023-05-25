@@ -20,18 +20,18 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-//        $this->call([
-//           RoleSeeder::class,
-//           UserSeeder::class,
-//            BreedSeeder::class,
-//            CategorySeeder::class,
-//            EventSeeder::class,
-//            SanitarySeeder::class,
-//            StatusSeeder::class,
-//            TypeSeeder::class,
-//            AreaSeeder::class,
-//            PlaceSeeder::class
-//        ]);
-        Marker::factory()->count(20000)->create();
+        /*$this->call([
+           RoleSeeder::class,
+           UserSeeder::class,
+            BreedSeeder::class,
+            CategorySeeder::class,
+            EventSeeder::class,
+            SanitarySeeder::class,
+            StatusSeeder::class,
+            TypeSeeder::class,
+            AreaSeeder::class,
+            PlaceSeeder::class
+        ]);*/
+        Marker::factory()->count(120000)->create();
     }
 }

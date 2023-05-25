@@ -11,6 +11,8 @@ use App\Models\Sanitary;
 use App\Models\Status;
 use App\Models\Type;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use MatanYadaev\EloquentSpatial\Objects\Point;
+use MatanYadaev\EloquentSpatial\Objects\Polygon;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Marker>
@@ -44,6 +46,7 @@ class MarkerFactory extends Factory
                 'lat' => $lat,
                 'lng' => $lng
             ]),
+            "point"=>new Point($lat,$lng)
         ];
     }
 }
