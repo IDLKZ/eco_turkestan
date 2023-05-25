@@ -112,7 +112,6 @@
                     checkInBounds(marker);
                     markersGroup.getLayers().forEach(function (e){
                         if (!MARKERS_DATA.includes(e.getLatLng())) {
-                            console.log(JSON.stringify(e.toGeoJSON()));
                             MARKERS_DATA.push(e.getLatLng())
                         }
                     });
