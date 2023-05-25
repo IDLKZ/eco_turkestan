@@ -84,10 +84,11 @@
             // a layer group, used here like a container for markers
             var markersGroup = L.layerGroup();
             map.addLayer(markersGroup);
-
-            markers.forEach(function (marker) {
-                L.marker(JSON.parse(marker.geocode), {icon: greenIcon}).addTo(map)
-            })
+            if(markers.length<20){
+                markers.forEach(function (marker) {
+                    L.marker(JSON.parse(marker.geocode), {icon: greenIcon}).addTo(map)
+                })
+            }
 
             function errorCallBack() {
                 $('#geo_permission').css('display', 'none');
