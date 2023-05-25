@@ -77,7 +77,6 @@ class ModalMarker extends Component
     public function submit()
     {
         $validatedData = $this->validate();
-        dd($validatedData);
     }
     public function render()
     {
