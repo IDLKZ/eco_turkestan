@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\View\Components\LeafletScripts;
 use App\View\Components\LeafletStyles;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Paginator::defaultView('vendor.pagination.bootstrap-4');
         Blade::if('admin' , function () {
             return auth()->user()->role_id == 1;
         });
