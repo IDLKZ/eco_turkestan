@@ -48,7 +48,7 @@
             var activeGeoPlace;
             const currentPosition = [],
                 place = {{Js::from($place)}},
-                markers = {{Js::from($place->markers)}},
+                markers = {{Js::from([])}},
                 map = L.map('map', {preferCanvas: true}).setView([42.315524, 69.586943], 14),
                 cable = L.geoJSON(JSON.parse(place.geocode), {
                     style: {
