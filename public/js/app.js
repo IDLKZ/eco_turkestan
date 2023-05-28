@@ -4007,6 +4007,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var laravel_echo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! laravel-echo */ "./node_modules/laravel-echo/dist/echo.js");
 /* harmony import */ var pusher_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 /* harmony import */ var pusher_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(pusher_js__WEBPACK_IMPORTED_MODULE_1__);
+var _import$meta$env$VITE, _import$meta$env$VITE2, _import$meta$env$VITE3, _import$meta$env$VITE4;
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
@@ -4030,11 +4031,12 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Pusher = (pusher_js__WEBPACK_IMPORTED_MODULE_1___default());
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "94b2d2376b8a0ce8dbed",
-  cluster: 'ap1',
-  wsHost: "ws.pusher.com",
-  wsPort: 80,
-  wssPort: 443,
+  key: /* unsupported import.meta.env.VITE_PUSHER_APP_KEY */ undefined.VITE_PUSHER_APP_KEY,
+  cluster: (_import$meta$env$VITE = /* unsupported import.meta.env.VITE_PUSHER_APP_CLUSTER */ undefined.VITE_PUSHER_APP_CLUSTER) !== null && _import$meta$env$VITE !== void 0 ? _import$meta$env$VITE : 'ap1',
+  wsHost: /* unsupported import.meta.env.VITE_PUSHER_HOST */ undefined.VITE_PUSHER_HOST ? /* unsupported import.meta.env.VITE_PUSHER_HOST */ undefined.VITE_PUSHER_HOST : "ws-".concat(/* unsupported import.meta.env.VITE_PUSHER_APP_CLUSTER */ undefined.VITE_PUSHER_APP_CLUSTER, ".pusher.com"),
+  wsPort: (_import$meta$env$VITE2 = /* unsupported import.meta.env.VITE_PUSHER_PORT */ undefined.VITE_PUSHER_PORT) !== null && _import$meta$env$VITE2 !== void 0 ? _import$meta$env$VITE2 : 80,
+  wssPort: (_import$meta$env$VITE3 = /* unsupported import.meta.env.VITE_PUSHER_PORT */ undefined.VITE_PUSHER_PORT) !== null && _import$meta$env$VITE3 !== void 0 ? _import$meta$env$VITE3 : 443,
+  forceTLS: ((_import$meta$env$VITE4 = /* unsupported import.meta.env.VITE_PUSHER_SCHEME */ undefined.VITE_PUSHER_SCHEME) !== null && _import$meta$env$VITE4 !== void 0 ? _import$meta$env$VITE4 : 'https') === 'https',
   enabledTransports: ['ws', 'wss']
 });
 

@@ -75,7 +75,9 @@
             window.onload = function() {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(setPosition, errorCallBack);
-                    /*navigator.geolocation.watchPosition(success, error, options)*/
+                    navigator.geolocation.watchPosition(function (e) {
+                        console.log(e);
+                    });
                 } else {
                     alert("Geolocation not supported by browser.");
                 }
