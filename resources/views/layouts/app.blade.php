@@ -15,6 +15,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
         @stack('css')
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
     </head>
     <body class="font-sans antialiased">
     <section class="body">
@@ -39,8 +40,32 @@
 
     </section>
         <x-app-layout-scripts></x-app-layout-scripts>
+    @vite('resources/js/app.js')
+    <script
+        src="https://code.jquery.com/jquery-3.7.0.js"
+        integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     @livewireScripts
     @stack('js')
+    <script type="module">
+        Echo.join("user-presence");
+    </script>
+    @admin
+    <script type="module">
+
+        Echo.join("user-presence")
+            .joining((user) => {
+            toastr.info(user.name + " Подключился к платформе")
+            })
+            .leaving((user) => {
+                toastr.info(user.name + " Отключился от платформы")
+            });
+    </script>
+    @endadmin
+
+
+
 
     </body>
 </html>

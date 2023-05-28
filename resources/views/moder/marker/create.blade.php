@@ -75,6 +75,7 @@
             window.onload = function() {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(setPosition, errorCallBack);
+                    /*navigator.geolocation.watchPosition(success, error, options)*/
                 } else {
                     alert("Geolocation not supported by browser.");
                 }
@@ -98,6 +99,7 @@
             function setPosition(position) {
                 var latitude = position.coords.latitude;
                 var longitude = position.coords.longitude;
+                console.log(latitude,longitude);
                 currentPosition['lat'] = latitude;
                 currentPosition['lng'] = longitude;
                 $('#lat').attr('value', JSON.stringify(latitude))

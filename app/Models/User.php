@@ -18,6 +18,20 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $appends = ["presence","geolocation"];
+
+
+    public function getPresenceAttribute()
+    {
+        return null;
+    }
+    public function getGeolocationAttribute()
+    {
+        return null;
+    }
+
+
+
     protected $fillable = [
         'name',
         'email',

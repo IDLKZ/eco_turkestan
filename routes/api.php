@@ -6,6 +6,7 @@ use \App\Http\Controllers\Api\AreaController;
 use \App\Http\Controllers\Api\PlaceController;
 use \App\Http\Controllers\Api\MarkerController;
 use \App\Http\Controllers\Api\SystemController;
+use \App\Http\Controllers\Api\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -33,3 +34,5 @@ Route::group([],function (){
    Route::get("get-system-all",[SystemController::class,"getAllSystemData"]);
 
 });
+
+Route::get("user-presence",[UserController::class,"user_presence"]);
