@@ -19,5 +19,8 @@ class RoleSeeder extends Seeder
         Role::create([
             'title_ru' => 'Куратор'
         ]);
+        Role::create([
+            'title_ru' => 'Акимат'
+        ]);
     }
 }

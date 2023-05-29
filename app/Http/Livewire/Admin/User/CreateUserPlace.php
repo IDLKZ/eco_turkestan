@@ -29,9 +29,10 @@ class CreateUserPlace extends Component
 
     public function toggle()
     {
-        $this->isShow = !$this->isShow;
-        if (!$this->isShow) {
-            $this->checkedPlaces = [];
+        if ($this->role_id == 2) {
+            $this->isShow = true;
+        } else {
+            $this->isShow = false;
         }
     }
     public function updated($propertyName)
