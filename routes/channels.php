@@ -19,3 +19,6 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('user-presence', function ($user) {
     return $user;
 });
+Broadcast::channel('user-location.{userId}', function ($user,$userId) {
+    return $user->role_id == 1;
+});

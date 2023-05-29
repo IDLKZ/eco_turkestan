@@ -61,6 +61,7 @@
             .leaving((user) => {
                 toastr.info(user.name + " Отключился от платформы")
             });
+
     </script>
     @endadmin
 

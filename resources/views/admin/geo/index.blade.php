@@ -47,7 +47,6 @@
                     usersOnline = usersOnline.filter((item)=>{
                         return item.id != user.id
                     });
-                    console.log(usersOnline);
                     updateTable();
                 });
 
@@ -63,6 +62,9 @@
                     newRow.append("<td сlass='whitespace-nowrap px-6 py-4 font-medium'>"+ item.id +"</td>");
                     newRow.append("<td сlass='whitespace-nowrap px-6 py-4 font-medium'>"+ item.name +"</td>");
                     newRow.append("<td сlass='whitespace-nowrap px-6 py-4 font-medium text-green'>Онлайн</td>");
+                    newRow.append("<td сlass='whitespace-nowrap px-6 py-4 font-medium text-green></td>").append(
+                        "<a href=/admin/user-by-geo/" +item.id + ">На карте</a>"
+                    );
 
                     $('#online-user').append(newRow);
                     }

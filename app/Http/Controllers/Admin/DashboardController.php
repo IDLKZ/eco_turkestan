@@ -24,7 +24,6 @@ class DashboardController extends Controller
 
     public function getByGeo($id)
     {
-        $geo = GeoPosition::findOrFail($id);
-        return view('admin.geo.show', compact('geo'));
+        return view('admin.geo.show', compact("id"));
     }
 }
