@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ModeratorMiddleware
+class MayorMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,7 +15,7 @@ class ModeratorMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (\Auth::user()->role_id == env('APP_MODER_ROLE', 2)) {
+        if (\Auth::user()->role_id == env('APP_MAYOR_ROLE', 3)) {
             return $next($request);
         }
         abort(404);

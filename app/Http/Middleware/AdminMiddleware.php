@@ -15,7 +15,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (\Auth::user()->role_id == 1) {
+        if (\Auth::user()->role_id == env('APP_ADMIN_ROLE',1)) {
             return $next($request);
         }
         abort(404);

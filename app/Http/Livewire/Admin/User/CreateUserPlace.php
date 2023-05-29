@@ -29,7 +29,7 @@ class CreateUserPlace extends Component
 
     public function toggle()
     {
-        if ($this->role_id == 2) {
+        if ($this->role_id == env('APP_MODER_ROLE', 2)) {
             $this->isShow = true;
         } else {
             $this->isShow = false;

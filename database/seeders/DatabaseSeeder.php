@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Marker;
+use App\Models\Place;
 use Illuminate\Database\Seeder;
 use MongoDB\Driver\Query;
 
@@ -30,8 +31,9 @@ class DatabaseSeeder extends Seeder
             StatusSeeder::class,
             TypeSeeder::class,
             AreaSeeder::class,
-            PlaceSeeder::class
+//            PlaceSeeder::class
         ]);
-        Marker::factory()->count(100)->create();
+        Place::factory()->count(10)->create();
+        Marker::factory()->count(20)->create();
     }
 }
