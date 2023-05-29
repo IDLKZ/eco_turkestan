@@ -32,7 +32,7 @@ Route::group([],function (){
    Route::get("markers-all-place",[MarkerController::class,"getPlacesMarker"]);
 
    Route::get("get-system-all",[SystemController::class,"getAllSystemData"]);
+   Route::get("get-user-location/{userId}/{location}",[UserController::class,"user_presence"]);
 
 });
 
-Route::get("user-presence",[UserController::class,"user_presence"]);

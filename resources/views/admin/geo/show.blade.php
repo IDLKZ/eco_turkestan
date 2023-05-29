@@ -30,15 +30,37 @@
     @push('js')
         <x-leaflet-scripts/>
 
-        <script>
+        <script type="module">
             //    Initialize Map
+            let userId = {{Js::from($id)}};
             const
-                marker = JSON.parse({{Js::from($geo->geocode)}}),
+
                 map = L.map('map', {preferCanvas: true}).setView([42.315524, 69.586943], 14);
-            L.marker([marker.lat, marker.lng]).addTo(map)
+
 
             // L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoid2VwbGF5a3oyMDIwIiwiYSI6ImNrcTRxd3I3czB2eHgydm8wOHR2NW40OTEifQ.a08RNc7xB3Tm1pGai2NNCQ', {subdomains:['mt0','mt1','mt2','mt3'], maxZoom:25}).addTo(map);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 25}).addTo(map);
+            Echo.private("user-location." +userId).listen(".App\\Events\\UserLocation",function (e) {
+                        console.log(e);
+                        recreateMap(e);
+             });
+
+
+            function recreateMap(data){
+                map.eachLayer(function(layer) {
+                    if (!!layer.toGeoJSON) {
+                        map.removeLayer(layer);
+                    }
+                });
+                if(data.location){
+                    let location = JSON.parse(data.location);
+                    L.marker([location.lat, location.lng]).addTo(map);
+                    map.flyTo([location.lat, location.lng], 18);
+                }
+
+
+            }
+
 
         </script>
     @endpush

@@ -44,8 +44,10 @@
     @push('js')
         <x-leaflet-scripts/>
 
-        <script>
+        <script type="module">
             //    Initialize Map
+
+            var userId = {{\Illuminate\Support\Facades\Auth::id()}};
             var activeGeoPlace;
             const currentPosition = [],
                 place = {{Js::from($place)}},
@@ -77,7 +79,10 @@
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(setPosition, errorCallBack);
                     navigator.geolocation.watchPosition(function (e) {
-                        console.log(e);
+                        let coordinates = JSON.stringify({"lat":e.coords.latitude,"lng":e.coords.longitude});
+                        axios.get('/api/get-user-location/'+userId+'/'+ coordinates +'').then(response => {
+
+                        });
                     });
                 } else {
                     alert("Geolocation not supported by browser.");
@@ -102,7 +107,6 @@
             function setPosition(position) {
                 var latitude = position.coords.latitude;
                 var longitude = position.coords.longitude;
-                console.log(latitude,longitude);
                 currentPosition['lat'] = latitude;
                 currentPosition['lng'] = longitude;
                 $('#lat').attr('value', JSON.stringify(latitude))
