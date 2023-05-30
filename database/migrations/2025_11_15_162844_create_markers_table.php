@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreignId('breed_id')->references('id')->on('breeds');
             $table->foreignId('status_id')->nullable()->references('id')->on('statuses');
             $table->foreignId('place_id')->references('id')->on('places');
+            $table->foreignId('area_id')->nullable()->references('id')->on('areas');
             $table->text('geocode');
             $table->point("point")->nullable();
             $table->string('image_url')->nullable();

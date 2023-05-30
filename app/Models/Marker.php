@@ -37,6 +37,10 @@ class Marker extends Model
         'point' => Point::class,
     ];
 
+    public function area()
+    {
+        return $this->belongsTo(Area::class);
+    }
     public function event()
     {
         return $this->belongsTo(Event::class);
@@ -70,5 +74,29 @@ class Marker extends Model
         return parent::query();
     }
 
+    public static function searchable($request)
+    {
+        if ($request['area_id']) {
+            $data = Marker::with('area', 'sanitary', 'breed', 'place')->where('area_id', $request['area_id']);
+        } else {
+            $data = Marker::with('area', 'sanitary', 'breed', 'place');
+        }
+        if ($request['category_id']) {
+            $data->where('category_id', $request['category_id']);
+        }
+        if ($request['type_id']) {
+            $data->where('type_id', $request['type_id']);
+        }
+        if ($request['breed_id']) {
+            $data->where('breed_id', $request['breed_id']);
+        }
+        if ($request['sanitary_id']) {
+            $data->where('sanitary_id', $request['sanitary_id']);
+        }
+        if ($request['status_id']) {
+            $data->where('status_id', $request['status_id']);
+        }
+        return $data;
+    }
 
 }

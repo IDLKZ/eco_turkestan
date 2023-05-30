@@ -10,7 +10,8 @@ use App\Http\Controllers\Admin\StatusController as AdminStatusController;
 use App\Http\Controllers\Admin\TypeController as AdminTypeController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\PlaceController as AdminPlaceController;
-use App\Http\Controllers\HomeController;
+
+
 use App\Http\Controllers\Moder\DashboardController as ModerDashboardController;
 use App\Http\Controllers\Moder\MarkerController as ModerMarkerController;
 use App\Http\Controllers\Moder\TreeController as ModerTreeController;

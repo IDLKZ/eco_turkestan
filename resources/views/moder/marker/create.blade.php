@@ -23,6 +23,7 @@
                     <livewire:moder.modal-marker />
                     <input type="hidden" id="geo" name="geocode[]">
                     <input type="hidden" name="place_id" value="{{$place->id}}">
+                    <input type="hidden" name="area_id" value="{{$place->area->id}}">
                     <input type="hidden" id="lat" name="lat">
                     <input type="hidden" id="lng" name="lng">
                     <div class="mb-2">

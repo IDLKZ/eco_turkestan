@@ -105,6 +105,21 @@
 
                 </ul>
                 @endmoder
+                @mayor
+                <ul class="nav nav-main">
+                    <x-sidebar-navlink
+                        :route="'mayor-dashboard'"
+                        :route-name="'Главная'"
+                        :icon="'bx bx-home-alt'"
+                    />
+                    <x-sidebar-navlink
+                        :route="'mayor-statistics'"
+                        :route-name="'Статистика'"
+                        :icon="'bx bx-home-alt'"
+                    />
+
+                </ul>
+                @endmayor
 
                 <li>
                     <form action="{{route("logout")}}" method="post">
