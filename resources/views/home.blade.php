@@ -13,7 +13,7 @@
                                     <h1 class="display-1 text-white mb-5 animated slideInDown">
                                        Реестр зеленых насаждений города Шымкент
                                     </h1>
-                                    <a href="" class="btn btn-primary py-sm-3 px-sm-4">Интерактивная карта насаждений</a>
+                                    <a href="{{route("front-map")}}" class="btn btn-primary py-sm-3 px-sm-4">Интерактивная карта насаждений</a>
                                 </div>
                             </div>
                         </div>
@@ -28,7 +28,7 @@
                                     <h1 class="display-1 text-white mb-5 animated slideInDown">
                                         Создание здоровой и привлекательной окружающей среды
                                     </h1>
-                                    <a href="" class="btn btn-primary py-sm-3 px-sm-4">Интерактивная карта насаждений</a>
+                                    <a href="{{route("front-map")}}" class="btn btn-primary py-sm-3 px-sm-4">Интерактивная карта насаждений</a>
                                 </div>
                             </div>
                         </div>
