@@ -33,7 +33,7 @@
 
     @push("js")
         <script type="module">
-            window.onload=function(){
+
                 let usersOnline = [];
                 Echo.join("user-presence")
                     .here((users)=>{
@@ -56,7 +56,6 @@
 
 
                 function updateTable(){
-                    console.log(usersOnline);
                     $('#online-user').children("tr").remove();
                     usersOnline.forEach( item=>{
                             var newRow = $("<tr class='border-b dark:border-neutral-500'>");
@@ -71,7 +70,7 @@
                         }
                     )
                 }
-            }
+
 
 
 
