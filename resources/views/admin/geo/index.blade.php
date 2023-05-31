@@ -32,46 +32,44 @@
     </div>
 
     @push("js")
-        <script type="module" defer>
-
-                let usersOnline = [];
-                Echo.join("user-presence")
-                    .here((users)=>{
-                        usersOnline = users;
-                        updateTable();
-                    })
-                    .joining((user) => {
-                        usersOnline.push(user);
-                        updateTable();
-                    })
-                    .leaving((user) => {
-                        usersOnline = usersOnline.filter((item)=>{
-                            return item.id != user.id
-                        });
-                        updateTable();
+        <script type="module">
+            let usersOnline = [];
+            Echo.join("user-presence")
+                .here((users)=>{
+                    usersOnline = users;
+                    updateTable();
+                })
+                .joining((user) => {
+                    usersOnline.push(user);
+                    updateTable();
+                })
+                .leaving((user) => {
+                    usersOnline = usersOnline.filter((item)=>{
+                        return item.id != user.id
                     });
+                    updateTable();
+                });
 
 
 
 
 
-                function updateTable(){
-                    $('#online-user').children("tr").remove();
-                    usersOnline.forEach( item=>{
-                            var newRow = $("<tr class='border-b dark:border-neutral-500'>");
-                            newRow.append("<td сlass='whitespace-nowrap px-6 py-4 font-medium'>"+ item.id +"</td>");
-                            newRow.append("<td сlass='whitespace-nowrap px-6 py-4 font-medium'>"+ item.name +"</td>");
-                            newRow.append("<td сlass='whitespace-nowrap px-6 py-4 font-medium text-green'>Онлайн</td>");
-                            newRow.append("<td сlass='whitespace-nowrap px-6 py-4 font-medium text-green></td>").append(
-                                "<a href=/admin/user-by-geo/" +item.id + ">На карте</a>"
-                            );
+            function updateTable(){
+                console.log(usersOnline);
+                $('#online-user').children("tr").remove();
+                usersOnline.forEach( item=>{
+                    var newRow = $("<tr class='border-b dark:border-neutral-500'>");
+                    newRow.append("<td сlass='whitespace-nowrap px-6 py-4 font-medium'>"+ item.id +"</td>");
+                    newRow.append("<td сlass='whitespace-nowrap px-6 py-4 font-medium'>"+ item.name +"</td>");
+                    newRow.append("<td сlass='whitespace-nowrap px-6 py-4 font-medium text-green'>Онлайн</td>");
+                    newRow.append("<td сlass='whitespace-nowrap px-6 py-4 font-medium text-green></td>").append(
+                        "<a href=/admin/user-by-geo/" +item.id + ">На карте</a>"
+                    );
 
-                            $('#online-user').append(newRow);
-                        }
-                    )
-                }
-
-
+                    $('#online-user').append(newRow);
+                    }
+                )
+            }
 
 
 
