@@ -58,7 +58,6 @@
         <div class="navbar-nav ms-auto p-4 p-lg-0">
             <a href="/" class="nav-item nav-link active">Главная</a>
             <a href="{{route("front-map")}}" class="nav-item nav-link">Карта</a>
-            <a href="{{route("stats")}}" class="nav-item nav-link">Статистика</a>
             <a href="{{route("faq")}}" class="nav-item nav-link">FAQ</a>
             <a href="{{route("contact")}}" class="nav-item nav-link">Контакты</a>
         </div>
@@ -97,7 +96,7 @@
             </div>
             <div class="col-lg-4 col-md-6">
                 <h4 class="text-white mb-4">Ссылки</h4>
-                <a class="btn btn-link" href="{{route("stats")}}">Статистика</a>
+                <a class="btn btn-link" href="/">Главная</a>
                 <a class="btn btn-link" href="{{route("front-map")}}">Карта</a>
                 <a class="btn btn-link" href="{{route("faq")}}">Вопросы-Ответы</a>
                 <a class="btn btn-link" href="{{route("contact")}}">Контакты</a>
