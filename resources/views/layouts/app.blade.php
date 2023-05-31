@@ -48,11 +48,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     @livewireScripts
     @stack('js')
-    <script type="module">
+    <script type="module" defer>
         Echo.join("user-presence");
     </script>
     @admin
-    <script type="module">
+    <script type="module" defer>
         Echo.join("user-presence")
             .joining((user) => {
             toastr.info(user.name + " Подключился к платформе")

@@ -32,7 +32,7 @@
     </div>
 
     @push("js")
-        <script type="module">
+        <script type="module" defer>
 
                 let usersOnline = [];
                 Echo.join("user-presence")
