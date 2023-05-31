@@ -48,6 +48,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     @livewireScripts
     @stack('js')
+    <script src="{{asset("js/app.js")}}"></script>
     <script type="module">
         Echo.join("user-presence");
     </script>
