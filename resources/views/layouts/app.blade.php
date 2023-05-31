@@ -49,18 +49,23 @@
     @livewireScripts
     @stack('js')
     <script type="module">
-        Echo.join("user-presence");
+        window.onload=function(){
+            Echo.join("user-presence");
+        }
+
     </script>
     @admin
     <script type="module">
+        window.onload=function(){
+            Echo.join("user-presence")
+                .joining((user) => {
+                    toastr.info(user.name + " Подключился к платформе")
+                })
+                .leaving((user) => {
+                    toastr.info(user.name + " Отключился от платформы")
+                });
+        }
 
-        Echo.join("user-presence")
-            .joining((user) => {
-            toastr.info(user.name + " Подключился к платформе")
-            })
-            .leaving((user) => {
-                toastr.info(user.name + " Отключился от платформы")
-            });
 
     </script>
     @endadmin
