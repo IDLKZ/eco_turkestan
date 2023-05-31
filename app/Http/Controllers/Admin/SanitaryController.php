@@ -31,7 +31,10 @@ class SanitaryController extends Controller
      */
     public function store(MainRequest $request)
     {
-        Sanitary::add($request->all());
+        $sanitary = Sanitary::add($request->all());
+        if($request->hasFile("image_url")){
+            $sanitary->uploadFile($request->file("image_url"),"image_url");
+        }
         return redirect(route('sanitary.index'));
     }
 
@@ -59,6 +62,9 @@ class SanitaryController extends Controller
     {
         $sanitary = Sanitary::findOrFail($id);
         $sanitary->edit($request->all());
+        if($request->hasFile("image_url")){
+            $sanitary->uploadFile($request->file("image_url"),"image_url");
+        }
         return redirect(route('sanitary.index'));
     }
 

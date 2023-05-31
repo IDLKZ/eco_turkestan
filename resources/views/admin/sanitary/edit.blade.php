@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="container mx-auto py-5">
         <h1 class="mb-4 rounded-lg bg-secondary-100 px-6 py-5 text-base text-secondary-800">Редактировать состояние</h1>
-        <form action="{{route('sanitary.update', $item->id)}}" method="post">
+        <form action="{{route('sanitary.update', $item->id)}}" method="post" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="relative mb-4">
@@ -23,6 +23,18 @@
                     value="{{$item->title_kz}}"
                     placeholder="Наименование на каз" />
                 @error('title_kz')
+                <div class="text-red-600">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="relative mb-4">
+                <input
+                    type="file"
+                    class="@error('image_url') border-red-600 @enderror peer block min-h-[auto] w-full rounded border-1"
+                    name="image_url"
+                    value="{{old('image_url')}}"
+                    accept="image/png, image/jpeg"
+                    placeholder="Изображение" />
+                @error('image_url')
                 <div class="text-red-600">{{ $message }}</div>
                 @enderror
             </div>

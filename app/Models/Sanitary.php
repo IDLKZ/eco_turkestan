@@ -9,5 +9,5 @@ use Illuminate\Database\Eloquent\Model;
 class Sanitary extends Model
 {
     use HasFactory, Upload;
-    protected $fillable = ['title_ru', 'title_kz'];
+    protected $fillable = ['title_ru', 'title_kz',"image_url"];
 }

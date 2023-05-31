@@ -13,16 +13,15 @@ return new class extends Migration
     {
         Schema::create('markers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('type_id');
-            $table->foreign('type_id')->references('id')->on('types');
-            $table->foreignId('event_id')->references('id')->on('events');
-            $table->foreignId('sanitary_id')->references('id')->on('sanitaries');
-            $table->foreignId('category_id')->references('id')->on('categories');
-            $table->foreignId('breed_id')->references('id')->on('breeds');
-            $table->foreignId('status_id')->nullable()->references('id')->on('statuses');
-            $table->foreignId('place_id')->references('id')->on('places');
-            $table->foreignId('area_id')->nullable()->references('id')->on('areas');
+            $table->foreignId('user_id')->nullable()->references('id')->on('users')->onDelete("set null");
+            $table->foreignId('type_id')->nullable()->references('id')->on('types')->onDelete("set null");
+            $table->foreignId('event_id')->nullable()->references('id')->on('events')->onDelete("set null");
+            $table->foreignId('sanitary_id')->nullable()->references('id')->on('sanitaries')->onDelete("set null");
+            $table->foreignId('category_id')->nullable()->references('id')->on('categories')->onDelete("set null");
+            $table->foreignId('breed_id')->nullable()->references('id')->on('breeds')->onDelete("set null");
+            $table->foreignId('status_id')->nullable()->references('id')->on('statuses')->onDelete("set null");
+            $table->foreignId('place_id')->nullable()->references('id')->on('places')->onDelete("set null");
+            $table->foreignId('area_id')->nullable()->references('id')->on('areas')->onDelete("set null");
             $table->text('geocode');
             $table->point("point")->nullable();
             $table->string('image_url')->nullable();
