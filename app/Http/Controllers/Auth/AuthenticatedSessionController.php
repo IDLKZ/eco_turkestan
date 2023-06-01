@@ -45,12 +45,12 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        if (Auth::user()->role_id == 2) {
-            $geo = GeoPosition::where('user_id', Auth::id())->first();
-            if ($geo) {
-                $geo->delete();
-            }
-        }
+//        if (Auth::user()->role_id == env('APP_MODER_ROLE', 2)) {
+//            $geo = GeoPosition::where('user_id', Auth::id())->first();
+//            if ($geo) {
+//                $geo->delete();
+//            }
+//        }
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();

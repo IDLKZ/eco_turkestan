@@ -10,7 +10,7 @@ use App\Http\Controllers\Admin\StatusController as AdminStatusController;
 use App\Http\Controllers\Admin\TypeController as AdminTypeController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\PlaceController as AdminPlaceController;
-
+use App\Http\Controllers\Mayor\DashboardController as MayorDashboardController;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Moder\DashboardController as ModerDashboardController;
@@ -67,6 +67,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/markers/by-area/{area_id}', [ModerMarkerController::class, 'index'])->name('moder-markers');
         Route::post('store-marker', [ModerMarkerController::class, 'store'])->name('store-marker');
         Route::resource('trees', ModerTreeController::class);
+    });
+
+    Route::middleware('MayorMiddleware')->prefix('mayor')->group(function (){
+        Route::get('', [MayorDashboardController::class, 'index'])->name('mayor-dashboard');
+        Route::get('statistics', [MayorDashboardController::class, 'statistics'])->name('mayor-statistics');
+        Route::get('search', [MayorDashboardController::class, 'search'])->name('mayor-search');
+        Route::post('search', [MayorDashboardController::class, 'search'])->name('mayor-search');
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

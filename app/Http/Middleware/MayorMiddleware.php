@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class MayorMiddleware
@@ -15,7 +16,7 @@ class MayorMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (\Auth::user()->role_id == env('APP_MAYOR_ROLE', 3)) {
+        if (Auth::user()->role_id == env('APP_MAYOR_ROLE', 3)) {
             return $next($request);
         }
         abort(404);
