@@ -68,6 +68,9 @@
             @moder
             <a href="{{route("moder-dashboard")}}" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">Привет, {{auth()->user()->name}}<i class="fa fa-arrow-right ms-3"></i></a>
             @endmoder
+            @mayor
+            <a href="{{route("mayor-dashboard")}}" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">Привет, {{auth()->user()->name}}<i class="fa fa-arrow-right ms-3"></i></a>
+            @endmayor
         @else
             <a href="{{route("login")}}" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">Вход<i class="fa fa-arrow-right ms-3"></i></a>
         @endif
