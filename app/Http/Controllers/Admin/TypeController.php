@@ -67,7 +67,9 @@ class TypeController extends Controller
      */
     public function destroy(string $id)
     {
-        Type::findOrFail($id)->delete();
+        $type = Type::findOrFail($id);
+        $type->deleteWithRelations($id, 'type_id');
+        $type->delete();
         return redirect()->back();
     }
 }

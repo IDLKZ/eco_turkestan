@@ -17,18 +17,28 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $breeds = Breed::get();
-        $subjectData[] = ['Прочие породы', 0];
-        foreach ($breeds as $key => $value) {
+        $breeds = Breed::all();
+        $areas = Area::all();
+        $sanitaries = Sanitary::all();
+        $dataForBreed[] = ['Прочие породы', 0];
+
+        foreach ($breeds as $value) {
             $pr = (Marker::where('breed_id', $value->id)->count()/Marker::count()) * 100;
-            if ($pr < 0.75) {
-                $subjectData[0][1] += $pr;
+            if ($pr < 3) {
+                $dataForBreed[0][1] += $pr;
             } else {
-                $subjectData[] = [$value->title_ru , $pr];
+                $dataForBreed[] = [$value->title_ru , $pr];
             }
         }
 
-        return view('mayor.dashboard', compact('subjectData'));
+        foreach ($areas as $value) {
+            $dataForArea[] = [$value->title_ru , (Marker::where('area_id', $value->id)->count()/Marker::count()) * 100];
+        }
+        foreach ($sanitaries as $value) {
+            $dataForSanitary[] = [$value->title_ru , (Marker::where('sanitary_id', $value->id)->count()/Marker::count()) * 100];
+        }
+
+        return view('mayor.dashboard', compact('dataForBreed', 'dataForArea', 'dataForSanitary'));
     }
 
     public function statistics()

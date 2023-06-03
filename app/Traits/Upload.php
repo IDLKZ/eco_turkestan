@@ -2,6 +2,10 @@
 
 namespace App\Traits;
 
+use App\Models\Marker;
+use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -87,6 +91,13 @@ trait Upload
         else{
             return '/uploads/' . $this->$path;
         }
+    }
 
+    public function deleteWithRelations($id, $column)
+    {
+        $items = Marker::where($column, $id)->get();
+        foreach ($items as $item) {
+            $item->delete();
+        }
     }
 }

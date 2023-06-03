@@ -67,7 +67,9 @@ class BreedController extends Controller
      */
     public function destroy(string $id)
     {
-        Breed::findOrFail($id)->delete();
+        $breed = Breed::findOrFail($id);
+        $breed->deleteWithRelations($id, 'breed_id');
+        $breed->delete();
         return redirect()->back();
     }
 }

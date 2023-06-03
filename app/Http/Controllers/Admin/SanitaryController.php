@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MainRequest;
+use App\Models\Marker;
 use App\Models\Sanitary;
 use Illuminate\Http\Request;
 
@@ -71,9 +72,11 @@ class SanitaryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        Sanitary::findOrFail($id)->delete();
+        $sanitary = Sanitary::findOrFail($id);
+        $sanitary->deleteWithRelations($id, 'sanitary_id');
+        $sanitary->delete();
         return redirect()->back();
     }
 }
