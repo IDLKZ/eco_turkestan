@@ -50,7 +50,8 @@ class ModalMarker extends Component
         'breed_id' => 'required',
         'landing_date' => 'nullable',
         'status_id' => 'nullable',
-        'geocode' => 'required'
+        'geocode' => 'required',
+        'age' => 'required'
     ];
     protected $validationAttributes = [
         'event_id' => 'хозяйственное мероприятие',
@@ -59,7 +60,8 @@ class ModalMarker extends Component
         'height' => 'высота',
         'diameter' => 'диаметр',
         'breed_id' => 'порода',
-        'geocode' => 'маркер'
+        'geocode' => 'маркер',
+        'age' => 'возраст'
     ];
     public function updated($propertyName)
     {

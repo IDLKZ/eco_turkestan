@@ -52,19 +52,19 @@
         </select>
     </div>
     <div class="mb-2">
-        <input wire:model="height" name="height" type="text" class="w-full @error('height') border-red-600 @enderror" placeholder="Введите высоту">
+        <input id="height" name="height" min="0" max="100" inputmode="numeric" pattern="[0-9]*" type="text" class="w-full @error('height') border-red-600 @enderror" placeholder="Введите высоту">
         @error('height')
             <div class="text-red-600">{{ $message }}</div>
         @enderror
     </div>
     <div class="mb-2">
-        <input wire:model="diameter" name="diameter" type="text" class="w-full @error('diameter') border-red-600 @enderror" placeholder="Введите диаметер">
+        <input id="diameter" name="diameter" min="0" max="100" inputmode="numeric" pattern="[0-9]*" type="text" class="w-full @error('diameter') border-red-600 @enderror" placeholder="Введите диаметер">
         @error('diameter')
             <div class="text-red-600">{{ $message }}</div>
         @enderror
     </div>
     <div class="mb-2">
-        <input wire:model="landing_date" name="landing_date" type="date" class="w-full" placeholder="Введите дату посадки">
+        <input id="age" name="age" min="0" max="150" inputmode="numeric" pattern="[0-9]*" type="text" class="w-full" placeholder="Введите возраст дерева">
     </div>
     <div class="mb-2">
         <input class="w-full mb-2" type="text" wire:model="search" placeholder="Введите породу дерева...">

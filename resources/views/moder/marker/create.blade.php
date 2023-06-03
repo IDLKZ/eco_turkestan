@@ -4,7 +4,7 @@
         <style>
             #map {height: 300px}
             select {width: 100%}
-            #geo_denied {display: none}
+            /*#geo_denied {display: none}*/
         </style>
     @endpush
     <div class="container mx-auto py-5">
@@ -36,24 +36,30 @@
 
             </div>
         </div>
-        <div id="geo_denied" class="mb-4 rounded-lg bg-danger-100 px-6 py-5 text-base text-danger-700">
-            Разрешите доступ к вашему местоположению! (Обновите страницу)
-        </div>
+{{--        <div id="geo_denied" class="mb-4 rounded-lg bg-danger-100 px-6 py-5 text-base text-danger-700">--}}
+{{--            Разрешите доступ к вашему местоположению! (Обновите страницу)--}}
+{{--        </div>--}}
     </div>
 
     @push('js')
         <x-leaflet-scripts/>
-
-        <script type="module">
+{{--        <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>--}}
+{{--        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js" integrity="sha512-efAcjYoYT0sXxQRtxGY37CKYmqsFVOIwMApaEbrxJr4RwqVVGw8o+Lfh/+59TU07+suZn1BWq4fDl5fdgyCNkw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>--}}
+            <script>
+                // $('#height').inputmask({"mask": "999"});
+                // $('#diameter').inputmask({"mask": "99"});
+                // $('#age').inputmask({"mask": "999"});
+            </script>
+            <script type="module">
             //    Initialize Map
-
             var userId = {{\Illuminate\Support\Facades\Auth::id()}};
             var activeGeoPlace;
             const currentPosition = [],
+                area = {{Js::from($place->area)}},
                 place = {{Js::from($place)}},
                 markers = {{Js::from([])}},
                 map = L.map('map', {preferCanvas: true}).setView([42.315524, 69.586943], 14),
-                cable = L.geoJSON(JSON.parse(place.geocode), {
+                cable = L.geoJSON(JSON.parse(area.geocode), {
                     style: {
                         color: place.bg_color
                     },
@@ -77,7 +83,7 @@
 
             window.onload = function() {
                 if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(setPosition, errorCallBack);
+                    navigator.geolocation.getCurrentPosition(setPosition);
                     navigator.geolocation.watchPosition(function (e) {
                         let coordinates = JSON.stringify({"lat":e.coords.latitude,"lng":e.coords.longitude});
                         axios.get('/api/get-user-location/'+userId+'/'+ coordinates +'').then(response => {
