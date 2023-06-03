@@ -17,7 +17,18 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('mayor.dashboard');
+        $breeds = Breed::get();
+        $subjectData[] = ['Прочие породы', 0];
+        foreach ($breeds as $key => $value) {
+            $pr = (Marker::where('breed_id', $value->id)->count()/Marker::count()) * 100;
+            if ($pr < 0.75) {
+                $subjectData[0][1] += $pr;
+            } else {
+                $subjectData[] = [$value->title_ru , $pr];
+            }
+        }
+
+        return view('mayor.dashboard', compact('subjectData'));
     }
 
     public function statistics()
