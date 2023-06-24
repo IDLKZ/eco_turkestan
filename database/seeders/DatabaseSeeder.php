@@ -31,9 +31,9 @@ class DatabaseSeeder extends Seeder
             StatusSeeder::class,
             TypeSeeder::class,
             AreaSeeder::class,
-//            PlaceSeeder::class
+            PlaceSeeder::class
         ]);
         Place::factory()->count(10)->create();
-        Marker::factory()->count(50)->create();
+        Marker::factory()->count(100000)->create();
     }
 }

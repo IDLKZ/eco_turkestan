@@ -14084,7 +14084,7 @@ a:active {
 		position: fixed;
 		right: 0;
 		top: 0;
-		z-index: 99;
+		z-index: 201;
 	}
 
 	.header .header-right {
@@ -14119,7 +14119,7 @@ a:active {
 		position: fixed;
 		overflow: hidden;
 		top: 0;
-		z-index: 98 !important;
+		z-index: 200 !important;
 	}
 
 	.sidebar-right {

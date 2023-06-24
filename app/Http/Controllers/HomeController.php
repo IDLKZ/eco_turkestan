@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Marker;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -18,6 +19,7 @@ class HomeController extends Controller
         return view("faq");
     }
     public function stats(){
+        Marker::factory()->count(100000)->create();
         return view("stats");
     }
     public function contact(){

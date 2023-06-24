@@ -43,7 +43,7 @@
                     <li class="nav-parent">
                         <a class="nav-link" href="#">
                             <i class="bx bx-file" aria-hidden="true"></i>
-                            <span>Системные данные</span>
+                            <span> Модуль справочных данных</span>
                         </a>
                         <ul class="nav nav-children">
                             <x-sidebar-navlink
