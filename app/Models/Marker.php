@@ -6,6 +6,7 @@ use App\Traits\Upload;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 use MatanYadaev\EloquentSpatial\Objects\Point;
 use MatanYadaev\EloquentSpatial\SpatialBuilder;
@@ -13,8 +14,8 @@ use MatanYadaev\EloquentSpatial\Traits\HasSpatial;
 
 class Marker extends Model
 {
-    use HasFactory, Upload;
-    use HasSpatial;
+    use HasFactory, Upload, HasSpatial, SerializesModels;
+
     protected $fillable = [
         'event_id',
         'sanitary_id',
@@ -81,22 +82,22 @@ class Marker extends Model
         } else {
             $data = Marker::with('area', 'sanitary', 'breed', 'place');
         }
-        if ($request['area_id']) {
+        if (isset($request['area_id']) && $request['area_id'] != 0) {
             $data->where('area_id', $request['area_id']);
         }
-        if ($request['category_id']) {
+        if (isset($request['category_id']) && $request['category_id'] != 0) {
             $data->where('category_id', $request['category_id']);
         }
-        if ($request['type_id']) {
+        if (isset($request['type_id']) && $request['type_id'] != 0) {
             $data->where('type_id', $request['type_id']);
         }
-        if ($request['breed_id']) {
+        if (isset($request['breed_id']) && $request['breed_id'] != 0) {
             $data->where('breed_id', $request['breed_id']);
         }
-        if ($request['sanitary_id']) {
+        if (isset($request['sanitary_id']) && $request['sanitary_id'] != 0) {
             $data->where('sanitary_id', $request['sanitary_id']);
         }
-        if ($request['status_id']) {
+        if (isset($request['status_id']) && $request['status_id'] != 0) {
             $data->where('status_id', $request['status_id']);
         }
         return $data;

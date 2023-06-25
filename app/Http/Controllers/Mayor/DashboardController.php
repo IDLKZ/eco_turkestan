@@ -12,7 +12,9 @@ use App\Models\Place;
 use App\Models\Sanitary;
 use App\Models\Status;
 use App\Models\Type;
+use Brian2694\Toastr\Toastr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 class DashboardController extends Controller
 {
@@ -51,13 +53,15 @@ class DashboardController extends Controller
 
     public function search(Request $request)
     {
-        $markers = Marker::searchable($request)->paginate(20);
+        $markers = Marker::searchable($request->all())->paginate(20);
         $forExp = $request->all();
         return view('mayor.statistics', compact('markers', 'forExp'));
     }
 
     public function export(Request $request)
     {
-        return (new MarkerExport($request))->download('markers.xlsx');
+        (new MarkerExport($request->all()))->store('markers.xlsx');
+        toastr('Экспорт начался!');
+        return back();
     }
 }

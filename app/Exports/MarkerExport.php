@@ -7,10 +7,11 @@ use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
+use Maatwebsite\Excel\Concerns\WithCustomQuerySize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 
-class MarkerExport implements FromQuery, WithHeadings, WithMapping, WithColumnWidths
+class MarkerExport implements FromQuery, WithHeadings, WithMapping, WithColumnWidths, WithCustomQuerySize
 {
     use Exportable;
     public $query;
@@ -29,57 +30,32 @@ class MarkerExport implements FromQuery, WithHeadings, WithMapping, WithColumnWi
     public function map($row): array
     {
         return [
-//            $row->id,
             $row->area->title_ru,
             $row->place->title_ru,
             $row->breed->title_ru,
-//            $row->birthday,
             $row->height,
-//            $row->number_card_id,
-//            $row->date_card_id,
             $row->diameter,
             $row->sanitary->title_ru,
             $row->status->title_ru,
-//            $row->photo_url,
-//            $row->photo_card_url,
-//            $row->photo_diploma_url,
-//            $row->reference_075_url,
             $row->category->title_ru,
             $row->age,
-//            $row->language_id,
-            $row->landing_date,
-//            $row->educationForm->title_ru,
-//            $row->region->title_ru,
-//            $row->created_at->format('d-m-Y')
+            $row->landing_date
         ];
     }
 
     public function headings(): array
     {
         return [
-//            '#',
             'Район',
             'Место',
             'Порода',
             'Высота',
             'Диаметр',
             'Состояние',
-//            '',
             'Статус',
             'Вид насаждения',
-//            'Телефон',
-//            '',
-//            '',
-//            '',
-//            '',
-//            'Гражданство',
-//            'ОП',
-//            '',
-//            'Образования',
-//            'Форма обучения',
             'Возраст',
-            'Дата посадки',
-//            '',
+            'Дата посадки'
         ];
     }
 
@@ -97,5 +73,10 @@ class MarkerExport implements FromQuery, WithHeadings, WithMapping, WithColumnWi
             'I' => 15,
             'J' => 25
         ];
+    }
+
+    public function querySize(): int
+    {
+        return 500;
     }
 }

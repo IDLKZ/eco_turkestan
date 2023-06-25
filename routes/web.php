@@ -74,7 +74,6 @@ Route::middleware('auth')->group(function () {
         Route::get('statistics', [MayorDashboardController::class, 'statistics'])->name('mayor-statistics');
         Route::get('search', [MayorDashboardController::class, 'search'])->name('mayor-search');
         Route::post('search', [MayorDashboardController::class, 'search'])->name('mayor-search');
-        Route::post('export', [MayorDashboardController::class, 'export'])->name('mayor-export');
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
