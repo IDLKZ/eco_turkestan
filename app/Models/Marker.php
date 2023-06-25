@@ -74,12 +74,15 @@ class Marker extends Model
         return parent::query();
     }
 
-    public static function searchable($request)
+    public static function searchable($request, $bool = false)
     {
-        if ($request['area_id']) {
-            $data = Marker::with('area', 'sanitary', 'breed', 'place')->where('area_id', $request['area_id']);
+        if ($bool) {
+            $data = Marker::with('area', 'sanitary', 'breed', 'place', 'status', 'event');
         } else {
             $data = Marker::with('area', 'sanitary', 'breed', 'place');
+        }
+        if ($request['area_id']) {
+            $data->where('area_id', $request['area_id']);
         }
         if ($request['category_id']) {
             $data->where('category_id', $request['category_id']);

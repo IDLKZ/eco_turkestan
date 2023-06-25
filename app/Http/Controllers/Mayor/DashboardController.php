@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Mayor;
 
+use App\Exports\MarkerExport;
 use App\Http\Controllers\Controller;
 use App\Models\Area;
 use App\Models\Breed;
@@ -43,14 +44,20 @@ class DashboardController extends Controller
 
     public function statistics()
     {
+        $forExp = [];
         $markers = Marker::with('area', 'sanitary', 'breed', 'place')->paginate(20);
-        return view('mayor.statistics', compact('markers'));
+        return view('mayor.statistics', compact('markers', 'forExp'));
     }
 
     public function search(Request $request)
     {
         $markers = Marker::searchable($request)->paginate(20);
+        $forExp = $request->all();
+        return view('mayor.statistics', compact('markers', 'forExp'));
+    }
 
-        return view('mayor.statistics', compact('markers'));
+    public function export(Request $request)
+    {
+        return (new MarkerExport($request))->download('markers.xlsx');
     }
 }

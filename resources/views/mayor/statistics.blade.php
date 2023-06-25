@@ -9,7 +9,26 @@
                     <div class="overflow-hidden">
 
                         @if($markers)
-                            <h1>Количество посаженных деревьев: {{$markers->total()}}</h1>
+                            <div class="flex justify-between">
+                                <div>Количество посаженных деревьев: {{$markers->total()}}</div>
+                                <div>
+                                    <form action="{{route('mayor-export')}}" method="POST">
+                                        @csrf
+                                        @if(count($forExp) > 0)
+                                            <input type="hidden" name="area_id" value="{{$forExp['area_id']}}">
+                                            <input type="hidden" name="category_id" value="{{$forExp['category_id']}}">
+                                            <input type="hidden" name="type_id" value="{{$forExp['type_id']}}">
+                                            <input type="hidden" name="breed_id" value="{{$forExp['breed_id']}}">
+                                            <input type="hidden" name="sanitary_id" value="{{$forExp['sanitary_id']}}">
+                                            <input type="hidden" name="status_id" value="{{$forExp['status_id']}}">
+                                        @endif
+
+                                        <button type="submit" class="btn btn-success text-black text-hover-light">Экспорт в Excel</button>
+                                    </form>
+                                </div>
+
+                            </div>
+
                             <table class="min-w-full text-left text-sm font-light">
                                 <thead class="border-b font-medium dark:border-neutral-500">
                                 <tr>
