@@ -6,7 +6,7 @@
                 min-height: 600px;
             }
             .collapse{
-                visibility: visible!important;
+                visibility: visible;
             }
         </style>
     @endpush
@@ -26,14 +26,5 @@
             </div>
         </div>
 
-        @push('js')
-            <x-leaflet-scripts/>
 
-            <script type="module">
-                //    Initialize Map
-                var map = L.map('map', {preferCanvas: true}).setView([42.315524, 69.586943], 14);
-
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-            </script>
-        @endpush
 </x-app-layout>
