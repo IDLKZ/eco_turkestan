@@ -26,4 +26,8 @@ class DashboardController extends Controller
     {
         return view('admin.geo.show', compact("id"));
     }
+
+    public function all_trees(){
+        return view("admin.geo.all_trees");
+    }
 }

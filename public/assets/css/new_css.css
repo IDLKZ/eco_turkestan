@@ -37855,3 +37855,6 @@ html.dark .wizard-progress .wizard-steps li.active a span {
 }
 
 /* Add here all your CSS customizations */
+.leaflet-container .leaflet-control-attribution {
+    display: none!important;
+}

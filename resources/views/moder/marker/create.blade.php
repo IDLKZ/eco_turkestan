@@ -14,7 +14,11 @@
                 @error('geocode')
                     <div class="text-red-600">{{ $message }}</div>
                 @enderror
-                <div id='map'></div>
+                <div id='map' class="position-relative">
+                    <button id="my-location" class="position-absolute z-[1040] right-2 m-3 btn btn-primary">
+                        <i class="fas fa-location fs-5"></i>
+                    </button>
+                </div>
             </div>
 
             <div class="modal-block">
@@ -43,13 +47,6 @@
 
     @push('js')
         <x-leaflet-scripts/>
-{{--        <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>--}}
-{{--        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js" integrity="sha512-efAcjYoYT0sXxQRtxGY37CKYmqsFVOIwMApaEbrxJr4RwqVVGw8o+Lfh/+59TU07+suZn1BWq4fDl5fdgyCNkw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>--}}
-            <script>
-                // $('#height').inputmask({"mask": "999"});
-                // $('#diameter').inputmask({"mask": "99"});
-                // $('#age').inputmask({"mask": "999"});
-            </script>
             <script type="module">
             //    Initialize Map
             var userId = {{\Illuminate\Support\Facades\Auth::id()}};
@@ -59,7 +56,7 @@
                 place = {{Js::from($place)}},
                 markers = {{Js::from([])}},
                 map = L.map('map', {preferCanvas: true}).setView([42.315524, 69.586943], 14),
-                cable = L.geoJSON(JSON.parse(area.geocode), {
+                cable = L.geoJSON(JSON.parse(place.geocode), {
                     style: {
                         color: place.bg_color
                     },
@@ -76,6 +73,14 @@
                     shadowAnchor: [4, 62],  // the same for the shadow
                     popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
                 }),
+                meIcon = L.icon({
+                    iconUrl: '/images/man_point.png',
+                    iconSize:     [40, 40], // size of the icon
+                    shadowSize:   [50, 64], // size of the shadow
+                    iconAnchor:   [20, 40], // point of the icon which will correspond to marker's location
+                    shadowAnchor: [4, 62],  // the same for the shadow
+                    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                }),
                 MARKERS_MAX = 20,
                 MARKERS_DATA = [];
 
@@ -89,17 +94,26 @@
                         axios.get('/api/get-user-location/'+userId+'/'+ coordinates +'').then(response => {
 
                         });
+                        L.marker([e.coords.latitude,e.coords.longitude],{icon:meIcon}).addTo(map);
                     });
                 } else {
                     alert("Geolocation not supported by browser.");
                 }
 
-            }
-
+            };
+            $("#my-location").on("click",function () {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                        map.setView([position.coords.latitude,position.coords.longitude], 19);
+                    });
+                } else {
+                    alert("Geolocation not supported by browser.");
+                }
+            });
             // a layer group, used here like a container for markers
             var markersGroup = L.layerGroup();
             map.addLayer(markersGroup);
-            if(markers.length<20){
+            if(markers.length<100){
                 markers.forEach(function (marker) {
                     L.marker(JSON.parse(marker.geocode), {icon: greenIcon}).addTo(map)
                 })
@@ -121,7 +135,6 @@
             map.on('click', function(e) {
                 // get the count of currently displayed markers
                 const markersCount = markersGroup.getLayers().length;
-
                 if (markersCount < MARKERS_MAX) {
                     var marker = L.marker(e.latlng, {icon: greenIcon}).addTo(markersGroup);
                     checkInBounds(marker);
@@ -149,7 +162,6 @@
             }
 
 
-            // L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoid2VwbGF5a3oyMDIwIiwiYSI6ImNrcTRxd3I3czB2eHgydm8wOHR2NW40OTEifQ.a08RNc7xB3Tm1pGai2NNCQ', {subdomains:['mt0','mt1','mt2','mt3'], maxZoom:25}).addTo(map);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 25}).addTo(map);
 
         </script>

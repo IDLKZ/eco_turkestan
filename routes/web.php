@@ -35,6 +35,7 @@ Route::get('/map', [HomeController::class,"map"])->name("front-map");
 Route::get('/statistics', [HomeController::class,"stats"])->name("stats");
 Route::get('/faq', [HomeController::class,"faq"])->name("faq");
 Route::get('/contact', [HomeController::class,"contact"])->name("contact");
+Route::get('/do-backup', [HomeController::class,"db_dump"])->name("do-backup");
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -53,7 +54,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('status', AdminStatusController::class);
         Route::resource('event', AdminEventController::class);
         Route::resource('type', AdminTypeController::class);
-
+        Route::get("all-trees",[AdminDashboardController::class,"all_trees"])->name("all-trees");
         Route::get('add-place/{id?}', [AdminPlaceController::class, 'addPlace'])->name('admin.add-place');
 
         Route::get('users-check', [AdminDashboardController::class, 'geo_positions'])->name('admin-check-users');

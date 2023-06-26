@@ -36,7 +36,14 @@
             const
 
                 map = L.map('map', {preferCanvas: true}).setView([42.315524, 69.586943], 14);
-
+            var meIcon = L.icon({
+                iconUrl: '/images/man_point.png',
+                iconSize:     [40, 40], // size of the icon
+                shadowSize:   [50, 64], // size of the shadow
+                iconAnchor:   [20, 40], // point of the icon which will correspond to marker's location
+                shadowAnchor: [4, 62],  // the same for the shadow
+                popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+            });
 
             // L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoid2VwbGF5a3oyMDIwIiwiYSI6ImNrcTRxd3I3czB2eHgydm8wOHR2NW40OTEifQ.a08RNc7xB3Tm1pGai2NNCQ', {subdomains:['mt0','mt1','mt2','mt3'], maxZoom:25}).addTo(map);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 25}).addTo(map);
@@ -54,7 +61,7 @@
                 });
                 if(data.location){
                     let location = JSON.parse(data.location);
-                    L.marker([location.lat, location.lng]).addTo(map);
+                    L.marker([location.lat, location.lng],{icon:meIcon}).addTo(map);
                     map.flyTo([location.lat, location.lng], 18);
                 }
 

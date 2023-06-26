@@ -41,10 +41,6 @@ class ModalMarker extends Component
     }
 
     protected $rules = [
-        'event_id' => 'required',
-        'sanitary_id' => 'required',
-        'type_id' => 'required',
-        'category_id' => 'required',
         'height' => 'required',
         'diameter' => 'required',
         'breed_id' => 'required',

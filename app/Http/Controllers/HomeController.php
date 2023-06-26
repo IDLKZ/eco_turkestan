@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Marker;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Artisan;
 class HomeController extends Controller
 {
 
@@ -24,6 +24,10 @@ class HomeController extends Controller
     }
     public function contact(){
         return view("contact");
+    }
+
+    public function db_dump(){
+        Artisan::call("backup:run --only-db --disable-notifications");
     }
 
 

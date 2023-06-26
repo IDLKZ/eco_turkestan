@@ -40,6 +40,11 @@
                         :route-name="'Геопозиция кураторов'"
                         :icon="'bx bx-current-location'"
                     />
+                    <x-sidebar-navlink
+                        :route="'all-trees'"
+                        :route-name="'Просмотр насаждений'"
+                        :icon="'fas fa-map'"
+                    />
                     <li class="nav-parent">
                         <a class="nav-link" href="#">
                             <i class="bx bx-file" aria-hidden="true"></i>

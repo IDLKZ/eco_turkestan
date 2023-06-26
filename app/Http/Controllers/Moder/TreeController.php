@@ -69,7 +69,7 @@ class TreeController extends Controller
             $data['point'] = new Point($datum->lat, $datum->lng);
             Marker::add($data);
         }
-        return redirect(route('trees.index'));
+        return redirect(route('trees.create'));
     }
 
     /**
