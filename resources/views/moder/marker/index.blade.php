@@ -24,7 +24,7 @@
                             <tr>
                                 <th scope="col" class="px-6 py-4">#</th>
                                 <th scope="col" class="px-6 py-4">Район</th>
-                                <th scope="col" class="px-6 py-4">Вид</th>
+{{--                                <th scope="col" class="px-6 py-4">Вид</th>--}}
                                 <th scope="col" class="px-6 py-4">Возраст</th>
                                 <th scope="col" class="px-6 py-4">Дата посадки</th>
                                 <th scope="col" class="px-6 py-4">Высота</th>
@@ -37,7 +37,6 @@
                                 <tr class="border-b dark:border-neutral-500">
                                     <td class="whitespace-nowrap px-6 py-4 font-medium">{{$loop->iteration}}</td>
                                     <td class="whitespace-nowrap px-6 py-4">{{$item->place->title_ru}}</td>
-                                    <td class="whitespace-nowrap px-6 py-4">{{$item->type->title_ru}}</td>
                                     <td class="whitespace-nowrap px-6 py-4">{{$item->age}}</td>
                                     <td class="whitespace-nowrap px-6 py-4">
                                         @if($item->landing_date)

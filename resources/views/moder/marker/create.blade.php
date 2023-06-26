@@ -14,6 +14,15 @@
                 @error('geocode')
                     <div class="text-red-600">{{ $message }}</div>
                 @enderror
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div id='map' class="position-relative">
                     <button id="my-location" class="position-absolute z-[1040] right-2 m-3 btn btn-primary">
                         <i class="fas fa-location fs-5"></i>

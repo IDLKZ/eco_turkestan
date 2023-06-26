@@ -65,11 +65,11 @@ class ModalMarker extends Component
     }
     public function mount()
     {
-        $this->events = Event::all();
+//        $this->events = Event::all();
         $this->sanitaries = Sanitary::all();
-        $this->categories = Category::all();
-        $this->types = Type::all();
-        $this->statuses = Status::all();
+//        $this->categories = Category::all();
+//        $this->types = Type::all();
+//        $this->statuses = Status::all();
     }
 
     public function submit()

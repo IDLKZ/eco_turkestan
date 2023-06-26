@@ -23,15 +23,15 @@
                     class="mb-2 text-xl font-medium leading-tight text-neutral-800">
                     Общая информация
                 </h5>
-                <p class="mb-4 text-base text-neutral-600">
-                    <b>Вид насаждений:</b> {{$tree->type->title_ru}}
-                </p>
+{{--                <p class="mb-4 text-base text-neutral-600">--}}
+{{--                    <b>Вид насаждений:</b> {{$tree->type->title_ru}}--}}
+{{--                </p>--}}
                 <p class="mb-4 text-base text-neutral-600">
                     <b>Порода дерева:</b> {{$tree->breed->title_ru}}
                 </p>
-                <p class="mb-4 text-base text-neutral-600">
-                    <b>Категория насаждений:</b> {{$tree->category->title_ru}}
-                </p>
+{{--                <p class="mb-4 text-base text-neutral-600">--}}
+{{--                    <b>Категория насаждений:</b> {{$tree->category->title_ru}}--}}
+{{--                </p>--}}
                 @if($tree->age)
                     <p class="mb-4 text-base text-neutral-600">
                         <b>Возраст:</b> {{$tree->age}}
@@ -51,9 +51,9 @@
                         <b>Статус:</b> {{$tree->status->title_ru}}
                     </p>
                 @endif
-                <p class="mb-4 text-base text-neutral-600">
-                    <b>Хозяйственное мероприятие:</b> {{$tree->event->title_ru}}
-                </p>
+{{--                <p class="mb-4 text-base text-neutral-600">--}}
+{{--                    <b>Хозяйственное мероприятие:</b> {{$tree->event->title_ru}}--}}
+{{--                </p>--}}
                 @if($tree->landing_date)
                     <p class="mb-4 text-base text-neutral-600">
                         <b>Дата посадки:</b> {{$tree->landing_date}}
@@ -81,7 +81,7 @@
                     area = {{Js::from($tree->place->area)}},
                     marker = {{Js::from($tree->geocode)}},
                     map = L.map('map', {preferCanvas: true}).setView([42.315524, 69.586943], 14),
-                    cable = L.geoJSON(JSON.parse(area.geocode), {
+                    cable = L.geoJSON(JSON.parse(place.geocode), {
                         style: {
                             color: place.bg_color
                         }

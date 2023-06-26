@@ -22,10 +22,10 @@ class MarkerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'event_id' => 'required',
+//            'event_id' => 'required',
             'sanitary_id' => 'required',
-            'type_id' => 'required',
-            'category_id' => 'required',
+//            'type_id' => 'required',
+//            'category_id' => 'required',
             'height' => 'required',
             'diameter' => 'required',
             'breed_id' => 'required',
