@@ -56,30 +56,27 @@
                                 class="peer block min-h-[auto] w-full rounded border-1"
                                 value="{{$activeMarker->id}}" />
                         </div>
-                        <div class="relative mb-2">
-                            <label>Район:</label>
-                            <input
-                                type="text"
-                                disabled
-                                class="peer block min-h-[auto] w-full rounded border-1"
-                                value="{{$activeMarker->area->title_ru}}" />
-                        </div>
-                        <div class="relative mb-2">
-                            <label>Субрайон:</label>
-                            <input
-                                type="text"
-                                disabled
-                                class="peer block min-h-[auto] w-full rounded border-1"
-                                value="{{$activeMarker->place->title_ru}}" />
-                        </div>
-                        <div class="relative mb-2">
-                            <label>Тип:</label>
-                            <input
-                                type="text"
-                                disabled
-                                class="peer block min-h-[auto] w-full rounded border-1"
-                                value="{{$activeMarker->type->title_ru}}" />
-                        </div>
+                        @if($activeMarker->place)
+                            <div class="relative mb-2">
+                                <label>Субрайон:</label>
+                                <input
+                                    type="text"
+                                    disabled
+                                    class="peer block min-h-[auto] w-full rounded border-1"
+                                    value="{{$activeMarker->place->title_ru}}" />
+                            </div>
+                        @endif
+                        @if($activeMarker->type)
+                            <div class="relative mb-2">
+                                <label>Тип:</label>
+                                <input
+                                    type="text"
+                                    disabled
+                                    class="peer block min-h-[auto] w-full rounded border-1"
+                                    value="{{$activeMarker->type->title_ru}}" />
+                            </div>
+                        @endif
+                        @if($activeMarker->breed)
                         <div class="relative mb-2">
                             <label>Тип насаждения:</label>
                             <input
@@ -88,6 +85,8 @@
                                 class="peer block min-h-[auto] w-full rounded border-1"
                                 value="{{$activeMarker->breed->title_ru}}" />
                         </div>
+                        @endif
+                        @if($activeMarker->sanitary)
                         <div class="relative mb-2">
                             <label>Тип санитарного состояния:</label>
                             <input
@@ -96,6 +95,8 @@
                                 class="peer block min-h-[auto] w-full rounded border-1"
                                 value="{{$activeMarker->sanitary->title_ru}}" />
                         </div>
+                        @endif
+                        @if($activeMarker->status)
                         <div class="relative mb-2">
                             <label>Тип состояния:</label>
                             <input
@@ -104,6 +105,8 @@
                                 class="peer block min-h-[auto] w-full rounded border-1"
                                 value="{{$activeMarker->status->title_ru}}" />
                         </div>
+                        @endif
+                        @if($activeMarker->category)
                         <div class="relative mb-2">
                             <label>Тип категории:</label>
                             <input
@@ -112,14 +115,17 @@
                                 class="peer block min-h-[auto] w-full rounded border-1"
                                 value="{{$activeMarker->category->title_ru}}" />
                         </div>
-                        <div class="relative mb-2">
-                            <label>Тип мероприятия:</label>
-                            <input
-                                type="text"
-                                disabled
-                                class="peer block min-h-[auto] w-full rounded border-1"
-                                value="{{$activeMarker->event->title_ru}}" />
-                        </div>
+                        @endif
+                        @if($activeMarker->event)
+                            <div class="relative mb-2">
+                                <label>Тип мероприятия:</label>
+                                <input
+                                    type="text"
+                                    disabled
+                                    class="peer block min-h-[auto] w-full rounded border-1"
+                                    value="{{$activeMarker->event->title_ru}}" />
+                            </div>
+                        @endif
                         <div class="relative mb-2">
                             <label>Диаметр(см):</label>
                             <input
@@ -137,7 +143,7 @@
                                 value="{{$activeMarker->height}}" />
                         </div>
                         <div class="relative mb-2">
-                            <label>Возраст:</label>
+                            <label>Возраст (лет):</label>
                             <input
                                 type="text"
                                 disabled
