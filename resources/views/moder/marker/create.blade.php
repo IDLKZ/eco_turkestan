@@ -49,9 +49,6 @@
 
             </div>
         </div>
-{{--        <div id="geo_denied" class="mb-4 rounded-lg bg-danger-100 px-6 py-5 text-base text-danger-700">--}}
-{{--            Разрешите доступ к вашему местоположению! (Обновите страницу)--}}
-{{--        </div>--}}
     </div>
 
     @push('js')
@@ -99,11 +96,15 @@
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(setPosition);
                     navigator.geolocation.watchPosition(function (e) {
+                        map.eachLayer(function (mapItem){
+                            if(mapItem.options && mapItem.options.title == "me"){
+                                mapItem.remove();
+                            }
+                        })
                         let coordinates = JSON.stringify({"lat":e.coords.latitude,"lng":e.coords.longitude});
-                        axios.get('/api/get-user-location/'+userId+'/'+ coordinates +'').then(response => {
+                        axios.get('/api/get-user-location/'+userId+'/'+ coordinates +'').then(response => {});
+                        let marker = L.marker([e.coords.latitude,e.coords.longitude],{icon:meIcon,title:"me"}).addTo(map);
 
-                        });
-                        L.marker([e.coords.latitude,e.coords.longitude],{icon:meIcon}).addTo(map);
                     });
                 } else {
                     alert("Geolocation not supported by browser.");

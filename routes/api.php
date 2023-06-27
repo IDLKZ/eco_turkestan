@@ -33,6 +33,5 @@ Route::group([],function (){
 
    Route::get("get-system-all",[SystemController::class,"getAllSystemData"]);
    Route::get("get-user-location/{userId}/{location}",[UserController::class,"user_presence"]);
-
 });
 

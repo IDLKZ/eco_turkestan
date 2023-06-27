@@ -31,7 +31,10 @@ class BreedController extends Controller
      */
     public function store(MainRequest $request)
     {
-        Breed::add($request->all());
+        $breed = Breed::add($request->all());
+        if($request->hasFile("image_url")){
+            $breed->uploadFile($request->file("image_url"),"image_url");
+        }
         return redirect(route('breed.index'));
     }
 
@@ -59,6 +62,9 @@ class BreedController extends Controller
     {
         $breed = Breed::findOrFail($id);
         $breed->edit($request->all());
+        if($request->hasFile("image_url")){
+            $breed->uploadFile($request->file("image_url"),"image_url");
+        }
         return redirect(route('breed.index'));
     }
 

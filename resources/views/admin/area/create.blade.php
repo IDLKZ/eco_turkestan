@@ -68,7 +68,8 @@
                         },
                         buttonsStyling: false
                     })
-                    var dataPolygons = []
+                    var dataPolygons = [];
+
                     var areas = {{Js::from($initialAreas)}};
                     var map = L.map('map',{preferCanvas:true}).setView([42.315524, 69.586943], 12);
                     map.pm.addControls({

@@ -63,16 +63,16 @@
         </div>
         @if(auth()->check())
             @admin
-            <a href="{{route("admin-dashboard")}}" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">Привет, {{auth()->user()->name}}<i class="fa fa-arrow-right ms-3"></i></a>
+            <a href="{{route("admin-dashboard")}}" class="btn btn-primary py-4 px-lg-4 rounded-0  d-block">Привет, {{auth()->user()->name}}<i class="fa fa-arrow-right ms-3"></i></a>
             @endadmin
             @moder
-            <a href="{{route("moder-dashboard")}}" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">Привет, {{auth()->user()->name}}<i class="fa fa-arrow-right ms-3"></i></a>
+            <a href="{{route("moder-dashboard")}}" class="btn btn-primary py-4 px-lg-4 rounded-0  d-block">Привет, {{auth()->user()->name}}<i class="fa fa-arrow-right ms-3"></i></a>
             @endmoder
             @mayor
-            <a href="{{route("mayor-dashboard")}}" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">Привет, {{auth()->user()->name}}<i class="fa fa-arrow-right ms-3"></i></a>
+            <a href="{{route("mayor-dashboard")}}" class="btn btn-primary py-4 px-lg-4 rounded-0  d-block">Привет, {{auth()->user()->name}}<i class="fa fa-arrow-right ms-3"></i></a>
             @endmayor
         @else
-            <a href="{{route("login")}}" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">Вход<i class="fa fa-arrow-right ms-3"></i></a>
+            <a href="{{route("login")}}" class="btn btn-primary py-4 px-lg-4 rounded-0 d-block">Вход<i class="fa fa-arrow-right ms-3"></i></a>
         @endif
     </div>
 </nav>

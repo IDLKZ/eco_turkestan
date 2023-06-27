@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Area;
+use App\Models\Marker;
 use App\Models\Place;
 use Livewire\Component;
 
@@ -10,9 +11,10 @@ class SidebarFilter extends Component
 {
     public $areas;
     public $places;
+    public $activeMarker;
     public $selectedAreas = [];
     public $selectedPlaces = [];
-    protected $listeners = ['areaChanged' => 'areaChangedEvent',"placeChange"=>"placeChangedEvent"];
+    protected $listeners = ['areaChanged' => 'areaChangedEvent',"placeChange"=>"placeChangedEvent","loadMarker"=>"getMarkerById"];
     public function mount()
     {
         $this->areas = Area::all();
@@ -50,6 +52,10 @@ class SidebarFilter extends Component
     }
     public function getPlaces(){
         return $this->selectedAreas;
+    }
+
+    public function getMarkerById($id){
+        $this->activeMarker = Marker::where(["id"=>$id])->with(["area","breed","place","sanitary","event","status","category","type"])->first();
     }
 
 
