@@ -35,7 +35,7 @@
                             <tbody>
                             @foreach($trees as $item)
                                 <tr class="border-b dark:border-neutral-500">
-                                    <td class="whitespace-nowrap px-6 py-4 font-medium">{{$loop->iteration}}</td>
+                                    <td class="whitespace-nowrap px-6 py-4 font-medium">{{$trees->firstItem() + $loop->index}}</td>
                                     <td class="whitespace-nowrap px-6 py-4">{{$item->place->title_ru}}</td>
                                     <td class="whitespace-nowrap px-6 py-4">{{$item->age}}</td>
                                     <td class="whitespace-nowrap px-6 py-4">

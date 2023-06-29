@@ -100,4 +100,35 @@ trait Upload
             $item->delete();
         }
     }
+
+    public function getBreedImage($path)
+    {
+        if($this->$path == null)
+        {
+            return '/images/no-image.png';
+        }
+        else{
+            return '/images/breeds/' . $this->$path;
+        }
+    }
+
+    public function uploadBreedImage($file, $path)
+    {
+        if($file == null) { return; }
+        $this->removeBreedImage($path);
+        $filename = Str::random(10) . '.' . $file->getClientOriginalExtension();
+        $file->storeAs('images/breeds', $filename);
+        $this->$path = $filename;
+        $this->save();
+    }
+
+    public function removeBreedImage($path)
+    {
+        if($this->$path != null)
+        {
+            if (Storage::exists('images/breeds/' . $this->$path)){
+                Storage::delete('images/breeds/' . $this->$path);
+            }
+        }
+    }
 }

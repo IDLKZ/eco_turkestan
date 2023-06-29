@@ -26,18 +26,20 @@
                                 <th scope="col" class="px-6 py-4">Наименование на русском</th>
                                 <th scope="col" class="px-6 py-4">Наименование на казахском</th>
                                 <th scope="col" class="px-6 py-4">Изображение</th>
+                                <th scope="col" class="px-6 py-4">Коэффициент</th>
                                 <th scope="col" class="px-6 py-4 text-center">Действие</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($breeds as $item)
                                 <tr class="border-b dark:border-neutral-500">
-                                    <td class="whitespace-nowrap px-6 py-4 font-medium">{{$loop->iteration}}</td>
+                                    <td class="whitespace-nowrap px-6 py-4 font-medium">{{$breeds->firstItem() + $loop->index}}</td>
                                     <td class="whitespace-nowrap px-6 py-4">{{$item->title_ru}}</td>
                                     <td class="whitespace-nowrap px-6 py-4">{{$item->title_kz}}</td>
                                     <td class="whitespace-nowrap px-6 py-4">
-                                        <img src="{{$item->getFile("image_url")}}" width="50px">
+                                        <img src="{{$item->getBreedImage('image_url')}}" width="50px">
                                     </td>
+                                    <td class="whitespace-nowrap px-6 py-4">{{$item->coefficient}}</td>
                                     <td class="flex justify-center py-4">
                                         <a href="{{route('breed.edit', $item->id)}}" class="mr-3">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

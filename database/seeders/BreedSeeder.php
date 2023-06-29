@@ -14,37 +14,313 @@ class BreedSeeder extends Seeder
     public function run(): void
     {
         Breed::create([
-           'title_ru' => 'Хвойные',
-           'title_kz' => 'Қылқан жапырақты ағаштар'
+           'title_ru' => 'Айлант',
+           'title_kz' => 'Айлант',
+           'image_url' => 'ailant.jpg',
+           'coefficient' => '2'
         ]);
         Breed::create([
-           'title_ru' => 'Твердолиственные',
-           'title_kz' => 'Қатты жапырақты'
+           'title_ru' => 'Акация белая',
+           'title_kz' => 'Ақ акация',
+           'image_url' => 'white_akasia.jpeg',
+           'coefficient' => '2'
         ]);
         Breed::create([
-           'title_ru' => 'Мягколиственные',
-           'title_kz' => 'Жұмсақ жапырақты'
+           'title_ru' => 'Береза бородавчатая',
+           'title_kz' => 'Сүйелді қайың',
+           'image_url' => 'bereza_roslesopitomnik.jpg',
+           'coefficient' => '2'
         ]);
         Breed::create([
-           'title_ru' => 'Саксаульники',
-           'title_kz' => 'Сексеуілшілер'
+           'title_ru' => 'Гледичия',
+           'title_kz' => 'Бал шегіртке',
+           'image_url' => 'gleditsia.jpg',
+           'coefficient' => '2'
         ]);
         Breed::create([
-           'title_ru' => 'Биота восточная',
-           'title_kz' => 'Шығыс Биота'
+           'title_ru' => 'Ива белая',
+           'title_kz' => 'Ақ тал',
+           'image_url' => 'white_iva.jpg',
+           'coefficient' => '2'
         ]);
+        Breed::create([
+           'title_ru' => 'Ива вавилонская',
+           'title_kz' => 'Вавилондық тал',
+           'image_url' => 'vavilon_iva.jpg',
+           'coefficient' => '2'
+        ]);
+        Breed::create([
+           'title_ru' => 'Павловния',
+           'title_kz' => 'Пауловния',
+           'image_url' => 'pavlovnia.jpg',
+           'coefficient' => '2'
+        ]);
+        Breed::create([
+           'title_ru' => 'Тополь черный',
+           'title_kz' => 'Қара терек',
+           'image_url' => 'black_topol.jpg',
+           'coefficient' => '2'
+        ]);
+        Breed::create([
+           'title_ru' => 'Эвкалипт',
+           'title_kz' => 'Эвкалипт',
+           'image_url' => 'evkalipt.jpg',
+           'coefficient' => '2'
+        ]);
+        Breed::create([
+           'title_ru' => 'Вяз Ильм',
+           'title_kz' => 'Қараағаш (Ильм)',
+           'image_url' => 'vyaz_ilm.jpg',
+           'coefficient' => '1'
+        ]);
+        Breed::create([
+           'title_ru' => 'Катальпа',
+           'title_kz' => 'Катальпа ',
+           'image_url' => 'katalpa.jpg',
+           'coefficient' => '1'
+        ]);
+        Breed::create([
+           'title_ru' => 'Маклюра',
+           'title_kz' => 'Маклюра ',
+           'image_url' => 'maclura.jpg',
+           'coefficient' => '1'
+        ]);
+        Breed::create([
+           'title_ru' => 'Орех грецкий',
+           'title_kz' => 'Жаңғақ ',
+           'image_url' => 'oreh.webp',
+           'coefficient' => '1'
+        ]);
+        Breed::create([
+           'title_ru' => 'Платан',
+           'title_kz' => 'Шынар ',
+           'image_url' => 'platan.jpg',
+           'coefficient' => '1'
+        ]);
+        Breed::create([
+           'title_ru' => 'Тюльпановое дерево',
+           'title_kz' => 'Қызғалдақ ағашы',
+           'image_url' => 'tyulpanovoe-derevo.jpg',
+           'coefficient' => '1'
+        ]);
+        Breed::create([
+           'title_ru' => 'Шелковица',
+           'title_kz' => 'Тұт',
+           'image_url' => 'morus_nigra.jpg',
+           'coefficient' => '1'
+        ]);
+        Breed::create([
+           'title_ru' => 'Ясень обыкновенный',
+           'title_kz' => 'Кәдімгі күл',
+           'image_url' => 'yasen.jpeg',
+           'coefficient' => '1'
+        ]);
+        Breed::create([
+           'title_ru' => 'Ель обыкновенная',
+           'title_kz' => 'Қарапайым шырша',
+           'image_url' => 'el.JPG',
+           'coefficient' => '1'
+        ]);
+        Breed::create([
+           'title_ru' => 'Лиственница европейская',
+           'title_kz' => 'Еуропалық балқарағай',
+           'image_url' => 'listvennisa_evro.jpg',
+           'coefficient' => '1'
+        ]);
+        Breed::create([
+           'title_ru' => 'Лиственница сибирская',
+           'title_kz' => 'Сібір балқарағайы',
+           'image_url' => 'listvennisa_sibir.jpg',
+           'coefficient' => '1'
+        ]);
+        Breed::create([
+           'title_ru' => 'Псевдотсуга тиссолистная',
+           'title_kz' => 'Псевдотсуга',
+           'image_url' => 'pseudotsuga_menziesii.jpg',
+           'coefficient' => '1'
+        ]);
+        Breed::create([
+           'title_ru' => 'Сосна Веймутова',
+           'title_kz' => 'Веймут Қарағайы',
+           'image_url' => 'veimut_sosna.webp',
+           'coefficient' => '1'
+        ]);
+        Breed::create([
+           'title_ru' => 'Сосна обыкновенная',
+           'title_kz' => 'Кәдімгі қарағай',
+           'image_url' => 'sosna.jpg',
+           'coefficient' => '1'
+        ]);
+        Breed::create([
+           'title_ru' => 'Бархат амурский',
+           'title_kz' => 'Амур барқыт',
+           'image_url' => 'amur.jpg',
+           'coefficient' => '0.5'
+        ]);
+        Breed::create([
+           'title_ru' => 'Вяз',
+           'title_kz' => 'Қарағаш',
+           'image_url' => 'vyaz.jpg',
+           'coefficient' => '0.5'
+        ]);
+        Breed::create([
+           'title_ru' => 'Граб обыкновенный',
+           'title_kz' => 'Кәдімгі мүйіз',
+           'image_url' => 'grab.jpg',
+           'coefficient' => '0.5'
+        ]);
+        Breed::create([
+           'title_ru' => 'Дуб скальный',
+           'title_kz' => 'Жартас емен',
+           'image_url' => 'dub_skalni.jpg',
+           'coefficient' => '0.5'
+        ]);
+        Breed::create([
+           'title_ru' => 'Дуб черешчатый',
+           'title_kz' => 'Жапырақты емен',
+           'image_url' => 'dub_cher.jpg',
+           'coefficient' => '0.5'
+        ]);
+        Breed::create([
+           'title_ru' => 'Клен остролистый',
+           'title_kz' => 'Үйеңкі',
+           'image_url' => 'klen.jpeg',
+           'coefficient' => '0.5'
+        ]);
+        Breed::create([
+           'title_ru' => 'Клен полевой',
+           'title_kz' => 'Дала үйеңкісі',
+           'image_url' => 'klen_polevoi.jpg',
+           'coefficient' => '0.5'
+        ]);
+        Breed::create([
+           'title_ru' => 'Липа крупнолистная',
+           'title_kz' => 'Үлкен жапырақты линден',
+           'image_url' => 'lipa.jpeg',
+           'coefficient' => '0.5'
+        ]);
+        Breed::create([
+           'title_ru' => 'Ель колючая',
+           'title_kz' => 'Тікенді шырша',
+           'image_url' => 'elkolyuchaya.jpeg',
+           'coefficient' => '0.5'
+        ]);
+        Breed::create([
+           'title_ru' => 'Можжевельник виргинский',
+           'title_kz' => 'Виргин аршасы',
+           'image_url' => 'mozhevelnik_virgin.jpg',
+           'coefficient' => '0.5'
+        ]);
+        Breed::create([
+           'title_ru' => 'Можжевельник',
+           'title_kz' => 'Арша',
+           'image_url' => 'mozhevelnik.jpg',
+           'coefficient' => '0.5'
+        ]);
+        Breed::create([
+           'title_ru' => 'Пихта кавказская',
+           'title_kz' => 'Кавказ шыршасы',
+           'image_url' => 'pihta.jpg',
+           'coefficient' => '0.5'
+        ]);
+        Breed::create([
+           'title_ru' => 'Пихта сибирская',
+           'title_kz' => 'Сібір шыршасы',
+           'image_url' => 'pihta_sibir.jpg',
+           'coefficient' => '0.5'
+        ]);
+        Breed::create([
+           'title_ru' => 'Туя западная',
+           'title_kz' => 'Батыс Туя',
+           'image_url' => 'thuja.jpg',
+           'coefficient' => '0.5'
+        ]);
+        Breed::create([
+           'title_ru' => 'Груша лесная',
+           'title_kz' => 'Орман алмұрты',
+           'image_url' => 'grusha-lesnaya.jpg',
+           'coefficient' => '0.25'
+        ]);
+        Breed::create([
+           'title_ru' => 'Груша лохолистная',
+           'title_kz' => 'Лохо жапырақты алмұрт',
+           'image_url' => 'grusha-loholistnaya.jpg',
+           'coefficient' => '0.25'
+        ]);
+        Breed::create([
+           'title_ru' => 'Фисташковое дерево',
+           'title_kz' => 'Пісте ағашы',
+           'image_url' => 'fistashkovoe-derevo.jpg',
+           'coefficient' => '0.25'
+        ]);
+        Breed::create([
+           'title_ru' => 'Яблоня лесная',
+           'title_kz' => 'Орман алма ағашы',
+           'image_url' => 'yablonya.webp',
+           'coefficient' => '0.25'
+        ]);
+        Breed::create([
+           'title_ru' => 'Яблоня сибирская',
+           'title_kz' => 'Сібір алма ағашы',
+           'image_url' => 'sibirskaya-yablonya.jpg',
+           'coefficient' => '0.25'
+        ]);
+        Breed::create([
+           'title_ru' => 'Сосна кедровая сибирская',
+           'title_kz' => 'Сібір балқарағайы',
+           'image_url' => 'sosna_sibir.jpg',
+           'coefficient' => '0.25'
+        ]);
+        Breed::create([
+           'title_ru' => 'Туя восточная',
+           'title_kz' => 'Шығыс Туя',
+           'image_url' => 'tuya.jpg',
+           'coefficient' => '0.25'
+        ]);
+        Breed::create([
+           'title_ru' => 'Самшит',
+           'title_kz' => 'Самшит',
+           'image_url' => 'samshit.jpg',
+           'coefficient' => '0.15'
+        ]);
+        Breed::create([
+           'title_ru' => 'Тис ягодный',
+           'title_kz' => 'Жидек ағашы',
+           'image_url' => 'tis.jpg',
+           'coefficient' => '0.15'
+        ]);
+//        Breed::create([
+//           'title_ru' => 'Хвойные',
+//           'title_kz' => 'Қылқан жапырақты ағаштар'
+//        ]);
+//        Breed::create([
+//           'title_ru' => 'Твердолиственные',
+//           'title_kz' => 'Қатты жапырақты'
+//        ]);
+//        Breed::create([
+//           'title_ru' => 'Мягколиственные',
+//           'title_kz' => 'Жұмсақ жапырақты'
+//        ]);
+//        Breed::create([
+//           'title_ru' => 'Саксаульники',
+//           'title_kz' => 'Сексеуілшілер'
+//        ]);
+//        Breed::create([
+//           'title_ru' => 'Биота восточная',
+//           'title_kz' => 'Шығыс Биота'
+//        ]);
 //        Breed::create([
 //           'title_ru' => 'Прочие древесные породы',
 //           'title_kz' => 'Басқа ағаш түрлері'
 //        ]);
-        Breed::create([
-           'title_ru' => 'Ель',
-           'title_kz' => 'Шырша'
-        ]);
-        Breed::create([
-           'title_ru' => 'Кедр',
-           'title_kz' => 'Балқарағай'
-        ]);
+//        Breed::create([
+//           'title_ru' => 'Ель',
+//           'title_kz' => 'Шырша'
+//        ]);
+//        Breed::create([
+//           'title_ru' => 'Кедр',
+//           'title_kz' => 'Балқарағай'
+//        ]);
 //        Breed::create([
 //           'title_ru' => 'Лиственница',
 //           'title_kz' => 'Лиственница'

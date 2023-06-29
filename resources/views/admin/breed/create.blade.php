@@ -28,6 +28,17 @@
             </div>
             <div class="relative mb-4">
                 <input
+                    type="text"
+                    class="@error('coefficient') border-red-600 @enderror peer block min-h-[auto] w-full rounded border-1"
+                    name="coefficient"
+                    value="{{old('coefficient')}}"
+                    placeholder="Коэффициент для расчета" />
+                @error('coefficient')
+                <div class="text-red-600">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="relative mb-4">
+                <input
                     type="file"
                     class="@error('image_url') border-red-600 @enderror peer block min-h-[auto] w-full rounded border-1"
                     name="image_url"

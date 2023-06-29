@@ -14,7 +14,7 @@ class BreedController extends Controller
      */
     public function index()
     {
-        $breeds = Breed::paginate(15);
+        $breeds = Breed::latest()->paginate(20);
         return view('admin.breed.index', compact('breeds'));
     }
 
@@ -29,11 +29,19 @@ class BreedController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(MainRequest $request)
+    public function store(Request $request)
     {
-        $breed = Breed::add($request->all());
+        $this->validate($request, [
+           'title_ru' => 'required',
+           'coefficient' => 'nullable|numeric'
+        ]);
+        $data = $request->all();
+        if (is_null($request['coefficient'])) {
+            $data['coefficient'] = 1;
+        }
+        $breed = Breed::add($data);
         if($request->hasFile("image_url")){
-            $breed->uploadFile($request->file("image_url"),"image_url");
+            $breed->uploadBreedImage($request->file("image_url"),"image_url");
         }
         return redirect(route('breed.index'));
     }
@@ -63,7 +71,7 @@ class BreedController extends Controller
         $breed = Breed::findOrFail($id);
         $breed->edit($request->all());
         if($request->hasFile("image_url")){
-            $breed->uploadFile($request->file("image_url"),"image_url");
+            $breed->uploadBreedImage($request->file("image_url"),"image_url");
         }
         return redirect(route('breed.index'));
     }
@@ -74,6 +82,7 @@ class BreedController extends Controller
     public function destroy(string $id)
     {
         $breed = Breed::findOrFail($id);
+        $breed->removeBreedImage('image_url');
         $breed->deleteWithRelations($id, 'breed_id');
         $breed->delete();
         return redirect()->back();

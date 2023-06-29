@@ -10,7 +10,7 @@ class Breed extends Model
 {
     use HasFactory, Upload;
 
-    protected $fillable = ['title_ru', 'title_kz','image_url'];
+    protected $fillable = ['title_ru', 'title_kz','image_url', 'coefficient'];
 
     public function markers()
     {
