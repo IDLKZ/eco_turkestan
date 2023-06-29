@@ -66,10 +66,14 @@ class BreedController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(MainRequest $request, string $id)
+    public function update(Request $request, string $id)
     {
+        $this->validate($request, [
+            'title_ru' => 'required',
+            'coefficient' => 'nullable|numeric'
+        ]);
         $breed = Breed::findOrFail($id);
-        $breed->edit($request->all());
+        $breed->edit($request->all(), 'image_url');
         if($request->hasFile("image_url")){
             $breed->uploadBreedImage($request->file("image_url"),"image_url");
         }
