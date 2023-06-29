@@ -4,7 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Area;
+use App\Models\Breed;
+use App\Models\Category;
+use App\Models\Event;
+use App\Models\Marker;
 use App\Models\Place;
+use App\Models\Sanitary;
+use App\Models\Status;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
 class PlaceController extends Controller
@@ -20,7 +27,6 @@ class PlaceController extends Controller
 
     public function addPlace($id = null)
     {
-
         $area = Area::find($id);
         $areas = Area::with("places")->get();
         return view('admin.place.create', compact('area',"areas"));
@@ -67,9 +73,6 @@ class PlaceController extends Controller
         $area = Area::where(["id"=>$place->area_id])->first();
         $places = Place::where(["area_id"=>$area->id])->whereNot("id",$place->id)->get();
         return view("admin.place.edit",compact("area","place","places"));
-
-
-
     }
 
     /**
@@ -80,7 +83,6 @@ class PlaceController extends Controller
 
         $this->validate($request, [
             'title_ru' => 'required',
-            'bg_color' => 'required',
             'bg_color' => 'required',
             'geocode' => 'required'
         ]);
@@ -97,5 +99,39 @@ class PlaceController extends Controller
         $place = Place::findOrFail($id);
         $place->delete();
         return redirect()->back();
+    }
+
+
+    public function changeMarker($id){
+        $marker = Marker::find($id);
+        if($marker){
+            $types = Type::all();
+            $events = Event::all();
+            $sanitaries = Sanitary::all();
+            $categories = Category::all();
+            $breeds = Breed::all();
+            $status = Status::all();
+
+            return view("admin.marker.edit",compact("marker","types","events","sanitaries","categories",
+            "breeds","status"
+            ));
+        }
+        return redirect('/404');
+    }
+
+    public function updateMarker(Request $request,string $id){
+        $marker = Marker::find($id);
+        if($marker){
+            $request->validate([
+                "height"=>"gte:1",
+                "age"=>"gte:1",
+                "diameter"=>"gte:1",
+            ]);
+            $marker->edit($request->all());
+            toastr()->success('Данные успешно обновлены!');
+            return redirect()->back();
+        }
+        toastr()->warning('Посадка не найдена!');
+        return redirect('/404');
     }
 }

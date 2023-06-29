@@ -48,7 +48,7 @@
             <div id="treeCollapse" aria-labelledby="treeheadingOne" data-bs-parent="#myCollapseMenu">
                 <div class="accordion-body">
                     @if($activeMarker)
-                        <div class="relative mb-2">
+                        <div class="relative mb-1">
                             <label>Номер:</label>
                             <input
                                 type="text"
@@ -57,7 +57,7 @@
                                 value="{{$activeMarker->id}}" />
                         </div>
                         @if($activeMarker->place)
-                            <div class="relative mb-2">
+                            <div class="relative mb-1">
                                 <label>Субрайон:</label>
                                 <input
                                     type="text"
@@ -67,7 +67,7 @@
                             </div>
                         @endif
                         @if($activeMarker->type)
-                            <div class="relative mb-2">
+                            <div class="relative mb-1">
                                 <label>Тип:</label>
                                 <input
                                     type="text"
@@ -77,7 +77,7 @@
                             </div>
                         @endif
                         @if($activeMarker->breed)
-                        <div class="relative mb-2">
+                        <div class="relative mb-1">
                             <label>Тип насаждения:</label>
                             <input
                                 type="text"
@@ -87,7 +87,7 @@
                         </div>
                         @endif
                         @if($activeMarker->sanitary)
-                        <div class="relative mb-2">
+                        <div class="relative mb-1">
                             <label>Тип санитарного состояния:</label>
                             <input
                                 type="text"
@@ -97,7 +97,7 @@
                         </div>
                         @endif
                         @if($activeMarker->status)
-                        <div class="relative mb-2">
+                        <div class="relative mb-1">
                             <label>Тип состояния:</label>
                             <input
                                 type="text"
@@ -107,7 +107,7 @@
                         </div>
                         @endif
                         @if($activeMarker->category)
-                        <div class="relative mb-2">
+                        <div class="relative mb-1">
                             <label>Тип категории:</label>
                             <input
                                 type="text"
@@ -117,7 +117,7 @@
                         </div>
                         @endif
                         @if($activeMarker->event)
-                            <div class="relative mb-2">
+                            <div class="relative mb-1">
                                 <label>Тип мероприятия:</label>
                                 <input
                                     type="text"
@@ -126,7 +126,7 @@
                                     value="{{$activeMarker->event->title_ru}}" />
                             </div>
                         @endif
-                        <div class="relative mb-2">
+                        <div class="relative mb-1">
                             <label>Диаметр(см):</label>
                             <input
                                 type="text"
@@ -134,21 +134,25 @@
                                 class="peer block min-h-[auto] w-full rounded border-1"
                                 value="{{$activeMarker->diameter}}" />
                         </div>
-                        <div class="relative mb-2">
-                            <label>Высота(см):</label>
+                        <div class="relative mb-1">
+                            <label>Высота(м):</label>
                             <input
                                 type="text"
                                 disabled
                                 class="peer block min-h-[auto] w-full rounded border-1"
                                 value="{{$activeMarker->height}}" />
                         </div>
-                        <div class="relative mb-2">
+                        <div class="relative mb-1">
                             <label>Возраст (лет):</label>
                             <input
                                 type="text"
                                 disabled
                                 class="peer block min-h-[auto] w-full rounded border-1"
                                 value="{{$activeMarker->age}}" />
+                        </div>
+                        <div class="relative mb-2 d-flex justify-content-around">
+                            <a href="{{route("change-marker",$activeMarker->id)}}" class="btn btn-warning text-white">Изменить</a>
+                            <a wire:click="$emit('removeMarker',{{$areaItem->id}})"   class="btn btn-danger text-white">Удалить</a>
                         </div>
                     @endif
                 </div>
@@ -233,19 +237,15 @@
             }
         })
 
-        function loadInfo(id){
-            alert(id);
-        }
 
         async function loadMarker() {
             if (currentZoom > 14 && selectedPlaces && search_polygon) {
-                cleanMap();
+                cleanMarker();
                 const res = await axios.get('/api/markers-all-place', {params: {search_polygon: search_polygon,ids:selectedPlaces}});
                if(res.status == 200){
                     res.data.forEach(item=>{
                       let marker = L.marker([item.point.coordinates[1],item.point.coordinates[0]],{icon:greenIcon}).addTo(map);
                       marker.on("click",()=>{
-                          console.log(item.id);
                           Livewire.emit('loadMarker',item.id);
                       });
                     });

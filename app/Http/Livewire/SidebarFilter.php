@@ -14,7 +14,7 @@ class SidebarFilter extends Component
     public $activeMarker;
     public $selectedAreas = [];
     public $selectedPlaces = [];
-    protected $listeners = ['areaChanged' => 'areaChangedEvent',"placeChange"=>"placeChangedEvent","loadMarker"=>"getMarkerById"];
+    protected $listeners = ['areaChanged' => 'areaChangedEvent',"placeChange"=>"placeChangedEvent","loadMarker"=>"getMarkerById","removeMarker"=>"removeMarkerById"];
     public function mount()
     {
         $this->areas = Area::all();
@@ -58,7 +58,10 @@ class SidebarFilter extends Component
         $this->activeMarker = Marker::where(["id"=>$id])->with(["area","breed","place","sanitary","event","status","category","type"])->first();
     }
 
-
+    public function removeMarkerById($id){
+        Marker::destroy($id);
+        toastr()->success("Маркер успешно удалено");
+    }
 
     public function render()
     {
