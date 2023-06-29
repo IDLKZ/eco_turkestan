@@ -152,7 +152,7 @@
                         </div>
                         <div class="relative mb-2 d-flex justify-content-around">
                             <a href="{{route("change-marker",$activeMarker->id)}}" class="btn btn-warning text-white">Изменить</a>
-                            <a wire:click="$emit('removeMarker',{{$areaItem->id}})"   class="btn btn-danger text-white">Удалить</a>
+                            <a wire:click="$emit('removeMarker',{{$activeMarker->id}})"   class="btn btn-danger text-white">Удалить</a>
                         </div>
                     @endif
                 </div>

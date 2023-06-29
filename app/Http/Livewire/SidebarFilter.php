@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Area;
 use App\Models\Marker;
 use App\Models\Place;
+use Exception;
 use Livewire\Component;
 
 class SidebarFilter extends Component
@@ -59,8 +60,15 @@ class SidebarFilter extends Component
     }
 
     public function removeMarkerById($id){
-        Marker::destroy($id);
-        toastr()->success("Маркер успешно удалено");
+        try {
+            Marker::destroy($id);
+            toastr()->success("Маркер успешно удалено");
+            $this->activeMarker = null;
+        }
+        catch (Exception $e) {
+            toastr()->warning("Что-то пошло не так");
+        }
+
     }
 
     public function render()
