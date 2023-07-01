@@ -39,6 +39,7 @@ class BreedController extends Controller
         if (is_null($request['coefficient'])) {
             $data['coefficient'] = 1;
         }
+        $data['status'] = env('APP_ADMIN_ROLE',1);
         $breed = Breed::add($data);
         if($request->hasFile("image_url")){
             $breed->uploadBreedImage($request->file("image_url"),"image_url");
@@ -72,8 +73,10 @@ class BreedController extends Controller
             'title_ru' => 'required',
             'coefficient' => 'nullable|numeric'
         ]);
+        $data = $request->all();
+        $data['status'] = env('APP_ADMIN_ROLE',1);
         $breed = Breed::findOrFail($id);
-        $breed->edit($request->all(), 'image_url');
+        $breed->edit($data, 'image_url');
         if($request->hasFile("image_url")){
             $breed->uploadBreedImage($request->file("image_url"),"image_url");
         }

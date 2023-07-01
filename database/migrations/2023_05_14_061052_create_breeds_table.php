@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('title_kz')->nullable();
             $table->string("image_url")->nullable();
             $table->string("coefficient")->default(1);
+            $table->integer("status")->nullable();
             $table->timestamps();
         });
     }

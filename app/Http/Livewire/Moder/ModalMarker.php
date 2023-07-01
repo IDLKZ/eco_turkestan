@@ -30,6 +30,9 @@ class ModalMarker extends Component
     public $diameter;
     public $age;
     public $landing_date;
+    public $breedStr = '';
+    public array $searchResults = [];
+    public bool $showBtn = false;
 
     public function updatedSearch()
     {
@@ -38,6 +41,32 @@ class ModalMarker extends Component
         } else {
             $this->breeds = Breed::where('title_ru', 'like', '%'.$this->search.'%')->get();
         }
+    }
+
+    public function updatedBreedStr()
+    {
+        if ($this->breedStr != '')
+        {
+            $this->searchResults = Breed::where('title_ru', 'like', '%'.$this->breedStr.'%')->get()->toArray();
+            if (empty($this->searchResults)) {
+                $this->showBtn = true;
+            } else {
+                $this->showBtn = false;
+            }
+        } else {
+            $this->searchResults = [];
+        }
+    }
+
+    public function addBreed()
+    {
+        $b = Breed::create([
+           'title_ru' => $this->breedStr,
+           'coefficient' => 1,
+           'status' => env('APP_MODER_ROLE', 2)
+        ]);
+        $this->breed_id = $b->id;
+        $this->updatedBreedStr();
     }
 
     protected $rules = [

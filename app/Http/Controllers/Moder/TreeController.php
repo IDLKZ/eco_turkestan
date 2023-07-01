@@ -41,33 +41,13 @@ class TreeController extends Controller
         $data = $request->all();
         $breed = Breed::find($data['breed_id']);
         if ($breed != null) {
-            $data['age'] = ($data['diameter'] * 0.5) / $breed->coefficient;
+            $data['age'] = round(($data['diameter'] * 0.5) / $breed->coefficient);
         } else {
-            $data['age'] = $data['diameter'] * 0.5;
+            $data['age'] = round($data['diameter'] * 0.5);
         }
         $test = Carbon::now()->format('Y') - $data['age'];
         $data['landing_date'] = Carbon::createFromDate($test)->format('d.m.Y');
-//        if ($request['landing_date']) {
-//            $years = explode('-', $data['landing_date']);
-//            $year = $years[0];
-//            $data['age'] = Carbon::now()->format('Y') - $year;
-//        } else {
-//            unset($data['landing_date']);
-//        }
         $data['user_id'] = auth()->id();
-
-//        $geoPosition = GeoPosition::where('user_id', auth()->id())->latest()->first();
-//
-//        if ($geoPosition != null) {
-//            GeoPosition::where('user_id', auth()->id())->update([
-//                'geocode' => json_encode($latLng)
-//            ]);
-//        } else {
-//            GeoPosition::create([
-//                'user_id' => auth()->id(),
-//                'geocode' => json_encode($latLng)
-//            ]);
-//        }
 
         foreach (json_decode($request['geocode'][0]) as $datum) {
             $data['geocode'] = json_encode($datum);

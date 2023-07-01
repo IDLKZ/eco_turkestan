@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Breed;
 use App\View\Components\LeafletScripts;
 use App\View\Components\LeafletStyles;
 use Illuminate\Pagination\Paginator;
@@ -32,6 +33,9 @@ class AppServiceProvider extends ServiceProvider
         });
         Blade::if('mayor', function () {
             return auth()->user()->role_id == env('APP_MAYOR_ROLE', 3);
+        });
+        view()->composer('layouts.sidebar-left', function($view){
+            $view->with('counts', Breed::where('status', 2)->count());
         });
         Blade::component('leaflet-scripts', LeafletScripts::class);
         Blade::component("leaflet-styles",LeafletStyles::class);

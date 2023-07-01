@@ -10,15 +10,17 @@ class SidebarNavlink extends Component
 {
     public string $route;
     public string $icon;
+    public string $count = '';
     public string $routeName;
 
     /**
      * Create a new component instance.
      */
-    public function __construct(string $route, string $icon,string $routeName)
+    public function __construct(string $route, string $icon,string $routeName, string $count = '')
     {
         $this->route = $route;
         $this->icon = $icon;
+        $this->count = $count;
         $this->routeName = $routeName;
     }
 

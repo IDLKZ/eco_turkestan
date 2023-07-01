@@ -32,7 +32,7 @@
                             </thead>
                             <tbody>
                             @foreach($breeds as $item)
-                                <tr class="border-b dark:border-neutral-500">
+                                <tr class="border-b dark:border-neutral-500 @if($item->status == env('APP_MODER_ROLE')) text-danger-700 font-weight-extra-bold @endif">
                                     <td class="whitespace-nowrap px-6 py-4 font-medium">{{$breeds->firstItem() + $loop->index}}</td>
                                     <td class="whitespace-nowrap px-6 py-4">{{$item->title_ru}}</td>
                                     <td class="whitespace-nowrap px-6 py-4">{{$item->title_kz}}</td>
