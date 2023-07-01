@@ -43,31 +43,7 @@
             <div class="text-red-600">{{ $message }}</div>
         @enderror
     </div>
-    {{--<div class="mb-2">
-        <select wire:model="status_id" name="status_id">
-            <option value="">Выберите статус (необязательно)</option>
-            @foreach($statuses as $item)
-                <option value="{{$item->id}}">{{$item->title_ru}}</option>
-            @endforeach
-        </select>
-    </div>--}}
     <div class="mb-2">
-        <input id="height" name="height" min="0" max="10000" inputmode="numeric" pattern="[0-9]*" type="text" class="w-full @error('height') border-red-600 @enderror" placeholder="Введите высоту">
-        @error('height')
-            <div class="text-red-600">{{ $message }}</div>
-        @enderror
-    </div>
-    <div class="mb-2">
-        <input id="diameter" name="diameter" min="0" max="10000" inputmode="numeric" pattern="[0-9]*" type="text" class="w-full @error('diameter') border-red-600 @enderror" placeholder="Введите диаметер">
-        @error('diameter')
-            <div class="text-red-600">{{ $message }}</div>
-        @enderror
-    </div>
-    <div class="mb-2">
-        <input id="age" name="age" min="0" max="150" inputmode="numeric" pattern="[0-9]*" type="text" class="w-full" placeholder="Введите возраст дерева">
-    </div>
-    <div class="mb-2">
-        <input class="w-full mb-2" type="text" wire:model="search" placeholder="Введите породу дерева...">
         @if(!empty($breeds))
             <select wire:model="breed_id" name="breed_id">
                 <option value="" selected>Выберите породу</option>
@@ -80,4 +56,45 @@
             <div class="text-red-600">{{ $message }}</div>
         @enderror
     </div>
+    {{--<div class="mb-2">
+        <select wire:model="status_id" name="status_id">
+            <option value="">Выберите статус (необязательно)</option>
+            @foreach($statuses as $item)
+                <option value="{{$item->id}}">{{$item->title_ru}}</option>
+            @endforeach
+        </select>
+    </div>--}}
+    <div class="mb-2">
+        <input id="height" name="height" min="0" max="10000" inputmode="numeric" pattern="[0-9]*" type="text" class="w-full
+            @error('height') border-red-600 @enderror"
+               placeholder="Введите высоту (м)">
+        @error('height')
+            <div class="text-red-600">{{ $message }}</div>
+        @enderror
+    </div>
+    <div class="mb-2">
+        <input id="diameter" name="diameter" min="0" max="10000" inputmode="numeric" pattern="[0-9]*" type="text" class="w-full
+            @error('diameter') border-red-600 @enderror"
+               placeholder="Введите диаметер (см)">
+        @error('diameter')
+            <div class="text-red-600">{{ $message }}</div>
+        @enderror
+    </div>
+{{--    <div class="mb-2">--}}
+{{--        <input id="age" name="age" min="0" max="150" inputmode="numeric" pattern="[0-9]*" type="text" class="w-full" placeholder="Введите возраст дерева">--}}
+{{--    </div>--}}
+{{--    <div class="mb-2">--}}
+{{--        <input class="w-full mb-2" type="text" wire:model="search" placeholder="Введите породу дерева...">--}}
+{{--        @if(!empty($breeds))--}}
+{{--            <select wire:model="breed_id" name="breed_id">--}}
+{{--                <option value="" selected>Выберите породу</option>--}}
+{{--                @foreach($breeds as $item)--}}
+{{--                    <option value="{{$item->id}}">{{$item->title_ru}}</option>--}}
+{{--                @endforeach--}}
+{{--            </select>--}}
+{{--        @endif--}}
+{{--        @error('breed_id')--}}
+{{--            <div class="text-red-600">{{ $message }}</div>--}}
+{{--        @enderror--}}
+{{--    </div>--}}
 </div>

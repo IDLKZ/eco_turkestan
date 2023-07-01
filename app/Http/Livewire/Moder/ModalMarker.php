@@ -47,7 +47,7 @@ class ModalMarker extends Component
         'landing_date' => 'nullable',
         'status_id' => 'nullable',
         'geocode' => 'required',
-        'age' => 'required'
+//        'age' => 'required'
     ];
     protected $validationAttributes = [
         'event_id' => 'хозяйственное мероприятие',
@@ -67,6 +67,7 @@ class ModalMarker extends Component
     {
 //        $this->events = Event::all();
         $this->sanitaries = Sanitary::all();
+        $this->breeds = Breed::all();
 //        $this->categories = Category::all();
 //        $this->types = Type::all();
 //        $this->statuses = Status::all();

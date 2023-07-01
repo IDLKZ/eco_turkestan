@@ -30,7 +30,7 @@ class MarkerRequest extends FormRequest
             'diameter' => 'required',
             'breed_id' => 'required',
             'landing_date' => 'nullable',
-            'age' => 'required',
+//            'age' => 'required',
             'status_id' => 'nullable',
             'geocode' => 'required'
         ];

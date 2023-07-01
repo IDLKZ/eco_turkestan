@@ -1,5 +1,6 @@
 <x-app-layout>
     @push('css')
+        @toastr_css
         <x-leaflet-styles/>
         <style>
             #map {height: 300px}
@@ -52,6 +53,8 @@
     </div>
 
     @push('js')
+        @toastr_js
+        @toastr_render
         <x-leaflet-scripts/>
             <script type="module">
             //    Initialize Map

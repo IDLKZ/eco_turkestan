@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Moder;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MarkerRequest;
+use App\Models\Breed;
 use App\Models\GeoPosition;
 use App\Models\Marker;
 use Carbon\Carbon;
@@ -11,6 +12,7 @@ use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use MatanYadaev\EloquentSpatial\Objects\Point;
+use Yoeunes\Toastr\Facades\Toastr;
 
 class TreeController extends Controller
 {
@@ -37,8 +39,12 @@ class TreeController extends Controller
     public function store(MarkerRequest $request)
     {
         $data = $request->all();
-        $latLng['lat'] = $request['lat'];
-        $latLng['lng'] = $request['lng'];
+        $breed = Breed::find($data['breed_id']);
+        if ($breed != null) {
+            $data['age'] = ($data['diameter'] * 0.5) / $breed->coefficient;
+        } else {
+            $data['age'] = $data['diameter'] * 0.5;
+        }
         $test = Carbon::now()->format('Y') - $data['age'];
         $data['landing_date'] = Carbon::createFromDate($test)->format('d.m.Y');
 //        if ($request['landing_date']) {
@@ -69,6 +75,7 @@ class TreeController extends Controller
             $data['point'] = new Point($datum->lat, $datum->lng);
             Marker::add($data);
         }
+        Toastr::success('Дерево было добавлено!', 'Успешно');
         return redirect()->back();
     }
 
