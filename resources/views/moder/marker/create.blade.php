@@ -1,6 +1,5 @@
 <x-app-layout>
     @push('css')
-        @toastr_css
         <x-leaflet-styles/>
         <style>
             #map {height: 300px}
@@ -53,8 +52,6 @@
     </div>
 
     @push('js')
-        @toastr_js
-        @toastr_render
         <x-leaflet-scripts/>
             <script type="module">
             //    Initialize Map
@@ -92,9 +89,10 @@
                 }),
                 MARKERS_MAX = 20,
                 MARKERS_DATA = [];
+                let search_polygon;
 
                 map.fitBounds(cable.getBounds())
-
+            let currentZoom = map.getZoom();
             window.onload = function() {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(setPosition);
@@ -145,25 +143,50 @@
                 $('#lat').attr('value', JSON.stringify(latitude))
                 $('#lng').attr('value', JSON.stringify(longitude))
             }
+            let points = [];
             map.on('click', function(e) {
                 // get the count of currently displayed markers
                 const markersCount = markersGroup.getLayers().length;
                 if (markersCount < MARKERS_MAX) {
-                    var marker = L.marker(e.latlng, {icon: greenIcon}).addTo(markersGroup);
-                    checkInBounds(marker);
-                    markersGroup.getLayers().forEach(function (e){
-                        if (!MARKERS_DATA.includes(e.getLatLng())) {
-                            MARKERS_DATA.push(e.getLatLng())
+                    var marker = L.marker(e.latlng, {icon: greenIcon,title:"point"});
+                    if(checkInBounds(marker)){
+                        if(marker.options.title == "point"){
+                            marker.addTo(markersGroup);
                         }
-                    });
+                        markersGroup.getLayers().forEach(function (e){
+                            if (!MARKERS_DATA.includes(e.getLatLng()) && e.options.title == "point") {
+                                points.push(e.options.title);
+                                MARKERS_DATA.push(e.getLatLng());
+                                marker = null;
+                            }
+                        });
+                    }
                     $('#geo').attr('value', JSON.stringify(MARKERS_DATA))
                     return;
+
                 }
 
                 // remove the markers when MARKERS_MAX is reached
                 markersGroup.clearLayers();
             });
+            map.on("zoomend",function (event) {
+                currentZoom = map.getZoom();
+                loadMarker();
+            })
 
+            map.on("moveend",function (event) {
+                if(currentZoom > 14){
+                    let bounds = event.target.getBounds();
+                    search_polygon = new L.Polygon([
+                        bounds._southWest,
+                        L.latLng(bounds._northEast.lat, bounds._southWest.lng), // Top-left coordinate
+                        bounds._northEast,
+                        L.latLng(bounds._southWest.lat, bounds._northEast.lng)
+                    ]);
+                    search_polygon = JSON.stringify(search_polygon.toGeoJSON());
+                    loadMarker();
+                }
+            })
             //Check if in selectedArea
             function checkInBounds(layer){
                 if(activeGeoPlace){
@@ -172,8 +195,31 @@
                     }
                 }
                 layer.remove();
+                return false;
             }
+            function cleanMarker(){
+                map.eachLayer(function (layer) {
+                    if (layer instanceof L.Marker){
+                        if(layer.options.title != "point" && layer.options.title != "me"){
+                            layer.remove();
+                        }
+                    }
+                });
+            }
+            async function loadMarker() {
+                if (currentZoom > 14 && place.id && search_polygon) {
+                    cleanMarker();
+                    const res = await axios.get('/api/markers-all-place', {params: {search_polygon: search_polygon,ids:place.id.toString()}});
+                    if(res.status == 200){
+                       if(res.data.length){
+                           res.data.forEach(item=>{
+                               let marker = L.marker([item.point.coordinates[1],item.point.coordinates[0]],{icon:greenIcon,title:"loaded"}).addTo(map);
+                           });
+                       }
 
+                    }
+                }
+            }
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 25}).addTo(map);
 
