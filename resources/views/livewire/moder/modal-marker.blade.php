@@ -10,17 +10,17 @@
             <div class="text-red-600">{{ $message }}</div>
         @enderror
     </div>--}}
-{{--    <div class="mb-2">--}}
-{{--        <select wire:model="type_id" name="type_id">--}}
-{{--            <option value="">Выберите вид насаждения *</option>--}}
-{{--            @foreach($types as $item)--}}
-{{--                <option value="{{$item->id}}">{{$item->title_ru}}</option>--}}
-{{--            @endforeach--}}
-{{--        </select>--}}
-{{--        @error('type_id')--}}
-{{--            <div class="text-red-600">{{ $message }}</div>--}}
-{{--        @enderror--}}
-{{--    </div>--}}
+    <div class="mb-2">
+        <select wire:model="type_id" name="type_id">
+            <option value="">Выберите вид насаждения *</option>
+            @foreach($types as $item)
+                <option value="{{$item->id}}">{{$item->title_ru}}</option>
+            @endforeach
+        </select>
+        @error('type_id')
+            <div class="text-red-600">{{ $message }}</div>
+        @enderror
+    </div>
     {{--<div class="mb-2">
         <select wire:model="event_id" name="event_id">
             <option value="">Выберите хозяйственное мероприятие *</option>
