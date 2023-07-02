@@ -17,7 +17,7 @@ class ModalMarker extends Component
     public $sanitaries;
     public $categories;
     public $types;
-    public $breeds;
+    public array $breeds = [];
     public $statuses;
     public $geocode;
     public $category_id;
@@ -38,8 +38,14 @@ class ModalMarker extends Component
     {
         if ($this->search == '') {
             $this->breeds = [];
+            $this->showBtn = false;
         } else {
-            $this->breeds = Breed::where('title_ru', 'like', '%'.$this->search.'%')->get();
+            $this->breeds = Breed::where('title_ru', 'like', '%'.$this->search.'%')->get()->toArray();
+            if (empty($this->breeds)) {
+                $this->showBtn = true;
+            } else {
+                $this->showBtn = false;
+            }
         }
     }
 
@@ -61,12 +67,12 @@ class ModalMarker extends Component
     public function addBreed()
     {
         $b = Breed::create([
-           'title_ru' => $this->breedStr,
+           'title_ru' => $this->search,
            'coefficient' => 1,
            'status' => env('APP_MODER_ROLE', 2)
         ]);
         $this->breed_id = $b->id;
-        $this->updatedBreedStr();
+        $this->updatedSearch();
     }
 
     protected $rules = [
@@ -96,7 +102,7 @@ class ModalMarker extends Component
     {
 //        $this->events = Event::all();
         $this->sanitaries = Sanitary::all();
-        $this->breeds = Breed::all();
+//        $this->breeds = Breed::all();
 //        $this->categories = Category::all();
 //        $this->types = Type::all();
 //        $this->statuses = Status::all();

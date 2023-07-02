@@ -48,7 +48,6 @@ class TreeController extends Controller
         $test = Carbon::now()->format('Y') - $data['age'];
         $data['landing_date'] = Carbon::createFromDate($test)->format('d.m.Y');
         $data['user_id'] = auth()->id();
-
         foreach (json_decode($request['geocode'][0]) as $datum) {
             $data['geocode'] = json_encode($datum);
 

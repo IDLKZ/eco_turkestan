@@ -43,49 +43,59 @@
             <div class="text-red-600">{{ $message }}</div>
         @enderror
     </div>
-    <div class="mb-2" x-data='{
-        breedSelected(e) {
-            let value = e.target.value
-            let id = document.body.querySelector("datalist [value=\""+value+"\"]").dataset.value
-            // todo: Do something interesting with this
-            document.body.querySelector("#breed_id").value = id;
-            console.log(id);
-        }
-    }'>
+    <div class="mb-2"
+{{--         x-data='{--}}
+{{--        breedSelected(e) {--}}
+{{--            let value = e.target.value--}}
+{{--            let id = document.body.querySelector("datalist [value=\""+value+"\"]").dataset.value--}}
+{{--            document.body.querySelector("#breed_id").value = id;--}}
+{{--            console.log(id);--}}
+{{--        }}'--}}
+    >
+{{--        <div class="flex">--}}
+{{--            <input--}}
+{{--                style="text-transform: capitalize;"--}}
+{{--                type="text"--}}
+{{--                list="breedOptions"--}}
+{{--                wire:model="breedStr"--}}
+{{--                class="fancy-tailwind-things w-full"--}}
+{{--                placeholder="Введите породу"--}}
+{{--                x-on:change="breedSelected($event)"--}}
+{{--            >--}}
+{{--            @if($showBtn)--}}
+{{--                <button type="button" wire:click="addBreed()" class="btn btn-success bg-success">+</button>--}}
+{{--            @endif--}}
+
+{{--        </div>--}}
+
+        @if($showBtn)
+            <input type="hidden" name="breed_id" id="breed_id" value="{{$this->breed_id}}">
+        @endif
+
+{{--        <datalist id="breedOptions">--}}
+{{--            @foreach($searchResults as $result)--}}
+{{--                <option--}}
+{{--                    wire:key="{{ $result['id'] }}"--}}
+{{--                    data-value="{{ $result['id'] }}"--}}
+{{--                    value="{{ $result['title_ru'] }}"--}}
+{{--                ></option>--}}
+{{--            @endforeach--}}
+{{--        </datalist>--}}
         <div class="flex">
-            <input
-                style="text-transform: capitalize;"
-                type="text"
-                list="breedOptions"
-                wire:model="breedStr"
-                class="fancy-tailwind-things w-full"
-                placeholder="Введите породу"
-                x-on:change="breedSelected($event)"
-            >
+            <input type="text" wire:model="search" placeholder="Введите породу" class="w-full">
             @if($showBtn)
                 <button type="button" wire:click="addBreed()" class="btn btn-success bg-success">+</button>
             @endif
-
         </div>
 
-        <datalist id="breedOptions">
-            @foreach($searchResults as $result)
-                <option
-                    wire:key="{{ $result['id'] }}"
-                    data-value="{{ $result['id'] }}"
-                    value="{{ $result['title_ru'] }}"
-                ></option>
-            @endforeach
-                <input type="hidden" name="breed_id" id="breed_id" value="{{$this->breed_id}}">
-        </datalist>
-{{--        @if(!empty($breeds))--}}
-{{--            <select wire:model="breed_id" name="breed_id">--}}
-{{--                <option value="" selected>Выберите породу</option>--}}
-{{--                @foreach($breeds as $item)--}}
-{{--                    <option value="{{$item->id}}">{{$item->title_ru}}</option>--}}
-{{--                @endforeach--}}
-{{--            </select>--}}
-{{--        @endif--}}
+        @if(!empty($breeds))
+            <select wire:model="breed_id" name="breed_id" class="mt-2">
+                <option value="" selected>Выберите породу</option>
+                @foreach($breeds as $item)
+                    <option value="{{$item['id']}}">{{$item['title_ru']}}</option>
+                @endforeach
+            </select>
+        @endif
         @error('breed_id')
             <div class="text-red-600">{{ $message }}</div>
         @enderror
