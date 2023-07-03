@@ -24,7 +24,7 @@ class MarkerRequest extends FormRequest
         return [
 //            'event_id' => 'required',
             'sanitary_id' => 'required',
-//            'type_id' => 'required',
+            'type_id' => 'required',
 //            'category_id' => 'required',
             'height' => 'required',
             'diameter' => 'required',

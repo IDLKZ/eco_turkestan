@@ -79,6 +79,7 @@ class ModalMarker extends Component
         'height' => 'required',
         'diameter' => 'required',
         'breed_id' => 'required',
+        'type_id' => 'required',
         'landing_date' => 'nullable',
         'status_id' => 'nullable',
         'geocode' => 'required',

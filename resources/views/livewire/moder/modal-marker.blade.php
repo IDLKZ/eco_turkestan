@@ -68,9 +68,9 @@
 
 {{--        </div>--}}
 
-        @if($showBtn)
-            <input type="hidden" name="breed_id" id="breed_id" value="{{$this->breed_id}}">
-        @endif
+{{--        @if($showBtn)--}}
+{{--            <input type="hidden" name="breed_id" id="breed_id" value="{{$this->breed_id}}">--}}
+{{--        @endif--}}
 
 {{--        <datalist id="breedOptions">--}}
 {{--            @foreach($searchResults as $result)--}}
@@ -83,9 +83,9 @@
 {{--        </datalist>--}}
         <div class="flex">
             <input type="text" wire:model="search" placeholder="Введите породу" class="w-full">
-            @if($showBtn)
-                <button type="button" wire:click="addBreed()" class="btn btn-success bg-success">+</button>
-            @endif
+{{--            @if($showBtn)--}}
+{{--                <button type="button" wire:click="addBreed()" class="btn btn-success bg-success">+</button>--}}
+{{--            @endif--}}
         </div>
 
         @if(!empty($breeds))
