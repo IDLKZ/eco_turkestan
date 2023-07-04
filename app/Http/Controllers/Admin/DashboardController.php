@@ -5,15 +5,27 @@ namespace App\Http\Controllers\Admin;
 use App\Events\UserPresenceChannel;
 use App\Http\Controllers\Controller;
 use App\Models\GeoPosition;
+use App\Models\Marker;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard');
+        $top_ten = DB::table('markers')
+            ->select('user_id', DB::raw('count(*) as total'))
+            ->groupBy('user_id')
+            ->orderBy("total","DESC")
+            ->take(10)
+            ->get();
+
+        $total = $top_ten->pluck("total");
+        $user_ids = $top_ten->pluck("user_id");
+        $users = User::whereIn("id",$top_ten->pluck("user_id")->toArray())->pluck("name","id");
+        return view('admin.dashboard',compact("total","users","user_ids"));
     }
 
     public function geo_positions()

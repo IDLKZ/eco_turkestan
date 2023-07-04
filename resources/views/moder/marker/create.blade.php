@@ -27,11 +27,14 @@
                     <button id="my-location" class="position-absolute z-[1040] right-2 m-3 btn btn-primary">
                         <i class="fas fa-location fs-5"></i>
                     </button>
+                    <button id="showLocated" class="position-absolute z-[1040] right-2  m-3 bottom-5 btn btn-primary">
+                        <i id="toggleShowIcon" class="fas fa-eye fs-5"></i>
+                    </button>
                 </div>
             </div>
 
             <div class="modal-block">
-                <form action="{{route('trees.store')}}" method="post">
+                <form id="createMarkerPointForm" action="{{route('trees.store')}}" method="post">
                     @csrf
                     <livewire:moder.modal-marker />
                     <input type="hidden" id="geo" name="geocode[]">
@@ -41,6 +44,7 @@
                     <input type="hidden" id="lng" name="lng">
                     <div class="mb-2">
                         <button
+                            id="buttonSendMarker"
                             class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
                             Сохранить
                         </button>
@@ -57,6 +61,8 @@
             //    Initialize Map
             var userId = {{\Illuminate\Support\Facades\Auth::id()}};
             var activeGeoPlace;
+            let toggleShow = true;
+            let dataTree = [];
             const currentPosition = [],
                 area = {{Js::from($place->area)}},
                 place = {{Js::from($place)}},
@@ -207,19 +213,43 @@
                 });
             }
             async function loadMarker() {
-                if (currentZoom > 14 && place.id && search_polygon) {
+                if (currentZoom > 14 && place.id && search_polygon && toggleShow) {
                     cleanMarker();
                     const res = await axios.get('/api/markers-all-place', {params: {search_polygon: search_polygon,ids:place.id.toString()}});
                     if(res.status == 200){
                        if(res.data.length){
-                           res.data.forEach(item=>{
-                               let marker = L.marker([item.point.coordinates[1],item.point.coordinates[0]],{icon:greenIcon,title:"loaded"}).addTo(map);
-                           });
+                           dataTree = res.data;
+                           renderLoadedMap();
                        }
-
                     }
                 }
+                else{
+                    cleanMarker();
+                }
             }
+
+            function renderLoadedMap(){
+                dataTree.forEach(item=>{
+                    let marker = L.marker([item.point.coordinates[1],item.point.coordinates[0]],{icon:greenIcon,title:"loaded"}).addTo(map);
+                });
+            }
+            $("#showLocated").on("click",function (){
+               toggleShow = !toggleShow;
+               if(!toggleShow){
+                   cleanMarker();
+                   $("#toggleShowIcon").removeAttr('class');
+                   $("#toggleShowIcon").addClass("fas fa-eye-slash");
+               }
+               else{
+                   loadMarker();
+                   $("#toggleShowIcon").removeAttr('class');
+                   $("#toggleShowIcon").addClass("fas fa-eye");
+               }
+            });
+
+            $('form#createMarkerPointForm').submit(function(){
+                $("#buttonSendMarker").prop('disabled', true);
+            });
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 25}).addTo(map);
 

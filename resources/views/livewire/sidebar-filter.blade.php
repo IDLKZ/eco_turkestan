@@ -40,6 +40,83 @@
             </div>
         </div>
         <div class="accordion-item">
+            <h2 class="accordion-header" id="filterheadingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse" aria-expanded="true" aria-controls="filterCollapse">
+                    Фильтры
+                </button>
+            </h2>
+            <div id="filterCollapse" aria-labelledby="filterheadingOne" data-bs-parent="#myCollapseMenu" wire:ignore>
+                <div class="accordion-body">
+
+                    <div class="my-2">
+                        <hr>
+                        <label class="fs-6 my-2 text-dark font-weight-bold">Вид насаждения</label>
+                        <select id="breedSelection" class="w-100 mw-100" multiple>
+                            @foreach($breeds as $breedItem)
+                                <option value="{{$breedItem->id}}">{{$breedItem->title_ru}}</option>
+                            @endforeach
+                        </select>
+                        <hr>
+                    </div>
+                    <div class="my-2">
+                        <hr>
+                        <label class="fs-6 my-2 text-dark font-weight-bold">Состояние</label>
+                        <select id="sanitarySelection" class="w-100 mw-100" multiple>
+                            @foreach($sanitaries as $sanitaryItem)
+                                <option value="{{$sanitaryItem->id}}">{{$sanitaryItem->title_ru}}</option>
+                            @endforeach
+                        </select>
+
+                        <hr>
+                    </div>
+                    <div class="my-2">
+                        <hr>
+                        <label class="fs-6 my-2 text-dark font-weight-bold">Категория насаждений</label>
+                        <select id="categoriesSelection" class="w-100 mw-100" multiple>
+                            @foreach($categories as $categoryItem)
+                                <option value="{{$categoryItem->id}}">{{$categoryItem->title_ru}}</option>
+                            @endforeach
+                        </select>
+
+                        <hr>
+                    </div>
+                    <div class="my-2">
+                        <hr>
+                        <label class="fs-6 my-2 text-dark font-weight-bold">Тип посадки</label>
+                        <select id="typeSelection" class="w-100 mw-100" multiple>
+                            @foreach($types as $typeItem)
+                                <option value="{{$typeItem->id}}">{{$typeItem->title_ru}}</option>
+                            @endforeach
+                        </select>
+                        <hr>
+                    </div>
+                    <div class="my-2">
+                        <hr>
+                        <label class="fs-6 my-2 text-dark font-weight-bold">Вид мероприятия</label>
+                        <select id="eventSelection" class="w-100 mw-100" multiple>
+                            @foreach($events as $eventItem)
+                                <option value="{{$eventItem->id}}">{{$eventItem->title_ru}}</option>
+                            @endforeach
+                        </select>
+                        <hr>
+                    </div>
+                    <div class="my-2">
+                        <hr>
+                        <label class="fs-6 my-2 text-dark font-weight-bold">Статус</label>
+                        <select id="statusSelection" class="w-100 mw-100" multiple>
+                            @foreach($status as $statusItem)
+                                <option value="{{$statusItem->id}}">{{$statusItem->title_ru}}</option>
+                            @endforeach
+                        </select>
+                        <hr>
+                    </div>
+                    <div class="my-2 flex justify-content-end">
+                        <button id="useFilter" class="btn btn-info">Поиск</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
             <h2 class="accordion-header" id="treeheadingOne">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#treeCollapse" aria-expanded="true" aria-controls="treeCollapse">
                     Выбранное насаждение
@@ -162,13 +239,14 @@
     </div>
 </div>
 @push('js')
+
     <x-leaflet-scripts/>
     <script type="module">
         var map = L.map('map', {preferCanvas: true}).setView([42.315524, 69.586943], 14);
-
        let areas = {{Js::from($this->areas)}};
        let places = [];
        let selectedAreas = [];
+       let activeFilters = {"event":[],"status":[],"category":[],"sanitary":[],"breed":[]};
        let selectedPlaces = "";
        let currentZoom = map.getZoom();
        let search_polygon;
@@ -240,8 +318,17 @@
 
         async function loadMarker() {
             if (currentZoom > 14 && selectedPlaces && search_polygon) {
+                let httpParams = {"search_polygon": search_polygon,"ids":selectedPlaces};
+                let filtersTags = ["event","status","category","sanitary","breed"];
                 cleanMarker();
-                const res = await axios.get('/api/markers-all-place', {params: {search_polygon: search_polygon,ids:selectedPlaces}});
+                filtersTags.forEach((filter)=>{
+                    if(activeFilters.hasOwnProperty(filter)){
+                        if(activeFilters[filter].length){
+                            httpParams[filter] = activeFilters[filter].join(', ');
+                        }
+                    }
+                });
+                const res = await axios.get('/api/markers-all-place', {params: httpParams});
                if(res.status == 200){
                     res.data.forEach(item=>{
                       let marker = L.marker([item.point.coordinates[1],item.point.coordinates[0]],{icon:greenIcon}).addTo(map);
@@ -252,6 +339,20 @@
                }
             }
         }
+
+        $("#useFilter").on("click",function () {
+            try{
+                activeFilters["event"] = $("#eventSelection").val();
+                activeFilters["status"] = $("#statusSelection").val();
+                activeFilters["category"] = $("#categoriesSelection").val();
+                activeFilters["breed"] = $("#breedSelection").val();
+                activeFilters["sanitary"] = $("#sanitarySelection").val();
+                loadMarker();
+            }
+            catch (e) {
+                console.log(e);
+            }
+        })
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
     </script>

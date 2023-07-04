@@ -60,6 +60,7 @@ Route::middleware('auth')->group(function () {
         Route::put("/update-marker/{id}",[AdminPlaceController::class,"updateMarker"])->name("update-marker");
         Route::get('users-check', [AdminDashboardController::class, 'geo_positions'])->name('admin-check-users');
         Route::get('user-by-geo/{id}', [AdminDashboardController::class, 'getByGeo'])->name('admin-user-by-geo');
+        Route::get('user-stats/{id}', [AdminUserController::class, 'stats'])->name('user-stats');
     });
 
     Route::middleware('ModerMiddleware')->prefix('moder')->group(function () {

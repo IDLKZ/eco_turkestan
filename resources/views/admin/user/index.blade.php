@@ -36,6 +36,9 @@
                                     <td class="whitespace-nowrap px-6 py-4">{{$item->role->title_ru}}</td>
                                     <td class="flex justify-end py-4">
                                         @if($item->role_id == 2)
+                                            <a href="{{route('user-stats', $item->id)}}" class="mr-3">
+                                                <i class="fas fa-chart-line"></i>
+                                            </a>
                                             <a href="{{route('user.show', $item->id)}}" class="mr-3">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />

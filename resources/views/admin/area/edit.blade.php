@@ -78,7 +78,7 @@
                 drawPolyline:false,
                 dragMode:false,
                 cutPolygon:false,
-                drawPolygon:true,
+                drawPolygon:false,
                 editMode:true,
                 drawMarker:false,
                 rotateMode:false

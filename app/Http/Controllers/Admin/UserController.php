@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Marker;
 use App\Models\Place;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\UserPlace;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -79,6 +81,28 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
+        return redirect()->back();
+    }
+
+
+    public function stats(string $id){
+        $user = User::find($id);
+        if($user){
+            if($user->role_id == 2){
+                $total = Marker::where(["user_id" => $id])->count();
+                $info_day = DB::table('markers')
+                    ->where("user_id",$id)
+                    ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as total'))
+                    ->groupBy('date')
+                    ->get();
+                $info_month = DB::table('markers')
+                    ->where("user_id",$id)
+                    ->select(DB::raw('count(*) as total'),  DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+                    ->groupby('year','month')
+                    ->get();
+                return view("admin.user.stats",compact("info_day","info_month","total","user"));
+            }
+        }
         return redirect()->back();
     }
 }

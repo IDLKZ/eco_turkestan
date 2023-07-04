@@ -74,6 +74,10 @@ class Marker extends Model
     {
         return parent::query();
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public static function searchable($request, $bool = false)
     {

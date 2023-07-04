@@ -3,8 +3,14 @@
 namespace App\Http\Livewire;
 
 use App\Models\Area;
+use App\Models\Breed;
+use App\Models\Category;
+use App\Models\Event;
 use App\Models\Marker;
 use App\Models\Place;
+use App\Models\Sanitary;
+use App\Models\Status;
+use App\Models\Type;
 use Exception;
 use Livewire\Component;
 
@@ -14,11 +20,25 @@ class SidebarFilter extends Component
     public $places;
     public $activeMarker;
     public $selectedAreas = [];
+    //load filters
+    public $categories = [];
+    public $sanitaries = [];
+    public $events = [];
+    public $status = [];
+    public $types = [];
+    public $breeds = [];
+    //load filters
     public $selectedPlaces = [];
     protected $listeners = ['areaChanged' => 'areaChangedEvent',"placeChange"=>"placeChangedEvent","loadMarker"=>"getMarkerById","removeMarker"=>"removeMarkerById"];
     public function mount()
     {
         $this->areas = Area::all();
+        $this->categories = Category::all();
+        $this->events = Event::all();
+        $this->sanitaries = Sanitary::all();
+        $this->status = Status::all();
+        $this->types = Type::all();
+        $this->breeds = Breed::all();
         $this->loadPlaces();
     }
     public function areaChangedEvent($areaId)
