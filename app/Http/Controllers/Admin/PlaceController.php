@@ -13,6 +13,7 @@ use App\Models\Sanitary;
 use App\Models\Status;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use MatanYadaev\EloquentSpatial\Objects\Point;
 
 class PlaceController extends Controller
 {
@@ -111,7 +112,6 @@ class PlaceController extends Controller
             $categories = Category::all();
             $breeds = Breed::all();
             $status = Status::all();
-
             return view("admin.marker.edit",compact("marker","types","events","sanitaries","categories",
             "breeds","status"
             ));
@@ -127,7 +127,15 @@ class PlaceController extends Controller
                 "age"=>"gte:1",
                 "diameter"=>"gte:1",
             ]);
-            $marker->edit($request->all());
+            $data = $request->all();
+            if ($request['geocode'] != null) {
+                $geo = json_decode($request['geocode']);
+                $data['geocode'] = json_encode($geo);
+                $data['point'] = new Point($geo->lat, $geo->lng);
+            } else {
+                unset($data['geocode']);
+            }
+            $marker->edit($data);
             toastr()->success('Данные успешно обновлены!');
             return redirect()->back();
         }

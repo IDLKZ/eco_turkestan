@@ -1,10 +1,11 @@
 <x-app-layout>
     @push('css')
         <x-leaflet-styles></x-leaflet-styles>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css"/>
     @endpush
     <div class="container mx-auto py-5">
         <h1 class="mb-4 rounded-lg bg-secondary-100 px-6 py-5 text-base text-secondary-800">Изменить посадку № {{$marker->id}}</h1>
-        <form  id="area-form" action="{{route("update-marker",$marker->id)}}" method="post">
+        <form id="area-form" action="{{route("update-marker",$marker->id)}}" method="post">
             @csrf
             @method('PUT')
             <div class="relative mb-4">
@@ -122,12 +123,12 @@
                 <input value="{{$marker->age}}" id="age" name="age" min="0" max="150" inputmode="numeric" pattern="[0-9]*" type="text" class="w-full" placeholder="Введите возраст дерева">
             </div>
             @error('geocode')
-            <div class="text-red-600">{{ $message }}</div>
+                <div class="text-red-600">{{ $message }}</div>
             @enderror
             <div class="relative mb-4">
                 <div id='map'></div>
             </div>
-
+            <input type="hidden" name="geocode" id="geocode">
             <button
                 id="submit-map"
                 type="submit"
@@ -140,10 +141,12 @@
 
     @push('js')
         <x-leaflet-scripts></x-leaflet-scripts>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js"></script>
             <script>
 
-            let marker = {{Js::from($marker)}};
-            let greenIcon = L.icon({
+            let marker = {{Js::from($marker)}},
+                geocode = document.getElementById('geocode'),
+                greenIcon = L.icon({
                 iconUrl: '/images/leaf-green.png',
                 shadowUrl: '/images/leaf-shadow.png',
                 iconSize:     [38, 95], // size of the icon
@@ -151,17 +154,51 @@
                 iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
                 shadowAnchor: [4, 62],  // the same for the shadow
                 popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-            });
+            }),
             //    Initialize Map
-            var map = L.map('map',{preferCanvas:true}).setView([42.315524, 69.586943], 12);
+            map = L.map('map',{preferCanvas:true}).setView([42.315524, 69.586943], 12);
             if(marker){
-                L.marker([marker.point.coordinates[1],marker.point.coordinates[0]],{icon:greenIcon}).addTo(map);
+                // L.marker([marker.point.coordinates[1],marker.point.coordinates[0]],{icon:greenIcon}).addTo(map);
                 map.setView([marker.point.coordinates[1],marker.point.coordinates[0]], 18);
-            }
 
+                let drawnItems = new L.FeatureGroup();
+                drawnItems.addLayer(new L.marker([marker.point.coordinates[1],marker.point.coordinates[0]],{icon:greenIcon}));
+                map.addLayer(drawnItems);
+                let drawControl = new L.Control.Draw({
+                    draw: {
+                        polygon: false,
+                        rectangle: false,
+                        marker: false,
+                        polyline: false,
+                        circle: false
+                    },
+                    edit: {
+                        featureGroup: drawnItems,
+                        remove: false
+                    }
+                });
+                map.addControl(drawControl);
+                map.on('draw:edited', function (e) {
+
+                    let layers = e.layers;
+                    layers.eachLayer(function (layer) {
+                        geocode.value = JSON.stringify({
+                            "lat": layer.toGeoJSON().geometry.coordinates[1],
+                            "lng": layer.toGeoJSON().geometry.coordinates[0]
+                        });
+                    });
+
+                    // var layer = e.layer,
+                    //     feature = layer.feature = layer.feature || {};
+                    //
+                    // feature.type = feature.type || 'Feature';
+                    // var props = feature.properties = feature.properties || {};
+                    //
+                    // drawnItems.addLayer(layer);
+                })
+            }
             // L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoid2VwbGF5a3oyMDIwIiwiYSI6ImNrcTRxd3I3czB2eHgydm8wOHR2NW40OTEifQ.a08RNc7xB3Tm1pGai2NNCQ', {subdomains:['mt0','mt1','mt2','mt3'], maxZoom:25}).addTo(map);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-
         </script>
     @endpush
 </x-app-layout>
