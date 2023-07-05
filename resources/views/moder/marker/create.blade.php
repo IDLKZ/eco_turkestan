@@ -251,7 +251,7 @@
                 $("#buttonSendMarker").prop('disabled', true);
             });
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 25}).addTo(map);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxNativeZoom: 18,maxZoom:28}).addTo(map);
 
         </script>
     @endpush

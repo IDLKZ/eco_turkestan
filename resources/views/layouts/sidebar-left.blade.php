@@ -41,6 +41,11 @@
                         :icon="'bx bx-current-location'"
                     />
                     <x-sidebar-navlink
+                        :route="'markers'"
+                        :route-name="'Изменить насаждения'"
+                        :icon="'fas fa-pen'"
+                    />
+                    <x-sidebar-navlink
                         :route="'all-trees'"
                         :route-name="'Просмотр насаждений'"
                         :icon="'fas fa-map'"
@@ -81,6 +86,11 @@
                                 :route="'type.index'"
                                 :route-name="'Виды насаждений'"
                                 :icon="'bx bxs-tree-alt'"
+                            />
+                            <x-sidebar-navlink
+                                :route="'sanitary_type.index'"
+                                :route-name="'Иконки насаждений'"
+                                :icon="'bx bxs-camera'"
                             />
                         </ul>
                     </li>

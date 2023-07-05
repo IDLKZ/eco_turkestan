@@ -354,6 +354,9 @@
             }
         })
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+            maxNativeZoom: 18,
+            maxZoom: 24
+        }).addTo(map);
     </script>
 @endpush

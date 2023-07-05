@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\TypeController as AdminTypeController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\PlaceController as AdminPlaceController;
 use App\Http\Controllers\Mayor\DashboardController as MayorDashboardController;
+use App\Http\Controllers\Admin\SanitaryTypeController as AdminSanitaryTypeController;
+use App\Http\Controllers\Admin\MarkerController as AdminMarkerController;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Moder\DashboardController as ModerDashboardController;
@@ -54,6 +56,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('status', AdminStatusController::class);
         Route::resource('event', AdminEventController::class);
         Route::resource('type', AdminTypeController::class);
+        Route::resource('sanitary_type', AdminSanitaryTypeController::class);
         Route::get("all-trees",[AdminDashboardController::class,"all_trees"])->name("all-trees");
         Route::get('add-place/{id?}', [AdminPlaceController::class, 'addPlace'])->name('admin.add-place');
         Route::get("/change-marker/{id}",[AdminPlaceController::class,"changeMarker"])->name("change-marker");
@@ -61,6 +64,7 @@ Route::middleware('auth')->group(function () {
         Route::get('users-check', [AdminDashboardController::class, 'geo_positions'])->name('admin-check-users');
         Route::get('user-by-geo/{id}', [AdminDashboardController::class, 'getByGeo'])->name('admin-user-by-geo');
         Route::get('user-stats/{id}', [AdminUserController::class, 'stats'])->name('user-stats');
+        Route::get("markers",[AdminMarkerController::class,"index"])->name("markers");
     });
 
     Route::middleware('ModerMiddleware')->prefix('moder')->group(function () {

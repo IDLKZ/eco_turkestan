@@ -7,6 +7,7 @@ use App\Models\Breed;
 use App\Models\Category;
 use App\Models\Event;
 use App\Models\Sanitary;
+use App\Models\SanitaryType;
 use App\Models\Status;
 use App\Models\Type;
 use Illuminate\Http\Request;
@@ -20,6 +21,8 @@ class SystemController extends Controller
             "event"=>Event::all(),
             "sanitary"=>Sanitary::all(),
             "status"=>Status::all(),
-            "type"=>Type::all()];
+            "type"=>Type::all(),
+            "sanitary_type"=>SanitaryType::all()
+        ];
     }
 }
