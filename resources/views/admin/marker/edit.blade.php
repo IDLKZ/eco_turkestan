@@ -93,7 +93,7 @@
                     <option value="">Не выбрано</option>
                     @if(count($status))
                         @foreach($status as $statusItem)
-                            <option @if($statusItem->id == $marker->status_id) selected @endif value="{{$sanitaryItem->id}}">
+                            <option @if($statusItem->id == $marker->status_id) selected @endif value="{{$statusItem->id}}">
                                 {{$statusItem->title_ru}}
                             </option>
                         @endforeach
