@@ -12,6 +12,7 @@ use App\Models\Place;
 use App\Models\Sanitary;
 use App\Models\Status;
 use App\Models\Type;
+use Exception;
 use Illuminate\Http\Request;
 
 class MarkerController extends Controller
@@ -39,26 +40,53 @@ class MarkerController extends Controller
         $types = null;
         if($request->get("event_id")){
             $events = Event::all();
-            $query = $query->whereIn("event_id",$request->get("event_id"));
+            $query = $query->where(["event_id"=>$request->get("event_id")]);
         }
         if($request->get("sanitary_id")){
             $sanitaries = Sanitary::all();
-            $query = $query->whereIn("event_id",$request->get("sanitary_id"));
+            $query = $query->where(["sanitary_id"=>$request->get("sanitary_id")]);
         }
         if($request->get("status_id")){
             $status = Status::all();
-            $query = $query->whereIn("status_id",$request->get("status_id"));
+            $query = $query->where(["status_id"=>$request->get("status_id")]);
         }
         if($request->get("type_id")){
             $types = Type::all();
-            $query = $query->whereIn("type_id",$request->get("type_id"));
+            $query = $query->where(["type_id"=>$request->get("type_id")]);
         }
         if($request->get("category_id")){
             $categories = Category::all();
-            $query = $query->whereIn("category_id",$request->get("category_id"));
+            $query = $query->where(["category_id"=>$request->get("category_id")]);
         }
         $marker = $query->count();
         $data = $request->all();
         return view("admin.marker.update",compact("places","breeds","types","status","sanitaries","events","categories","marker","data"));
+    }
+
+    public function update(Request $request){
+        try{
+            $query = Marker::where(["place_id" => $request->get("old_place_id"),"breed_id" => $request->get("old_breed_id")]);
+            if($request->get("old_event_id")){
+                $query = $query->where(["event_id"=>$request->get("old_event_id")]);
+            }
+            if($request->get("old_sanitary_id")){
+                $query = $query->where(["sanitary_id"=>$request->get("old_sanitary_id")]);
+            }
+            if($request->get("old_status_id")){
+                $query = $query->where(["status_id"=>$request->get("old_status_id")]);
+            }
+            if($request->get("old_type_id")){
+                $query = $query->where(["type_id"=>$request->get("old_type_id")]);
+            }
+            if($request->get("category_id")){
+                $query = $query->where(["category_id"=>$request->get("old_category_id")]);
+            }
+            $marker = $query->update( $request->only(["place_id","breed_id","event_id","sanitary_id","status_id","type_id","category_id"]));
+            toastr()->success("Обновлено!");
+        }
+        catch (Exception $exception){
+            toastr()->error($exception->getMessage());
+        }
+        return redirect()->route("markers");
     }
 }

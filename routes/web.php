@@ -66,6 +66,7 @@ Route::middleware('auth')->group(function () {
         Route::get('user-stats/{id}', [AdminUserController::class, 'stats'])->name('user-stats');
         Route::get("markers",[AdminMarkerController::class,"index"])->name("markers");
         Route::get("markers-edit",[AdminMarkerController::class,"edit"])->name("markers-edit");
+        Route::put("markers-mass-update",[AdminMarkerController::class,"update"])->name("markers-mass-update");
     });
 
     Route::middleware('ModerMiddleware')->prefix('moder')->group(function () {
