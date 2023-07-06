@@ -59,7 +59,7 @@ return [
             'strict' => true,
             'engine' => null,
             'dump' => [
-                'dump_binary_path' => 'D:\OSPanel\modules\database\MySQL-8.0-Win10\bin', // only the path, so without `mysqldump` or `pg_dump`
+                'dump_binary_path' => '', // only the path, so without `mysqldump` or `pg_dump`
                 'use_single_transaction',
                 'timeout' => 60 * 5, // 5 minute timeout
             ],
