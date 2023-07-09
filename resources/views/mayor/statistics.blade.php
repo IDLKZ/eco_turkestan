@@ -33,10 +33,38 @@
                                     @foreach($markers as $item)
                                         <tr class="border-b dark:border-neutral-500">
                                             <td class="whitespace-nowrap px-6 py-4 font-medium">{{$loop->iteration}}</td>
-                                            <td class="whitespace-nowrap px-6 py-4">{{$item->area->title_ru}}</td>
-                                            <td class="whitespace-nowrap px-6 py-4">{{$item->place->title_ru}}</td>
-                                            <td class="whitespace-nowrap px-6 py-4">{{$item->breed->title_ru}}</td>
-                                            <td class="whitespace-nowrap px-6 py-4">{{$item->sanitary->title_ru}}</td>
+                                            <td class="whitespace-nowrap px-6 py-4">
+                                                @if($item->place)
+                                                    @if($item->place->area)
+                                                        {{$item->place->area->title_ru}}
+                                                    @else
+                                                        -
+                                                    @endif
+                                                @else
+                                                    -
+                                                @endif
+                                            </td>
+                                            <td class="whitespace-nowrap px-6 py-4">
+                                                @if($item->place)
+                                                {{$item->place->title_ru}}
+                                                @else
+                                                -
+                                                @endif
+                                            </td>
+                                            <td class="whitespace-nowrap px-6 py-4">
+                                                @if($item->breed)
+                                                    {{$item->breed->title_ru}}
+                                                @else
+                                                    -
+                                                @endif
+                                            </td>
+                                            <td class="whitespace-nowrap px-6 py-4">
+                                               @if($item->sanitary)
+                                                    {{$item->sanitary->title_ru}}
+                                                @else
+                                                -
+                                                @endif
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

@@ -47,7 +47,7 @@ class DashboardController extends Controller
     public function statistics()
     {
         $forExp = [];
-        $markers = Marker::with('area', 'sanitary', 'breed', 'place')->paginate(20);
+        $markers = Marker::with('sanitary', 'breed', 'place.area')->paginate(20);
         return view('mayor.statistics', compact('markers', 'forExp'));
     }
 
