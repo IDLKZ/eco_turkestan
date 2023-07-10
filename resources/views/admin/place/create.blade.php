@@ -74,7 +74,13 @@
     @push('js')
             <x-leaflet-scripts></x-leaflet-scripts>
             <script>
-
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: 'focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800',
+                        cancelButton: 'focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-90'
+                    },
+                    buttonsStyling: false
+                })
                     //    Initialize Map
                     var map = L.map('map',{preferCanvas:true}).setView([42.315524, 69.586943], 12);
                     map.pm.addControls({
@@ -191,7 +197,33 @@
                                 return true;
                             }
                         }
-                        layer.remove();
+                        swalWithBootstrapButtons.fire({
+                            title: 'Вы уверены?',
+                            text: "Объекты на карте выходят за рамки",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonText: 'Я все равно хочу отрисовать их!',
+                            cancelButtonText: 'Нет, удалить!',
+                            reverseButtons: true
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                swalWithBootstrapButtons.fire(
+                                    'Новый объект создан!',
+                                    'Вы успешно создали новый объект',
+                                    'success'
+                                )
+                            } else if (
+                                /* Read more about handling dismissals below */
+                                result.dismiss === Swal.DismissReason.cancel
+                            ) {
+                                layer.remove();
+                                swalWithBootstrapButtons.fire(
+                                    'Объект удален',
+                                    'Объект был удален с карты :)',
+                                    'error'
+                                )
+                            }
+                        })
                     }
                     //Action when save it
                     $("#submit-map").on("click",function (e) {

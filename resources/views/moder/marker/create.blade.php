@@ -213,7 +213,7 @@
                 });
             }
             async function loadMarker() {
-                if (currentZoom > 14 && place.id && search_polygon && toggleShow) {
+                if (currentZoom > 18 && place.id && search_polygon && toggleShow) {
                     cleanMarker();
                     const res = await axios.get('/api/markers-all-place', {params: {search_polygon: search_polygon,ids:place.id.toString()}});
                     if(res.status == 200){

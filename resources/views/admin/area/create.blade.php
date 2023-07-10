@@ -178,7 +178,7 @@
                                                 layer.remove();
                                                 swalWithBootstrapButtons.fire(
                                                     'Объект удален',
-                                                    'Оюъект был удален с карты :)',
+                                                    'Объект был удален с карты :)',
                                                     'error'
                                                 )
                                             }
