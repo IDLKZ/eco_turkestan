@@ -69,6 +69,7 @@ Route::middleware('auth')->group(function () {
         Route::get("markers-edit",[AdminMarkerController::class,"edit"])->name("markers-edit");
         Route::put("markers-mass-update",[AdminMarkerController::class,"update"])->name("markers-mass-update");
         Route::get("back-up",[AdminBackupController::class,"index"])->name("back-up");
+        Route::delete("back-up-destroy",[AdminBackupController::class,"delete"])->name("back-up-destroy");
     });
 
     Route::middleware('ModerMiddleware')->prefix('moder')->group(function () {
