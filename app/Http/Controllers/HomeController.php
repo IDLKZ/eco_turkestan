@@ -28,7 +28,8 @@ class HomeController extends Controller
 
     public function db_dump(){
         Artisan::call('backup:run',['--only-db'=>true,"--disable-notifications"=>true]);
-        dd(Artisan::output());
+        toastr()->info(Artisan::output());
+        return redirect()->route("back-up");
     }
 
 

@@ -50,6 +50,11 @@
                         :route-name="'Просмотр насаждений'"
                         :icon="'fas fa-map'"
                     />
+                    <x-sidebar-navlink
+                        :route="'back-up'"
+                        :route-name="'Дамп БД'"
+                        :icon="'fas fa-database'"
+                    />
                     <li class="nav-parent">
                         <a class="nav-link" href="#">
                             <i class="bx bx-file" aria-hidden="true"></i>
