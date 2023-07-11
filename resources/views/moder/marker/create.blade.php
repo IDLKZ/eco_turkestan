@@ -63,6 +63,7 @@
             var activeGeoPlace;
             let toggleShow = true;
             let dataTree = [];
+            let maxZoom = 21;
             const currentPosition = [],
                 area = {{Js::from($place->area)}},
                 place = {{Js::from($place)}},
@@ -181,7 +182,7 @@
             })
 
             map.on("moveend",function (event) {
-                if(currentZoom > 14){
+                if(currentZoom > maxZoom){
                     let bounds = event.target.getBounds();
                     search_polygon = new L.Polygon([
                         bounds._southWest,
@@ -213,7 +214,7 @@
                 });
             }
             async function loadMarker() {
-                if (currentZoom > 18 && place.id && search_polygon && toggleShow) {
+                if (currentZoom > maxZoom && place.id && search_polygon && toggleShow) {
                     cleanMarker();
                     const res = await axios.get('/api/markers-all-place', {params: {search_polygon: search_polygon,ids:place.id.toString()}});
                     if(res.status == 200){

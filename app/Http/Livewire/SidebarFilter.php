@@ -13,6 +13,7 @@ use App\Models\Status;
 use App\Models\Type;
 use Exception;
 use Livewire\Component;
+use MatanYadaev\EloquentSpatial\Objects\Point;
 
 class SidebarFilter extends Component
 {
@@ -29,7 +30,13 @@ class SidebarFilter extends Component
     public $breeds = [];
     //load filters
     public $selectedPlaces = [];
-    protected $listeners = ['areaChanged' => 'areaChangedEvent',"placeChange"=>"placeChangedEvent","loadMarker"=>"getMarkerById","removeMarker"=>"removeMarkerById"];
+    protected $listeners = [
+        'areaChanged' => 'areaChangedEvent',
+        "placeChange"=>"placeChangedEvent",
+        "loadMarker"=>"getMarkerById",
+        "removeMarker"=>"removeMarkerById",
+        "changeMarkerGeo"=>"changeMarkerPosition"
+        ];
     public function mount()
     {
         $this->areas = Area::all();
@@ -90,7 +97,15 @@ class SidebarFilter extends Component
         }
 
     }
-
+    public function changeMarkerPosition($id,$latLng){
+        $marker = Marker::where(["id"=>$id])->first();
+        if($marker){
+            $marker->geocode = $latLng;
+            $latLng = json_decode($latLng);
+            $marker->point = new Point($latLng->lat, $latLng->lng);
+            $marker->save();
+        }
+    }
     public function render()
     {
         return view('livewire.sidebar-filter');
