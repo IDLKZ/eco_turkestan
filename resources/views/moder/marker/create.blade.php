@@ -23,13 +23,14 @@
                         </ul>
                     </div>
                 @endif
+                <button id="showLocated" class=" right-2  m-3 bottom-5 btn btn-primary">
+                    <i id="toggleShowIcon" class="fas fa-eye fs-5"></i>
+                </button>
+                <button id="my-location" class=" right-2 m-3 btn btn-primary">
+                    <i class="fas fa-location fs-5"></i>
+                </button>
                 <div id='map' class="position-relative">
-                    <button id="my-location" class="position-absolute z-[1040] right-2 m-3 btn btn-primary">
-                        <i class="fas fa-location fs-5"></i>
-                    </button>
-                    <button id="showLocated" class="position-absolute z-[1040] right-2  m-3 bottom-5 btn btn-primary">
-                        <i id="toggleShowIcon" class="fas fa-eye fs-5"></i>
-                    </button>
+
                 </div>
             </div>
 
@@ -63,7 +64,7 @@
             var activeGeoPlace;
             let toggleShow = true;
             let dataTree = [];
-            let maxZoom = 21;
+            let maxZoom = 18;
             const currentPosition = [],
                 area = {{Js::from($place->area)}},
                 place = {{Js::from($place)}},
@@ -215,10 +216,14 @@
             }
             async function loadMarker() {
                 if (currentZoom > maxZoom && place.id && search_polygon && toggleShow) {
+
                     cleanMarker();
                     const res = await axios.get('/api/markers-all-place', {params: {search_polygon: search_polygon,ids:place.id.toString()}});
+
                     if(res.status == 200){
+
                        if(res.data.length){
+
                            dataTree = res.data;
                            renderLoadedMap();
                        }
@@ -235,7 +240,9 @@
                 });
             }
             $("#showLocated").on("click",function (){
+
                toggleShow = !toggleShow;
+
                if(!toggleShow){
                    cleanMarker();
                    $("#toggleShowIcon").removeAttr('class');
