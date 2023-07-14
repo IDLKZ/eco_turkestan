@@ -59,7 +59,7 @@ return [
             'strict' => true,
             'engine' => null,
             'dump' => [
-                'dump_binary_path' => '', // only the path, so without `mysqldump` or `pg_dump`
+                'dump_binary_path' => env("MYSQL_DUMP_BIN"), // only the path, so without `mysqldump` or `pg_dump`
                 'use_single_transaction',
                 'timeout' => 60 * 5, // 5 minute timeout
             ],
