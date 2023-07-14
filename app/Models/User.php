@@ -37,7 +37,8 @@ class User extends Authenticatable
         'email',
         'password',
         'role_id',
-        'image_url'
+        'image_url',
+        "status"
     ];
 
     /**
@@ -48,6 +49,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'status'
     ];
 
     /**
@@ -57,6 +59,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        "status"=>"boolean"
     ];
 
     public function role()

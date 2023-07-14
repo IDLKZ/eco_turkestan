@@ -11,12 +11,14 @@ class EditUserPlace extends Component
     public $name;
     public $email;
     public $password;
+    public $status;
     protected function rules()
     {
         return [
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$this->user->id,
-            'password' => 'sometimes|nullable'
+            'password' => 'sometimes|nullable',
+            "status" => ""
         ];
     }
     public function updated($propertyName)
@@ -28,6 +30,7 @@ class EditUserPlace extends Component
         $this->user = $user;
         $this->name = $user->name;
         $this->email = $user->email;
+        $this->status = $user->status;
     }
 
     public function submit()

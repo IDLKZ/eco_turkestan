@@ -17,6 +17,7 @@ class CreateUserPlace extends Component
     public $email;
     public $password;
     public $role_id = 1;
+    public $status = true;
     public bool $isShow = false;
     public $checkedPlaces = [];
 
@@ -24,7 +25,8 @@ class CreateUserPlace extends Component
         'name' => 'required',
         'email' => 'required|email|unique:users,email',
         'password' => 'required',
-        'role_id' => 'required'
+        'role_id' => 'required',
+        "status" => ""
     ];
 
     public function toggle()
