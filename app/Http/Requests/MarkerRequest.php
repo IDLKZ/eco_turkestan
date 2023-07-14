@@ -32,7 +32,7 @@ class MarkerRequest extends FormRequest
             'landing_date' => 'nullable',
 //            'age' => 'required',
             'status_id' => 'nullable',
-            'geocode' => 'required'
+            'geocode' => ["required","array","min:1","max:21"]
         ];
     }
 

@@ -23,12 +23,7 @@
                         </ul>
                     </div>
                 @endif
-                <button id="showLocated" class=" right-2  m-3 bottom-5 btn btn-primary">
-                    <i id="toggleShowIcon" class="fas fa-eye fs-5"></i>
-                </button>
-                <button id="my-location" class=" right-2 m-3 btn btn-primary">
-                    <i class="fas fa-location fs-5"></i>
-                </button>
+
                 <div id='map' class="position-relative">
 
                 </div>
@@ -62,7 +57,7 @@
             //    Initialize Map
             var userId = {{\Illuminate\Support\Facades\Auth::id()}};
             var activeGeoPlace;
-            let toggleShow = true;
+            let toggleShow = false;
             let dataTree = [];
             let maxZoom = 18;
             const currentPosition = [],
@@ -95,12 +90,45 @@
                     shadowAnchor: [4, 62],  // the same for the shadow
                     popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
                 }),
-                MARKERS_MAX = 20,
-                MARKERS_DATA = [];
+                MARKERS_MAX = 20;
+                let MARKERS_DATA = [];
+            cable.pm.setOptions({
+                allowEditing:false,
+                allowRemoval:false,
+                allowCutting:false,
+                allowRotation:false,
+            });
                 let search_polygon;
+                let drawMode = true;
 
-                map.fitBounds(cable.getBounds())
-            let currentZoom = map.getZoom();
+                map.fitBounds(cable.getBounds());
+            map.pm.addControls({
+                position: 'topleft',
+                drawCircle: false,
+                drawCircleMarker:false,
+                tooltips:false,
+                drawPolyline:false,
+                dragMode:false,
+                cutPolygon:false,
+                drawPolygon:false,
+                drawRectangle:false,
+                drawText:false,
+                editMode:false,
+                drawMarker:false,
+                rotateMode:false
+            });
+            map.pm.Toolbar.createCustomControl({
+                name:"showAll",
+                title:"Показать ранее посаженные деревья",
+                className: "fas fa-eye fs-5",
+                afterClick:()=>{toggleShowAction();},
+            });
+            map.pm.Toolbar.createCustomControl({
+                name:"geoPosition",
+                title:"Показать ранее посаженные деревья",
+                className: "fas fa-location fs-5",
+                afterClick:()=>{getMyCurrentPosition();},
+            });
             window.onload = function() {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(setPosition);
@@ -120,21 +148,21 @@
                 }
 
             };
-            $("#my-location").on("click",function () {
+            function getMyCurrentPosition(){
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function (position) {
                         map.setView([position.coords.latitude,position.coords.longitude], 19);
                     });
                 } else {
-                    alert("Geolocation not supported by browser.");
+                    alert("Геолокация не поддерживается браузером.");
                 }
-            });
+            }
             // a layer group, used here like a container for markers
             var markersGroup = L.layerGroup();
             map.addLayer(markersGroup);
             if(markers.length<100){
                 markers.forEach(function (marker) {
-                    L.marker(JSON.parse(marker.geocode), {icon: greenIcon}).addTo(map)
+                    L.marker(JSON.parse(marker.geocode)).addTo(map)
                 })
             }
 
@@ -151,50 +179,57 @@
                 $('#lat').attr('value', JSON.stringify(latitude))
                 $('#lng').attr('value', JSON.stringify(longitude))
             }
-            let points = [];
+
             map.on('click', function(e) {
                 // get the count of currently displayed markers
                 const markersCount = markersGroup.getLayers().length;
-                if (markersCount < MARKERS_MAX) {
-                    var marker = L.marker(e.latlng, {icon: greenIcon,title:"point"});
+                if (markersCount < MARKERS_MAX && drawMode) {
+                    var marker = L.marker(e.latlng, {title:"point"});
                     if(checkInBounds(marker)){
                         if(marker.options.title == "point"){
                             marker.addTo(markersGroup);
+                            marker.on("pm:remove",function ({	layer, shape})
+                                {
+                                    markersGroup.removeLayer(layer["_leaflet_id"]);
+                                    let index = MARKERS_DATA.indexOf(layer.getLatLng());
+                                    if(index > -1){
+                                        MARKERS_DATA.splice(index, 1);
+                                    }
+                                    markersGroup = markersGroup.eachLayer(function (itemLayer) {
+                                       if(itemLayer.getLatLng() == layer.getLatLng()){
+                                           itemLayer.remove();
+                                       }
+                                    });
+                                    $('#geo').attr('value', MARKERS_DATA.length > 0 ? JSON.stringify(MARKERS_DATA) : null);
+                                }
+                            )
                         }
                         markersGroup.getLayers().forEach(function (e){
                             if (!MARKERS_DATA.includes(e.getLatLng()) && e.options.title == "point") {
-                                points.push(e.options.title);
                                 MARKERS_DATA.push(e.getLatLng());
                                 marker = null;
                             }
                         });
                     }
-                    $('#geo').attr('value', JSON.stringify(MARKERS_DATA))
-                    return;
-
                 }
-
+                $('#geo').attr('value', MARKERS_DATA.length > 0 ? JSON.stringify(MARKERS_DATA) : null);
+                if(markersCount > MARKERS_MAX){
+                    alert("Превышено допустимое число более 20");
+                }
                 // remove the markers when MARKERS_MAX is reached
-                markersGroup.clearLayers();
             });
             map.on("zoomend",function (event) {
-                currentZoom = map.getZoom();
-                loadMarker();
+                getSearchPolygon(event);
             })
 
             map.on("moveend",function (event) {
-                if(currentZoom > maxZoom){
-                    let bounds = event.target.getBounds();
-                    search_polygon = new L.Polygon([
-                        bounds._southWest,
-                        L.latLng(bounds._northEast.lat, bounds._southWest.lng), // Top-left coordinate
-                        bounds._northEast,
-                        L.latLng(bounds._southWest.lat, bounds._northEast.lng)
-                    ]);
-                    search_polygon = JSON.stringify(search_polygon.toGeoJSON());
-                    loadMarker();
-                }
+                getSearchPolygon(event);
             })
+
+            map.on("pm:globalremovalmodetoggled", ({enabled, map}) => {
+                drawMode = !enabled;
+            });
+
             //Check if in selectedArea
             function checkInBounds(layer){
                 if(activeGeoPlace){
@@ -205,6 +240,7 @@
                 layer.remove();
                 return false;
             }
+
             function cleanMarker(){
                 map.eachLayer(function (layer) {
                     if (layer instanceof L.Marker){
@@ -215,15 +251,11 @@
                 });
             }
             async function loadMarker() {
-                if (currentZoom > maxZoom && place.id && search_polygon && toggleShow) {
-
+                if (map.getZoom() > maxZoom && place.id && search_polygon && toggleShow) {
                     cleanMarker();
                     const res = await axios.get('/api/markers-all-place', {params: {search_polygon: search_polygon,ids:place.id.toString()}});
-
                     if(res.status == 200){
-
                        if(res.data.length){
-
                            dataTree = res.data;
                            renderLoadedMap();
                        }
@@ -236,24 +268,42 @@
 
             function renderLoadedMap(){
                 dataTree.forEach(item=>{
-                    let marker = L.marker([item.point.coordinates[1],item.point.coordinates[0]],{icon:greenIcon,title:"loaded"}).addTo(map);
+                    let marker = L.marker([item.point.coordinates[1],item.point.coordinates[0]],{title:"loaded"}).addTo(map);
+                    marker.pm.setOptions({
+                        allowEditing:false,
+                        allowRemoval:false,
+                        allowCutting:false,
+                        allowRotation:false,
+                    });
                 });
             }
             $("#showLocated").on("click",function (){
-
-               toggleShow = !toggleShow;
-
-               if(!toggleShow){
-                   cleanMarker();
-                   $("#toggleShowIcon").removeAttr('class');
-                   $("#toggleShowIcon").addClass("fas fa-eye-slash");
-               }
-               else{
-                   loadMarker();
-                   $("#toggleShowIcon").removeAttr('class');
-                   $("#toggleShowIcon").addClass("fas fa-eye");
-               }
+                toggleShowAction();
             });
+
+            function getSearchPolygon(event){
+                if(map.getZoom() > maxZoom){
+                    let bounds = event.target.getBounds();
+                    search_polygon = new L.Polygon([
+                        bounds._southWest,
+                        L.latLng(bounds._northEast.lat, bounds._southWest.lng), // Top-left coordinate
+                        bounds._northEast,
+                        L.latLng(bounds._southWest.lat, bounds._northEast.lng)
+                    ]);
+                    search_polygon = JSON.stringify(search_polygon.toGeoJSON());
+                    loadMarker();
+                }
+                else{
+                    cleanMarker();
+                }
+            }
+
+            function toggleShowAction(){
+                toggleShow = !toggleShow;
+                if(!toggleShow){
+                    cleanMarker();
+                }
+            }
 
             $('form#createMarkerPointForm').submit(function(){
                 $("#buttonSendMarker").prop('disabled', true);

@@ -39,6 +39,7 @@ class TreeController extends Controller
     public function store(MarkerRequest $request)
     {
         $data = $request->all();
+
         $breed = Breed::find($data['breed_id']);
         if ($breed != null) {
             $data['age'] = round(($data['diameter'] * 0.5) / $breed->coefficient);
