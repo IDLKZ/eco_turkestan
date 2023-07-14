@@ -39,9 +39,13 @@ class Marker extends Model
         'point' => Point::class,
     ];
 
+//    public function area()
+//    {
+//        return $this->hasOneThrough(Area::class, Place::class,'area_id','id','place_id','id');
+//    }
     public function area()
     {
-        return $this->hasOneThrough(Area::class, Place::class,'area_id','id','place_id','id');
+        return $this->belongsTo(Area::class);
     }
     public function event()
     {

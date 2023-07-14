@@ -49,14 +49,15 @@ class DashboardController extends Controller
     public function statistics()
     {
         $forExp = [];
-        $markers = Marker::with('sanitary', 'breed', 'place.area')->paginate(20);
+        $markers = Marker::with('sanitary', 'breed', 'place.area')->paginate(20)->withQueryString();
         return view('mayor.statistics', compact('markers', 'forExp'));
     }
 
     public function search(Request $request)
     {
-        $markers = Marker::searchable($request->all())->paginate(20);
+        $markers = Marker::searchable($request->all())->paginate(20)->withQueryString();
         $forExp = $request->all();
+//        dd($forExp);
         return view('mayor.statistics', compact('markers', 'forExp'));
     }
 

@@ -4,6 +4,9 @@
         @if(count($forExp) > 0)
             <input type="hidden" name="area_id" value="{{$forExp['area_id']}}">
 {{--            <input type="hidden" name="category_id" value="{{$forExp['category_id']}}">--}}
+        @if(isset($forExp['place_id']))
+            <input type="hidden" name="type_id" value="{{$forExp['place_id']}}">
+        @endif
             <input type="hidden" name="type_id" value="{{$forExp['type_id']}}">
             <input type="hidden" name="breed_id" value="{{$forExp['breed_id']}}">
             <input type="hidden" name="sanitary_id" value="{{$forExp['sanitary_id']}}">

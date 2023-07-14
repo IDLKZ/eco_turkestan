@@ -21,10 +21,9 @@
                         @if($markers)
                             <div class="flex justify-between">
                                 <div>Количество посаженных деревьев: {{$markers->total()}}</div>
-                                <div>
-                                    <livewire:mayor.export-marker :forExp="$forExp"/>
-                                </div>
-
+                                    <div>
+                                        <livewire:mayor.export-marker :forExp="$forExp"/>
+                                    </div>
                             </div>
 
                             <table class="min-w-full text-left text-sm font-light">
@@ -40,7 +39,7 @@
                                 <tbody>
                                     @foreach($markers as $item)
                                         <tr class="border-b dark:border-neutral-500">
-                                            <td class="whitespace-nowrap px-6 py-4 font-medium">{{$loop->iteration}}</td>
+                                            <td class="whitespace-nowrap px-6 py-4 font-medium">{{$markers->firstItem() + $loop->index}}</td>
                                             <td class="whitespace-nowrap px-6 py-4">
                                                 @if($item->place)
                                                     @if($item->place->area)
@@ -78,7 +77,7 @@
                                 </tbody>
                             </table>
                             <div class="py-4 text-center">
-                                {{$markers->links()}}
+                                {{$markers->appends(request()->except('page'))->links()}}
                             </div>
                         @endif
                     </div>

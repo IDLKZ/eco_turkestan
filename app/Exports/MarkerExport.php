@@ -36,8 +36,8 @@ class MarkerExport implements FromQuery, WithHeadings, WithMapping, WithColumnWi
             $row->height,
             $row->diameter,
             $row->sanitary->title_ru,
-            $row->status->title_ru,
-            $row->category->title_ru,
+//            $row->status->title_ru,
+//            $row->category->title_ru,
             $row->age,
             $row->landing_date
         ];
@@ -52,8 +52,8 @@ class MarkerExport implements FromQuery, WithHeadings, WithMapping, WithColumnWi
             'Высота',
             'Диаметр',
             'Состояние',
-            'Статус',
-            'Вид насаждения',
+//            'Статус',
+//            'Вид насаждения',
             'Возраст',
             'Дата посадки'
         ];
@@ -68,8 +68,8 @@ class MarkerExport implements FromQuery, WithHeadings, WithMapping, WithColumnWi
             'D' => 15,
             'E' => 15,
             'F' => 55,
-            'G' => 50,
-            'H' => 45,
+//            'G' => 50,
+//            'H' => 45,
             'I' => 15,
             'J' => 25
         ];
