@@ -21,43 +21,54 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $breeds = Breed::withCount('markers')->get();
+        $markerTotal = Marker::count();
+        $breeds = DB::table('markers')
+            ->select('breed_id', DB::raw('count(*) as total'))
+            ->groupBy('breed_id')
+            ->orderBy('total', 'DESC')
+            ->get();
+        $breedTotal = $breeds->pluck("total");
+        $breedsT = Breed::whereIn("id", $breeds->pluck("breed_id")->toArray())->pluck("title_ru","id");
+        foreach ($breeds as $item) {
+            $dataForBreed[] = [$breedsT[$item->breed_id], ($item->total/$markerTotal)*100];
+        }
+//        dd($dataForBreed);
+//        $breeds = Breed::withCount('markers')->get();
         $areas = Area::withCount('markers')->get();
         $sanitaries = Sanitary::withCount('markers')->get();
-        $dataForBreed[] = ['Прочие породы', 0];
+//        $dataForBreed[] = ['Прочие породы', 0];
 
-        foreach ($breeds as $value) {
-            $pr = ($value->markers_count/Marker::count()) * 100;
-            $dataForBreed[] = [$value->title_ru , $pr];
+//        foreach ($breeds as $value) {
+//            $pr = ($value->markers_count/$markerTotal) * 100;
+//            $dataForBreed[] = [$value->title_ru , $pr];
 //            if ($pr < 3) {
 //                $dataForBreed[0][1] += $pr;
 //            } else {
 //                $dataForBreed[] = [$value->title_ru , $pr];
 //            }
-        }
-
+//        }
         foreach ($areas as $value) {
-            $dataForArea[] = [$value->title_ru, ($value->markers_count/Marker::count()) * 100];
+            $dataForArea[] = [$value->title_ru, ($value->markers_count/$markerTotal) * 100];
         }
 
         foreach ($sanitaries as $value) {
-            $dataForSanitary[] = [$value->title_ru , ($value->markers_count/Marker::count()) * 100];
+            $dataForSanitary[] = [$value->title_ru , ($value->markers_count/$markerTotal) * 100];
         }
-        return view('mayor.dashboard', compact('dataForBreed', 'dataForArea', 'dataForSanitary'));
+        return view('mayor.dashboard', compact('dataForBreed', 'dataForArea', 'dataForSanitary', 'markerTotal'));
     }
 
     public function statistics()
     {
         $forExp = [];
-        $markers = Marker::with('sanitary', 'breed', 'place.area')->paginate(20)->withQueryString();
+        $markers = Marker::with('sanitary', 'breed', 'place.area')->paginate(20);
+
         return view('mayor.statistics', compact('markers', 'forExp'));
     }
 
     public function search(Request $request)
     {
-        $markers = Marker::searchable($request->all())->paginate(20)->withQueryString();
+        $markers = Marker::searchable($request->all())->paginate(20);
         $forExp = $request->all();
-//        dd($forExp);
         return view('mayor.statistics', compact('markers', 'forExp'));
     }
 

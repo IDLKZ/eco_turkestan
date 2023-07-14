@@ -7,14 +7,101 @@
             }
         </style>
     @endpush
-    <div class="my-3">
-        Общее количество деревьев: {{\App\Models\Marker::count()}}
-    </div>
-    <div class="row pt-4 mt-2">
-        <div id="chartBreed" class="pie-chart"></div>
+    <div class="col-lg-12">
+        <div class="row mb-3">
+            <div class="col-xl-6">
+                <section class="card card-featured-left card-featured-primary mb-3">
+                    <div class="card-body">
+                        <div class="widget-summary">
+                            <div class="widget-summary-col widget-summary-col-icon">
+                                <div class="summary-icon bg-primary">
+                                    <i class="fa-solid fa-globe"></i>
+                                </div>
+                            </div>
+                            <div class="widget-summary-col">
+                                <div class="summary">
+                                    <h4 class="title">Кол-во районов</h4>
+                                    <div class="info">
+                                        <strong class="amount">{{\App\Models\Area::count()}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="col-xl-6">
+                <section class="card card-featured-left card-featured-secondary">
+                    <div class="card-body">
+                        <div class="widget-summary">
+                            <div class="widget-summary-col widget-summary-col-icon">
+                                <div class="summary-icon bg-secondary">
+                                    <i class="fa-solid fa-map-location-dot"></i>
+                                </div>
+                            </div>
+                            <div class="widget-summary-col">
+                                <div class="summary">
+                                    <h4 class="title">Кол-во мест</h4>
+                                    <div class="info">
+                                        <strong class="amount">{{\App\Models\Place::count()}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-6">
+                <section class="card card-featured-left card-featured-tertiary mb-3">
+                    <div class="card-body">
+                        <div class="widget-summary">
+                            <div class="widget-summary-col widget-summary-col-icon">
+                                <div class="summary-icon bg-tertiary">
+                                    <i class="fa-solid fa-tree"></i>
+                                </div>
+                            </div>
+                            <div class="widget-summary-col">
+                                <div class="summary">
+                                    <h4 class="title">Кол-во посадок</h4>
+                                    <div class="info">
+                                        <strong class="amount">{{\App\Models\Marker::count()}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="col-xl-6">
+                <section class="card card-featured-left card-featured-quaternary">
+                    <div class="card-body">
+                        <div class="widget-summary">
+                            <div class="widget-summary-col widget-summary-col-icon">
+                                <div class="summary-icon bg-quaternary">
+                                    <i class="fa fa-pie-chart"></i>
+                                </div>
+                            </div>
+                            <div class="widget-summary-col">
+                                <div class="summary">
+                                    <h4 class="title">Кол-во пород</h4>
+                                    <div class="info">
+                                        <strong class="amount">{{\App\Models\Breed::count()}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
     </div>
     <div class="row pt-4 mt-2">
         <div id="chartArea" class="pie-chart"></div>
+    </div>
+    <div class="row pt-4 mt-2">
+        <div id="chartBreed" class="pie-chart"></div>
     </div>
     <div class="row pt-4 mt-2">
         <div id="chartSanitary" class="pie-chart"></div>
@@ -25,7 +112,7 @@
 @push('js')
         <script src="https://www.google.com/jsapi"></script>
         <script type="text/javascript">
-            var dataForBreed = @json($dataForBreed),
+            let dataForBreed = @json($dataForBreed),
                 dataForArea = @json($dataForArea),
                 dataForSanitary = @json($dataForSanitary);
 
@@ -38,7 +125,7 @@
             };
 
             function drawChart() {
-                var breedData = new google.visualization.DataTable(),
+                let breedData = new google.visualization.DataTable(),
                     areaData = new google.visualization.DataTable(),
                     sanitaryData = new google.visualization.DataTable();
                 breedData.addColumn('string', 'Name');
@@ -53,11 +140,11 @@
                 sanitaryData.addColumn('number', 'Count');
                 sanitaryData.addRows(dataForSanitary);
 
-                var breedOptions = {
+                let breedOptions = {
                         pieHole: 0.4,
                         title: 'Распределение насаждений по породному составу',
                         is3D: true,
-                        sliceVisibilityThreshold: 0.05
+                        sliceVisibilityThreshold: 0.02
                     },
                     areaOptions = {
                         pieHole: 0.4,
@@ -67,9 +154,14 @@
                     sanitaryOptions = {
                         pieHole: 0.4,
                         title: 'Санитарное состояние зеленых насаждений',
-                        is3D: true
+                        is3D: true,
+                        slices: {
+                            0: { color: 'green' },
+                            1: { color: 'orange' },
+                            2: { color: 'red'}
+                        }
                     };
-                var chartBreed = new google.visualization.PieChart(document.getElementById('chartBreed')),
+                let chartBreed = new google.visualization.PieChart(document.getElementById('chartBreed')),
                     chartArea = new google.visualization.PieChart(document.getElementById('chartArea')),
                     chartSanitary = new google.visualization.PieChart(document.getElementById('chartSanitary'));
                 chartBreed.draw(breedData, breedOptions);
