@@ -15,32 +15,34 @@ use App\Models\Type;
 use Brian2694\Toastr\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $breeds = Breed::all();
-        $areas = Area::all();
-        $sanitaries = Sanitary::all();
+        $breeds = Breed::withCount('markers')->get();
+        $areas = Area::withCount('markers')->get();
+        $sanitaries = Sanitary::withCount('markers')->get();
         $dataForBreed[] = ['Прочие породы', 0];
 
         foreach ($breeds as $value) {
-            $pr = (Marker::where('breed_id', $value->id)->count()/Marker::count()) * 100;
-            if ($pr < 3) {
-                $dataForBreed[0][1] += $pr;
-            } else {
-                $dataForBreed[] = [$value->title_ru , $pr];
-            }
+            $pr = ($value->markers_count/Marker::count()) * 100;
+            $dataForBreed[] = [$value->title_ru , $pr];
+//            if ($pr < 3) {
+//                $dataForBreed[0][1] += $pr;
+//            } else {
+//                $dataForBreed[] = [$value->title_ru , $pr];
+//            }
         }
 
         foreach ($areas as $value) {
-            $dataForArea[] = [$value->title_ru , (Marker::where('area_id', $value->id)->count()/Marker::count()) * 100];
-        }
-        foreach ($sanitaries as $value) {
-            $dataForSanitary[] = [$value->title_ru , (Marker::where('sanitary_id', $value->id)->count()/Marker::count()) * 100];
+            $dataForArea[] = [$value->title_ru, ($value->markers_count/Marker::count()) * 100];
         }
 
+        foreach ($sanitaries as $value) {
+            $dataForSanitary[] = [$value->title_ru , ($value->markers_count/Marker::count()) * 100];
+        }
         return view('mayor.dashboard', compact('dataForBreed', 'dataForArea', 'dataForSanitary'));
     }
 

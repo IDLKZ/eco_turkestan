@@ -29,6 +29,7 @@ class Marker extends Model
         'breed_id',
         'age',
         'place_id',
+        'area_id',
         'point',
         'geocode',
         'image_url'
@@ -40,7 +41,7 @@ class Marker extends Model
 
     public function area()
     {
-        return $this->belongsTo(Area::class);
+        return $this->hasOneThrough(Area::class, Place::class,'area_id','id','place_id','id');
     }
     public function event()
     {
@@ -89,9 +90,12 @@ class Marker extends Model
         if (isset($request['area_id']) && $request['area_id'] != 0) {
             $data->where('area_id', $request['area_id']);
         }
-        if (isset($request['category_id']) && $request['category_id'] != 0) {
-            $data->where('category_id', $request['category_id']);
+        if (isset($request['place_id']) && $request['place_id'] != 0) {
+            $data->where('place_id', $request['place_id']);
         }
+//        if (isset($request['category_id']) && $request['category_id'] != 0) {
+//            $data->where('category_id', $request['category_id']);
+//        }
         if (isset($request['type_id']) && $request['type_id'] != 0) {
             $data->where('type_id', $request['type_id']);
         }
@@ -101,9 +105,9 @@ class Marker extends Model
         if (isset($request['sanitary_id']) && $request['sanitary_id'] != 0) {
             $data->where('sanitary_id', $request['sanitary_id']);
         }
-        if (isset($request['status_id']) && $request['status_id'] != 0) {
-            $data->where('status_id', $request['status_id']);
-        }
+//        if (isset($request['status_id']) && $request['status_id'] != 0) {
+//            $data->where('status_id', $request['status_id']);
+//        }
         return $data;
     }
 

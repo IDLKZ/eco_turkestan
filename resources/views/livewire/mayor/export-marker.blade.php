@@ -3,11 +3,11 @@
         @csrf
         @if(count($forExp) > 0)
             <input type="hidden" name="area_id" value="{{$forExp['area_id']}}">
-            <input type="hidden" name="category_id" value="{{$forExp['category_id']}}">
+{{--            <input type="hidden" name="category_id" value="{{$forExp['category_id']}}">--}}
             <input type="hidden" name="type_id" value="{{$forExp['type_id']}}">
             <input type="hidden" name="breed_id" value="{{$forExp['breed_id']}}">
             <input type="hidden" name="sanitary_id" value="{{$forExp['sanitary_id']}}">
-            <input type="hidden" name="status_id" value="{{$forExp['status_id']}}">
+{{--            <input type="hidden" name="status_id" value="{{$forExp['status_id']}}">--}}
         @endif
         <button type="submit" class="btn btn-success text-black text-hover-light">
             Экспорт в Excel

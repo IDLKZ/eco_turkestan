@@ -11,29 +11,34 @@ use App\Models\Status;
 use App\Models\Type;
 use Closure;
 use Illuminate\Contracts\View\View;
-use Illuminate\View\Component;
+use Livewire\Component;
+
 
 class SearchInputs extends Component
 {
-    /**
-     * Create a new component instance.
-     */
-    public function __construct()
-    {
-        //
-    }
+    public $areas;
+    public $types;
+    public $breeds;
+    public $sanitaries;
 
+    public function mount()
+    {
+        $this->areas = Area::all();
+        $this->types = Type::all();
+//        $categories = Category::all();
+        $this->breeds = Breed::all();
+        $this->sanitaries = Sanitary::all();
+        //        $statuses = Status::all();
+    }
+    public function clickTest()
+    {
+        dd('ttt');
+    }
     /**
      * Get the view / contents that represent the component.
      */
-    public function render(): View|Closure|string
+    public function render()
     {
-        $areas = Area::all();
-        $types = Type::all();
-        $categories = Category::all();
-        $breeds = Breed::all();
-        $sanitaries = Sanitary::all();
-        $statuses = Status::all();
-        return view('components.search-inputs', compact('areas', 'types', 'categories', 'breeds', 'sanitaries', 'statuses'));
+        return view('livewire.mayor.search-inputs');
     }
 }

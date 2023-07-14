@@ -7,6 +7,9 @@
             }
         </style>
     @endpush
+    <div class="my-3">
+        Общее количество деревьев: {{\App\Models\Marker::count()}}
+    </div>
     <div class="row pt-4 mt-2">
         <div id="chartBreed" class="pie-chart"></div>
     </div>
@@ -29,7 +32,8 @@
             window.onload = function() {
                 google.load("visualization", "1.1", {
                     packages: ["corechart"],
-                    callback: 'drawChart'
+                    callback: 'drawChart',
+                    language: 'ru'
                 });
             };
 
@@ -52,7 +56,8 @@
                 var breedOptions = {
                         pieHole: 0.4,
                         title: 'Распределение насаждений по породному составу',
-                        is3D: true
+                        is3D: true,
+                        sliceVisibilityThreshold: 0.05
                     },
                     areaOptions = {
                         pieHole: 0.4,

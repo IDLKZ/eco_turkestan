@@ -26,4 +26,8 @@ class Area extends Model
     public function places():HasMany{
         return $this->hasMany(Place::class,"area_id","id");
     }
+
+    public function markers() {
+        return $this->hasManyThrough(Marker::class, Place::class, 'area_id', 'place_id');
+    }
 }

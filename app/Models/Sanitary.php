@@ -10,4 +10,9 @@ class Sanitary extends Model
 {
     use HasFactory, Upload;
     protected $fillable = ['title_ru', 'title_kz',"image_url"];
+
+    public function markers()
+    {
+        return $this->hasMany(Marker::class, 'sanitary_id', 'id');
+    }
 }
