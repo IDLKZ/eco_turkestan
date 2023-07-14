@@ -59,7 +59,7 @@
             var activeGeoPlace;
             let toggleShow = false;
             let dataTree = [];
-            let maxZoom = 18;
+            let maxZoom = 16;
             const currentPosition = [],
                 area = {{Js::from($place->area)}},
                 place = {{Js::from($place)}},
@@ -302,6 +302,9 @@
                 toggleShow = !toggleShow;
                 if(!toggleShow){
                     cleanMarker();
+                }
+                else{
+                    loadMarker();
                 }
             }
 
