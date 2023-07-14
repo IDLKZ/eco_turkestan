@@ -1,4 +1,5 @@
 <x-app-layout>
+
     <div class="row pt-4 mt-2">
         <form action="{{route('mayor-search')}}" method="post">
             @csrf
