@@ -64,7 +64,7 @@
                 area = {{Js::from($place->area)}},
                 place = {{Js::from($place)}},
                 markers = {{Js::from([])}},
-                map = L.map('map', {preferCanvas: true}).setView([42.315524, 69.586943], 14),
+                map = L.map('map', {preferCanvas: true}).setView([43.300777, 68.321683], 14),
                 cable = L.geoJSON(JSON.parse(place.geocode), {
                     style: {
                         color: place.bg_color

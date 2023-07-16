@@ -5,13 +5,13 @@
         <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="w-100" src="/images/bg-2.jpeg" alt="Image">
+                    <img class="w-100" src="{{asset('images/bg-2.jpg')}}" alt="Image">
                     <div class="carousel-caption">
                         <div class="container">
                             <div class="row justify-content-center">
                                 <div class="col-lg-8">
                                     <h1 class="display-1 text-white mb-5 animated slideInDown">
-                                       Реестр зеленых насаждений города Шымкент
+                                       Реестр зеленых насаждений города Туркестан
                                     </h1>
                                     <a href="{{route("front-map")}}" class="btn btn-primary py-sm-3 px-sm-4">Интерактивная карта насаждений</a>
                                 </div>
@@ -20,7 +20,7 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img class="w-100" src="/images/bg-4.jpg" alt="Image">
+                    <img class="w-100" src="{{asset('images/bg-4.jpeg')}}" alt="Image">
                     <div class="carousel-caption">
                         <div class="container">
                             <div class="row justify-content-center">
@@ -106,7 +106,7 @@
         <div class="container">
             <div class="row g-5 align-items-end">
                 <div class="col-lg-3 col-md-5 wow fadeInUp" data-wow-delay="0.1s">
-                    <img class="img-fluid rounded" data-wow-delay="0.1s" src="/images/bg-1.jpg">
+                    <img class="img-fluid rounded" data-wow-delay="0.1s" src="{{asset('images/bg-1.png')}}">
                 </div>
                 <div class="col-lg-6 col-md-7 wow fadeInUp" data-wow-delay="0.3s">
                     <h1 class="display-1 text-primary mb-0">>100k</h1>
@@ -187,7 +187,7 @@
                             </div>
                             <h4 class="mb-3">Красивый вид</h4>
                             <p class="mb-4">
-                                Зеленые насаждения города Шымкент: Создание здоровой и привлекательной окружающей среды
+                                Зеленые насаждения города Туркестан: Создание здоровой и привлекательной окружающей среды
                             </p>
                         </div>
                     </div>
@@ -380,7 +380,7 @@
                     <div class="team-item rounded d-flex justify-content-center">
                         <img style="max-height: 200px" class="img-fluid" src="https://www.gov.kz/uploads/2020/2/5/a2771b439d27f513634fdbf9a2f12388_original.54774.png" alt="">
                         <div class="team-text">
-                            <h6 class="mb-0">Акимат города Шымкент</h6>
+                            <h6 class="mb-0">Акимат города Туркестан</h6>
                             <div class="team-social d-flex">
                                 <a class="btn btn-square rounded-circle me-2" href=""><i class="fab fa-facebook-f"></i></a>
                                 <a class="btn btn-square rounded-circle me-2" href=""><i class="fab fa-twitter"></i></a>
@@ -401,7 +401,7 @@
             <div class="row g-5">
                 <div class="col-lg-5 wow fadeInUp" data-wow-delay="0.1s">
                     <p class="fs-5 fw-bold text-primary">Мнения</p>
-                    <h1 class="display-5 mb-5">Мнение о нашей программе: Реестр зеленых насаждений города Шымкент</h1>
+                    <h1 class="display-5 mb-5">Мнение о нашей программе: Реестр зеленых насаждений города Туркестан</h1>
                     <p class="mb-4">
                         Программа нашей организации по продвижению зеленых насаждений для устойчивого развития города  вызывает интерес и привлекает внимание не только общественности, но и государственных деятелей, экспертов международных программ и отчественных организаций.
                         В этом блоге мы рассмотрим, какие отзывы и мнения высказывают  о нашей программе и ее значимости для города

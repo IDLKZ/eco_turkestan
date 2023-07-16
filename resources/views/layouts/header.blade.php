@@ -1,7 +1,7 @@
 <header class="header">
     <div class="logo-container">
         <a href="/" class="logo my-0">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Shymkent_logo.svg/1200px-Shymkent_logo.svg.png" width="50px" height="50px" alt="Eco Shymkent" />
+            <img src="{{asset('images/logo.png')}}" width="50px" height="50px" alt="Eco Turkestan" />
         </a>
 
         <div class="d-md-none toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">

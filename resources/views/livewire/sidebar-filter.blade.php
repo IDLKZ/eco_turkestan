@@ -240,7 +240,7 @@
 
     <x-leaflet-scripts/>
     <script type="module">
-        var map = L.map('map', {preferCanvas: true}).setView([42.315524, 69.586943], 14);
+        var map = L.map('map', {preferCanvas: true}).setView([43.300777, 68.321683], 13);
         map.pm.addControls({
             position: 'topleft',
             drawCircle: false,

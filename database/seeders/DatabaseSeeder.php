@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             SanitarySeeder::class,
             StatusSeeder::class,
             TypeSeeder::class,
-            AreaSeeder::class,
+//            AreaSeeder::class,
 //            PlaceSeeder::class
         ]);
 //        Place::factory()->count(2)->create();

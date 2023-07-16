@@ -80,7 +80,7 @@
                     place = {{Js::from($tree->place)}},
                     area = {{Js::from($tree->place->area)}},
                     marker = {{Js::from($tree->geocode)}},
-                    map = L.map('map', {preferCanvas: true}).setView([42.315524, 69.586943], 14),
+                    map = L.map('map', {preferCanvas: true}).setView([43.300777, 68.321683], 14),
                     cable = L.geoJSON(JSON.parse(place.geocode), {
                         style: {
                             color: place.bg_color

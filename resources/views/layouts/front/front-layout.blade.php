@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Eco-Shymkent</title>
+    <title>Eco-Turkestan</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -27,7 +27,7 @@
     <div class="row gx-0 d-none d-lg-flex">
         <div class="col-lg-7 px-5 text-start">
             <div class="h-100 d-inline-flex align-items-center me-4">
-                <span>Государственное учреждение «Управление развития комфортной городской среды города Шымкент»</span>
+                <span>Государственное учреждение «Управление развития комфортной городской среды города Туркестан»</span>
             </div>
 
         </div>
@@ -49,7 +49,7 @@
 <!-- Navbar Start -->
 <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
     <a href="/" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-        <h1 class="m-0"><span class="text-success">ECO</span> <span class="text-danger">Shymkent</span></h1>
+        <h1 class="m-0"><span class="text-success">ECO</span> <span class="text-danger">Turkestan</span></h1>
     </a>
     <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
@@ -87,7 +87,7 @@
         <div class="row g-5">
             <div class="col-lg-4 col-md-6">
                 <h4 class="text-white mb-4">Контакты</h4>
-                <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i> 	г.Шымкент, Туркестанская, 11А </p>
+                <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i> 	г.Туркестан, Туркестанская, 11А </p>
                 <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
                 <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
                 <div class="d-flex pt-2">
@@ -122,7 +122,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                &copy; <a class="border-bottom" href="#">Eco Shymkent</a>, Все права защищены.
+                &copy; <a class="border-bottom" href="#">Eco Turkestan</a>, Все права защищены.
             </div>
         </div>
     </div>
